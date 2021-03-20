@@ -9,7 +9,7 @@ import com.example.runnerwar.ui.registro.RegistroActivity
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.seleccion_faccion)
 
 
 
