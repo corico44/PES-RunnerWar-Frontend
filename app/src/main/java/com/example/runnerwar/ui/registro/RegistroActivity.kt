@@ -1,40 +1,49 @@
 package com.example.runnerwar.ui.registro
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.runnerwar.R
 
+class RegistroActivity1 : AppCompatActivity() {
 
-
-class RegistroActivity : AppCompatActivity() {
-    private lateinit var  registroViewModel: RegistroViewModel      //"lateinit" se utiliza para indicar que se inicializará más tarde, dado que no acepta un nul
+    private val  registroViewModel: RegistroViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.registro)
+
 
         val username = findViewById<EditText>(R.id.reg_userName)
         val email = findViewById<EditText>(R.id.reg_email)
         val password = findViewById<EditText>(R.id.reg_password)
         val conditions = findViewById<CheckBox>(R.id.reg_checkbox)
-        val signup_button = findViewById<Button>(R.id.login_button)
+        val signup = findViewById<Button>(R.id.signup_button)
 
-        registroViewModel.registroFormState.observe(this@RegistroActivity, Observer{
+        registroViewModel.registroFormState.observe(this@RegistroActivity1, Observer{
             val registroForm = it ?: return@Observer
 
-            if(!registroForm.isDataValid)
-                Toast.makeText(applicationContext, registroForm.usernameError, Toast.LENGTH_SHORT).show()
+            if(!registroForm.isDataValid){
+                if (registroForm.usernameError != null){
+                    username.error = registroForm.usernameError
+                }
+                if (registroForm.emailError != null){
+                    email.error = registroForm.emailError
+                }
+                if (registroForm.passwordError != null){
+                    password.error = registroForm.passwordError
+                }
+            }
+
         })
+
 
         username.afterTextChanged {
             registroViewModel.singUpDataChanged(
@@ -44,10 +53,25 @@ class RegistroActivity : AppCompatActivity() {
             )
         }
 
-        signup_button.setOnClickListener{
-            registroViewModel.signUp(username.text.toString(), email.text.toString(),password.text.toString() )
+        email.afterTextChanged {
+            registroViewModel.singUpDataChanged(
+                username.text.toString(),
+                email.text.toString(),
+                password.text.toString()
+            )
         }
 
+        password.afterTextChanged {
+            registroViewModel.singUpDataChanged(
+                username.text.toString(),
+                email.text.toString(),
+                password.text.toString()
+            )
+        }
+
+        signup.setOnClickListener{
+            registroViewModel.signUp(username.text.toString(), email.text.toString(),password.text.toString() )
+        }
 
     }
 }
