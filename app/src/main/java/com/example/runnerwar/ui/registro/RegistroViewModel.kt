@@ -4,19 +4,27 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.runnerwar.Model.InfoUser
 
 import com.example.runnerwar.R
+import com.example.runnerwar.Repositories.RegistroRepository
+import kotlinx.coroutines.launch
 
 
-class RegistroViewModel : ViewModel() {
+class RegistroViewModel(private val repository: RegistroRepository) : ViewModel() {
+
+    val response: MutableLiveData<InfoUser> = MutableLiveData()
 
     private val _registroForm = MutableLiveData<RegistroFormState>()
     val registroFormState: LiveData<RegistroFormState> = _registroForm
 
 
-
     fun signUp(username: String, email: String, password: String) {
-
+       viewModelScope.launch {
+           val res: InfoUser = repository.newUser(username,email,password)
+           response.value = res
+       }
     }
 
     fun singUpDataChanged(username: String,email: String, password: String) {
