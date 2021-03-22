@@ -21,8 +21,7 @@ class CuentaFragment : Fragment() {
     ): View? {
         cuentaViewModel =
             ViewModelProviders.of(this).get(CuentaViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_chat, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
+        val root = inflater.inflate(R.layout.fragment_cuenta, container, false)
         return root
     }
 }
