@@ -10,15 +10,29 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+
+import androidx.lifecycle.ViewModelProviders
+
+
+
 import com.example.runnerwar.R
+import com.example.runnerwar.Repositories.RegistroRepository
+import com.example.runnerwar.ui.registro.RegistroViewModel
 
-class RegistroActivity1 : AppCompatActivity() {
 
-    private val  registroViewModel: RegistroViewModel by viewModels()
+class RegistroActivity : AppCompatActivity() {
+
+    private lateinit var  registroViewModel: RegistroViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registro)
+
+        val repository = RegistroRepository()
+        val viewModelFactory = RegistroViewModelFactory(repository)
+
+        registroViewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(RegistroViewModel::class.java)
 
 
         val username = findViewById<EditText>(R.id.reg_userName)
@@ -27,7 +41,9 @@ class RegistroActivity1 : AppCompatActivity() {
         val conditions = findViewById<CheckBox>(R.id.reg_checkbox)
         val signup = findViewById<Button>(R.id.signup_button)
 
-        registroViewModel.registroFormState.observe(this@RegistroActivity1, Observer{
+
+
+        registroViewModel.registroFormState.observe(this@RegistroActivity, Observer{
             val registroForm = it ?: return@Observer
 
             if(!registroForm.isDataValid){
