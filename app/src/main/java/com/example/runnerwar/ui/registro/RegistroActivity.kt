@@ -1,5 +1,6 @@
 package com.example.runnerwar.ui.registro
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -12,7 +13,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
-
+import com.example.runnerwar.NavActivity
 
 
 import com.example.runnerwar.R
@@ -86,7 +87,9 @@ class RegistroActivity : AppCompatActivity() {
         }
 
         signup.setOnClickListener{
-            registroViewModel.signUp(username.text.toString(), email.text.toString(),password.text.toString() )
+            //registroViewModel.signUp(username.text.toString(), email.text.toString(),password.text.toString() )
+            val intent = Intent(this@RegistroActivity, NavActivity::class.java)
+            startActivity(intent)
         }
 
     }
@@ -103,3 +106,4 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
     })
 }
+

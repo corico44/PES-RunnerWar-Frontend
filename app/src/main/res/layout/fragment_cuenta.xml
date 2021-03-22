@@ -50,12 +50,16 @@
             android:background="@drawable/boton_eliminar" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
             app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"/>
-    <TextView
-            android:text="MI NOMBRE"
-            android:layout_width="240dp"
-            android:layout_height="49dp" android:id="@+id/nombreCuenta"
-            android:layout_marginLeft="71dp" android:layout_marginStart="71dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.14" app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
-            android:layout_marginTop="96dp" app:layout_constraintStart_toStartOf="parent"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/reg_userName"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:hint="Name"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.345"
+            android:enabled="false"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
