@@ -110,8 +110,10 @@ class RegistroActivity : AppCompatActivity() {
 
         signup.setOnClickListener{
             //registroViewModel.signUp(UserForm( username.text.toString(), email.text.toString(),password.text.toString(), "rojo") )
-
             val intent = Intent(this@RegistroActivity, SeleccionFaccionActivity::class.java)
+            intent.putExtra("username", username.text.toString())
+            intent.putExtra("email", email.text.toString())
+            intent.putExtra("password", password.text.toString())
             startActivity(intent)
         }
 
