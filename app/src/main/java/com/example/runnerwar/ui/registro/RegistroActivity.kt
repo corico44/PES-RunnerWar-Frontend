@@ -8,17 +8,14 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
-import com.example.runnerwar.NavActivity
 
 
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
-import com.example.runnerwar.ui.registro.RegistroViewModel
+import com.example.runnerwar.SeleccionFaccionActivity
 
 
 class RegistroActivity : AppCompatActivity() {
@@ -88,7 +85,7 @@ class RegistroActivity : AppCompatActivity() {
 
         signup.setOnClickListener{
             //registroViewModel.signUp(username.text.toString(), email.text.toString(),password.text.toString() )
-            val intent = Intent(this@RegistroActivity, NavActivity::class.java)
+            val intent = Intent(this@RegistroActivity, SeleccionFaccionActivity::class.java)
             startActivity(intent)
         }
 
