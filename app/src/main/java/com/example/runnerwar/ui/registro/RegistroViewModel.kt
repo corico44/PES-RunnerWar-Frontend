@@ -45,7 +45,7 @@ class RegistroViewModel(private val repository: RegistroRepository) : ViewModel(
 
     // A placeholder password validation check
     private fun isUserNameValid(username: String): Boolean {
-        return username.length > 5
+        return (username.length in 5..10)
     }
 
     // A placeholder username validation check
@@ -59,7 +59,7 @@ class RegistroViewModel(private val repository: RegistroRepository) : ViewModel(
 
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 5
+        return (password.length in 6..12)
     }
 
 }
