@@ -6,24 +6,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.runnerwar.Model.InfoUser
+import com.example.runnerwar.Model.UserForm
+import com.example.runnerwar.Model.UserResponse
 
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 
 class RegistroViewModel(private val repository: RegistroRepository) : ViewModel() {
 
-    val response: MutableLiveData<InfoUser> = MutableLiveData()
+    private val _response= MutableLiveData<Response<UserResponse>>()
+    val responseCreate: LiveData<Response<UserResponse>> = _response
 
     private val _registroForm = MutableLiveData<RegistroFormState>()
     val registroFormState: LiveData<RegistroFormState> = _registroForm
 
 
-    fun signUp(username: String, email: String, password: String) {
+    fun signUp(user: UserForm) {
        viewModelScope.launch {
-           val res: InfoUser = repository.newUser(username,email,password)
-           response.value = res
+           val res: Response<UserResponse> = repository.newUser(user)
+           _response.value = res
        }
     }
 

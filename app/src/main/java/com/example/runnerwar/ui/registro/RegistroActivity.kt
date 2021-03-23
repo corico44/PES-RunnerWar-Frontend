@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
+import com.example.runnerwar.Model.UserForm
+import com.example.runnerwar.Model.UserResponse
 
 
 import com.example.runnerwar.R
@@ -58,6 +62,27 @@ class RegistroActivity : AppCompatActivity() {
 
         })
 
+        registroViewModel.responseCreate.observe(this@RegistroActivity, Observer { response ->
+
+            Toast.makeText(applicationContext, "Success", Toast.LENGTH_SHORT).show()
+
+            if (response.isSuccessful){
+                val data: UserResponse? = response.body()
+
+                if (data != null) {
+                    Log.d("Response", data._id)
+                    Log.d("Response", data.username)
+                    Log.d("Response", data.password.toString())
+                    Log.d("Response", data.coins.toString())
+                    Log.d("Response", data.faction.toString())
+                    Log.d("Response", data.points.toString())
+                }
+
+            }
+            //Toast.makeText(applicationContext, "Success", Toast.LENGTH_SHORT).show()
+
+        })
+
 
         username.afterTextChanged {
             registroViewModel.singUpDataChanged(
@@ -84,7 +109,8 @@ class RegistroActivity : AppCompatActivity() {
         }
 
         signup.setOnClickListener{
-            //registroViewModel.signUp(username.text.toString(), email.text.toString(),password.text.toString() )
+            //registroViewModel.signUp(UserForm( username.text.toString(), email.text.toString(),password.text.toString(), "rojo") )
+
             val intent = Intent(this@RegistroActivity, SeleccionFaccionActivity::class.java)
             startActivity(intent)
         }

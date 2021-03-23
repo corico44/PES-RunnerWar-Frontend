@@ -10,7 +10,7 @@ object RetrofitInstance {
 
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl("https://enigmatic-sea-32759.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
