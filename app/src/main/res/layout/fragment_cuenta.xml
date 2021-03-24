@@ -40,16 +40,16 @@
             app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.598" app:layout_constraintVertical_bias="0.055"
-            android:background="@drawable/boton_edit" app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" android:src="@drawable/boton_edit"/>
     <ImageButton
             android:layout_width="33dp"
-            android:layout_height="44dp" android:id="@+id/imageButton3"
+            android:layout_height="44dp" android:id="@+id/boton_eliminar"
             android:layout_marginTop="3dp"
             app:layout_constraintEnd_toEndOf="@+id/rectanguloBlanco" app:layout_constraintHorizontal_bias="0.792"
             app:layout_constraintVertical_bias="0.046"
-            android:background="@drawable/boton_eliminar" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
-            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"/>
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" android:src="@drawable/boton_eliminar"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

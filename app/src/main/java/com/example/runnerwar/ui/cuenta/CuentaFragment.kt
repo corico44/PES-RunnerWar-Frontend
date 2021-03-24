@@ -1,14 +1,18 @@
 package com.example.runnerwar.ui.cuenta
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.R
+import com.example.runnerwar.SeleccionFaccionActivity
+import kotlinx.android.synthetic.main.fragment_cuenta.*
 
 class CuentaFragment : Fragment() {
 
@@ -24,4 +28,17 @@ class CuentaFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_cuenta, container, false)
         return root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        boton_edit.setOnClickListener {
+            //FirebaseAuth.getInstance().signOut()
+            val intent = Intent (view.context, SeleccionFaccionActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+
+
 }
