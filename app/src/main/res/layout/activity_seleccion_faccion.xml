@@ -67,7 +67,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:contentDescription="azul"
             app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton5"/>
+            app:layout_constraintBottom_toTopOf="@+id/imageButton5" android:background="#FFFFFF"/>
     <TextView
             android:fontFamily="@font/font_arcade_classic"
             android:layout_width="260dp"
@@ -86,7 +86,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:contentDescription="naranja"
             app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton6"/>
+            app:layout_constraintBottom_toTopOf="@+id/imageButton6" android:background="#FFFFFF"
+    />
     <TextView
             android:fontFamily="@font/font_arcade_classic"
             android:layout_width="260dp"
@@ -103,7 +104,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageButton5" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0" app:layout_constraintHorizontal_bias="0.488"
-            android:contentDescription="verde"/>
+            android:contentDescription="verde" android:background="#FFFFFF"/>
     <TextView
             android:fontFamily="@font/font_arcade_classic"
             android:layout_width="260dp"
@@ -113,16 +114,17 @@
             app:layout_constraintEnd_toEndOf="@+id/imageButton6"
             android:text="Together   we   will  dominate   all   of Barcelona   and   all   factions   will know   that   green   is   the   best   Come with  us!"
             app:layout_constraintTop_toBottomOf="@+id/imageButton5"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton6"/>
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton6" app:layout_constraintHorizontal_bias="0.472"
+            app:layout_constraintVertical_bias="0.758"/>
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/rectangle_20" android:id="@+id/imageButton2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
             app:layout_constraintBottom_toTopOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.071"
+            app:layout_constraintVertical_bias="0.036"
             android:layout_marginTop="90dp" android:visibility="visible" android:contentDescription="amarillo"
-            app:layout_constraintHorizontal_bias="0.494"/>
+            app:layout_constraintHorizontal_bias="0.495" android:background="#FFFFFF"/>
     <TextView
             android:text="CHOOSE A TEAM!"
             android:fontFamily="@font/font_arcade_classic"

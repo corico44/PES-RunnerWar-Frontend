@@ -13,13 +13,12 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
-import com.example.runnerwar.Model.UserForm
 import com.example.runnerwar.Model.UserResponse
 
 
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
-import com.example.runnerwar.SeleccionFaccionActivity
+import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionActivity
 
 
 class RegistroActivity : AppCompatActivity() {
@@ -43,6 +42,9 @@ class RegistroActivity : AppCompatActivity() {
         val conditions = findViewById<CheckBox>(R.id.reg_checkbox)
         val signup = findViewById<Button>(R.id.signup_button)
 
+        signup.isEnabled = false
+        signup.isClickable=false
+
 
 
         registroViewModel.registroFormState.observe(this@RegistroActivity, Observer{
@@ -59,30 +61,12 @@ class RegistroActivity : AppCompatActivity() {
                     password.error = registroForm.passwordError
                 }
             }
-
-        })
-
-        registroViewModel.responseCreate.observe(this@RegistroActivity, Observer { response ->
-
-            Toast.makeText(applicationContext, "Success", Toast.LENGTH_SHORT).show()
-
-            if (response.isSuccessful){
-                val data: UserResponse? = response.body()
-
-                if (data != null) {
-                    Log.d("Response", data._id)
-                    Log.d("Response", data.username)
-                    Log.d("Response", data.password.toString())
-                    Log.d("Response", data.coins.toString())
-                    Log.d("Response", data.faction.toString())
-                    Log.d("Response", data.points.toString())
-                }
-
+            else{
+                signup.isEnabled = true
+                signup.isClickable=true
             }
-            //Toast.makeText(applicationContext, "Success", Toast.LENGTH_SHORT).show()
 
         })
-
 
         username.afterTextChanged {
             registroViewModel.singUpDataChanged(

@@ -1,4 +1,4 @@
-package com.example.runnerwar.ui.registro
+package com.example.runnerwar.ui.seleccionFaccion
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -11,7 +11,7 @@
             android:theme="@style/AppTheme">
         <activity android:name=".NavActivity">
         </activity>
-        <activity android:name=".SeleccionFaccionActivity">
+        <activity android:name=".ui.seleccionFaccion.SeleccionFaccionActivity">
         </activity>
         <activity android:name=".ui.registro.RegistroActivity">
         </activity>
