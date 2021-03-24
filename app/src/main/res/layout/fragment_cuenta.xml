@@ -58,8 +58,7 @@
             android:id="@+id/reg_userName"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:hint="Name"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
-            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.345"
-            android:enabled="false"/>
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.269"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
