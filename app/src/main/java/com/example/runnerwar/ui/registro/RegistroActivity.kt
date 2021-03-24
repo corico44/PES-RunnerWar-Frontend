@@ -31,7 +31,7 @@ class RegistroActivity : AppCompatActivity() {
         setContentView(R.layout.registro)
 
         val repository = RegistroRepository()
-        val viewModelFactory = RegistroViewModelFactory(repository)
+        val viewModelFactory = RegistroViewModelFactory(repository, 1)
 
         registroViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(RegistroViewModel::class.java)
