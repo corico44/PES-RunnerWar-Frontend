@@ -53,7 +53,7 @@ class SeleccionFaccionActivity : AppCompatActivity() {
                     Log.d("Response", data.points.toString())
 
                     val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
-                    intent.putExtra("_id", data._id)
+                    intent.putExtra("email", data._id)
                     intent.putExtra("coins", data.coins)
                     intent.putExtra("faction", data.faction)
                     intent.putExtra("password", data.password)

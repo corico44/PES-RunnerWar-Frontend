@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.R
@@ -31,6 +32,10 @@ class CuentaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var username : String? = activity?.intent?.extras?.getString("username")
+
+        reg_userName.setText(username.toString())
 
         boton_edit.setOnClickListener {
             if (reg_userName.isEnabled) {
