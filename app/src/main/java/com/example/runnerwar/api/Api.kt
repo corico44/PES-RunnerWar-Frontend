@@ -18,5 +18,11 @@ interface Api {
         @Body user: UserUpdate
     ) : Call<UserResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST("/delete")
+    fun deleteUser(
+        @Body user: DeleteUser
+    ) : Call<Codi>
+
 
 }

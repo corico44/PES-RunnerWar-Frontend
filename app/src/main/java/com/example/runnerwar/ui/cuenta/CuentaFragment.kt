@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Model.Codi
+import com.example.runnerwar.Model.DeleteUser
 import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.NavActivity
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
+import com.example.runnerwar.ui.registro.RegistroActivity
 import com.example.runnerwar.ui.registro.RegistroViewModelFactory
+import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionActivity
 import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionViewModel
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
@@ -82,11 +85,25 @@ class CuentaFragment : Fragment() {
             }
         })
 
+        cuentaViewModel.responseDelete.observe(this@CuentaFragment, Observer { response ->
+
+            if (response.isSuccessful){
+                val intent = Intent(activity?.applicationContext, RegistroActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
         disk_save.setOnClickListener {
             reg_userName.setEnabled(false)
             disk_save.setVisibility(View.INVISIBLE)
             val user_up = UserUpdate(reg_userName.text.toString(), reg_email.text.toString())
             cuentaViewModel.update_user(user_up)
+        }
+
+        boton_eliminar.setOnClickListener{
+            val user = DeleteUser(email.toString())
+            cuentaViewModel.delete_user(user)
+
         }
             //val intent = Intent (view.context, SeleccionFaccionActivity::class.java)
             //startActivity(intent)

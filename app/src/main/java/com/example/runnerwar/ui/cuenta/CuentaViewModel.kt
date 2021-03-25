@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.runnerwar.Model.Codi
+import com.example.runnerwar.Model.DeleteUser
 import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.Repositories.RegistroRepository
@@ -16,6 +17,8 @@ class CuentaViewModel(private val repository: RegistroRepository) : ViewModel() 
     private val _response= MutableLiveData<Response<UserResponse>>()
     val responseUpdate: LiveData<Response<UserResponse>> = _response
 
+    private val _response_delete= MutableLiveData<Response<Codi>>()
+    val responseDelete: LiveData<Response<Codi>> = _response_delete
 
 
 
@@ -26,6 +29,12 @@ class CuentaViewModel(private val repository: RegistroRepository) : ViewModel() 
         }
     }
 
+    fun delete_user(user: DeleteUser) {
+        viewModelScope.launch {
+            val res: Response<Codi> = repository.delete(user)
+            _response_delete.value = res
+        }
+    }
 
 
 }

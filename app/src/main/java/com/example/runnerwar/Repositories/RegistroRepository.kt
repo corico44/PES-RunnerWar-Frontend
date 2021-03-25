@@ -16,4 +16,8 @@ class RegistroRepository {
         return RetrofitInstance.api.updateUser(user).awaitResponse()
     }
 
+    suspend fun delete(user: DeleteUser) : Response<Codi>{
+        return RetrofitInstance.api.deleteUser(user).awaitResponse()
+    }
+
 }
