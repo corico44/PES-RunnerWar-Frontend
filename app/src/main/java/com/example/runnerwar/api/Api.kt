@@ -1,13 +1,8 @@
 package com.example.runnerwar.api
 
-import com.example.runnerwar.Model.InfoUser
-import com.example.runnerwar.Model.UserForm
-import com.example.runnerwar.Model.UserResponse
+import com.example.runnerwar.Model.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface Api {
 
@@ -16,5 +11,12 @@ interface Api {
     fun newUser(
         @Body user: UserForm
     ) : Call<UserResponse>
+
+    @Headers("Content-Type: application/json")
+    @PUT("/update_accountname")
+    fun updateUser(
+        @Body user: UserUpdate
+    ) : Call<UserResponse>
+
 
 }

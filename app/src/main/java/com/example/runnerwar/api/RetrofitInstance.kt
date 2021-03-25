@@ -17,7 +17,7 @@ object RetrofitInstance {
             .writeTimeout(60, TimeUnit.SECONDS)
             .build()
         Retrofit.Builder()
-            .baseUrl("https://enigmatic-sea-32759.herokuapp.com")
+            .baseUrl("https://dry-bastion-68112.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

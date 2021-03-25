@@ -8,14 +8,14 @@
         tools:context=".ui.chat.ChatFragment" android:background="@color/colorPrimary">
 
     <ImageView
-            android:layout_width="972dp"
-            android:layout_height="784dp" app:srcCompat="@drawable/sky" android:id="@+id/cielo"
+            android:layout_width="958dp"
+            android:layout_height="570dp" app:srcCompat="@drawable/sky" android:id="@+id/cielo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:contentDescription="@string/app_name"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.761"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.816"/>
+            app:layout_constraintBottom_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.677"/>
     <ImageView
             android:src="@drawable/pj_cuenta"
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

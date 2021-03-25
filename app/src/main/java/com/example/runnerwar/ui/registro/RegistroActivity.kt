@@ -36,6 +36,7 @@ class RegistroActivity : AppCompatActivity() {
         registroViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(RegistroViewModel::class.java)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         val username = findViewById<EditText>(R.id.reg_userName)
         val email = findViewById<EditText>(R.id.reg_email)

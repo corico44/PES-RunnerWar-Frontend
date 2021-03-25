@@ -46,7 +46,7 @@ class SeleccionFaccionActivity : AppCompatActivity() {
 
                 if (data != null) {
                     Log.d("Response", data._id)
-                    Log.d("Response", data.username)
+                    Log.d("Response", data.accountname)
                     Log.d("Response", data.password.toString())
                     Log.d("Response", data.coins.toString())
                     Log.d("Response", data.faction.toString())
@@ -58,7 +58,7 @@ class SeleccionFaccionActivity : AppCompatActivity() {
                     intent.putExtra("faction", data.faction)
                     intent.putExtra("password", data.password)
                     intent.putExtra("points", data.points)
-                    intent.putExtra("username", data.username)
+                    intent.putExtra("username", data.accountname)
                     startActivity(intent)
 
                 }
