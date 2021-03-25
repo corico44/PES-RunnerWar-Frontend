@@ -33,6 +33,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="4dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/reg_points"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:hint="Points"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.754"
+            android:enabled="false"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/reg_faction"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:hint="Faction"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.585"
+            android:enabled="false"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/reg_email"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:hint="Email"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.426"
+            android:enabled="false" app:layout_constraintHorizontal_bias="0.489"/>
     <ImageButton
             android:layout_width="40dp"
             android:layout_height="43dp" android:id="@+id/boton_edit"
@@ -68,6 +101,6 @@
             android:layout_height="wrap_content" android:id="@+id/disk_save"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.404" app:layout_constraintVertical_bias="0.431"/>
+            app:layout_constraintHorizontal_bias="0.432" app:layout_constraintVertical_bias="0.43"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

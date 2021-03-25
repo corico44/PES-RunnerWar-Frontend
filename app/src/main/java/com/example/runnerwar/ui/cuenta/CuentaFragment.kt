@@ -1,15 +1,16 @@
 package com.example.runnerwar.ui.cuenta
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.R
 import kotlinx.android.synthetic.main.fragment_cuenta.*
+import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
+import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
+import kotlinx.android.synthetic.main.registro.*
 
 class CuentaFragment : Fragment() {
 
@@ -33,16 +34,24 @@ class CuentaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var username : String? = activity?.intent?.extras?.getString("username")
+        var email : String? = activity?.intent?.extras?.getString("email")
+        var faction : String? = activity?.intent?.extras?.getString("faction")
+        var points : String? = activity?.intent?.extras?.getString("points")
 
         reg_userName.setText(username.toString())
+        reg_email.setText(email.toString())
+        reg_faction.setText(faction.toString())
+        reg_points.setText(points.toString())
 
         boton_edit.setOnClickListener {
             if (reg_userName.isEnabled) {
                 reg_userName.setEnabled(false)
+                reg_email.setEnabled(false)
                 disk_save.setVisibility(View.INVISIBLE)
             }
             else if(!reg_userName.isEnabled){
                 reg_userName.setEnabled(true)
+                reg_email.setEnabled(true)
                 disk_save.setVisibility(View.VISIBLE)
             }
         }
