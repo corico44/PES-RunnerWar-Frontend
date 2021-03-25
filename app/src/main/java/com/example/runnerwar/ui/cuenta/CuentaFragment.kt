@@ -9,7 +9,6 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.R
-import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionActivity
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 
 class CuentaFragment : Fragment() {
@@ -40,9 +39,11 @@ class CuentaFragment : Fragment() {
         boton_edit.setOnClickListener {
             if (reg_userName.isEnabled) {
                 reg_userName.setEnabled(false)
+                disk_save.setVisibility(View.INVISIBLE)
             }
             else if(!reg_userName.isEnabled){
                 reg_userName.setEnabled(true)
+                disk_save.setVisibility(View.VISIBLE)
             }
         }
             //val intent = Intent (view.context, SeleccionFaccionActivity::class.java)
