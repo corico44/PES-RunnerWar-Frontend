@@ -41,9 +41,11 @@
             android:id="@+id/reg_points"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:hint="Points"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
-            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.754"
-            android:enabled="false"/>
+            app:layout_constraintVertical_bias="0.177"
+            android:enabled="false" app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintTop_toBottomOf="@+id/reg_faction"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,9 +54,11 @@
             android:id="@+id/reg_faction"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:hint="Faction"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
-            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.585"
-            android:enabled="false"/>
+            app:layout_constraintVertical_bias="0.005"
+            android:enabled="false" app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,26 +67,28 @@
             android:id="@+id/reg_email"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:hint="Email"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
-            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.426"
-            android:enabled="false" app:layout_constraintHorizontal_bias="0.489"/>
+            app:layout_constraintVertical_bias="0.104"
+            android:enabled="false" app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"/>
     <ImageButton
             android:layout_width="40dp"
             android:layout_height="43dp" android:id="@+id/boton_edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.63" app:layout_constraintVertical_bias="0.055"
+            app:layout_constraintHorizontal_bias="0.735" app:layout_constraintVertical_bias="0.053"
             app:layout_constraintStart_toStartOf="parent" android:src="@drawable/boton_edit"/>
     <ImageButton
             android:layout_width="33dp"
             android:layout_height="44dp" android:id="@+id/boton_eliminar"
             android:layout_marginTop="3dp"
-            app:layout_constraintEnd_toEndOf="@+id/rectanguloBlanco" app:layout_constraintHorizontal_bias="0.792"
+            app:layout_constraintEnd_toEndOf="@+id/rectanguloBlanco" app:layout_constraintHorizontal_bias="0.479"
             app:layout_constraintVertical_bias="0.046"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
-            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" android:src="@drawable/boton_eliminar"/>
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" android:src="@drawable/boton_eliminar"
+            app:layout_constraintStart_toEndOf="@+id/boton_edit"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,9 +97,11 @@
             android:id="@+id/reg_userName"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:hint="Name"
+            android:gravity="center"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
-            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.269"
-            android:enabled="false"/>
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.144"
+            android:enabled="false" app:layout_constraintHorizontal_bias="0.436"/>
     <ImageButton
             android:src="@drawable/floppy_disk__1_"
             android:visibility="invisible"
@@ -102,5 +110,60 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.432" app:layout_constraintVertical_bias="0.43"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Email"
+            android:textStyle="bold"
+            android:textSize="19dp"
+            android:textColor="#000000"
+            android:background="@null"
+            android:ems="10"
+            android:id="@+id/editTextTextPersonName3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.299" app:layout_constraintVertical_bias="0.07"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintTop_toBottomOf="@+id/reg_userName"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Faction"
+            android:textSize="19dp"
+            android:textColor="#000000"
+            android:background="@null"
+            android:textStyle="bold"
+            android:ems="10"
+            android:id="@+id/editTextTextPersonName4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.299"
+            app:layout_constraintVertical_bias="0.004" app:layout_constraintTop_toBottomOf="@+id/reg_email"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Points"
+            android:textSize="19dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:background="@null"
+            android:ems="10"
+            android:enabled="false"
+            android:id="@+id/editTextTextPersonName5"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/reg_points"
+            app:layout_constraintTop_toBottomOf="@+id/reg_faction"
+            app:layout_constraintHorizontal_bias="0.299"
+            app:layout_constraintVertical_bias="0.0"/>
+    <ImageView
+            android:src="@drawable/bg_line"
+            android:layout_width="319dp"
+            android:layout_height="13dp" android:id="@+id/imageView4"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reg_userName"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName3"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
