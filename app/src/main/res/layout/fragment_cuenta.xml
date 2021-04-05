@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.chat.ChatFragment" android:background="@color/colorPrimary">
+
+    <ImageView
+            android:layout_width="958dp"
+            android:layout_height="570dp" app:srcCompat="@drawable/sky" android:id="@+id/cielo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintHorizontal_bias="0.761"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.677"/>
+    <ImageView
+            android:src="@drawable/pj_cuenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.3"
+            android:layout_marginBottom="500dp"/>
+    <View
+            android:id="@+id/rectanguloBlanco"
+            android:layout_width="425dp"
+            android:layout_height="453dp"
+            android:background="@drawable/bg_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="4dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/reg_points"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:hint="Points"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintVertical_bias="0.177"
+            android:enabled="false" app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintTop_toBottomOf="@+id/reg_faction"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/reg_faction"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:hint="Faction"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintVertical_bias="0.005"
+            android:enabled="false" app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/reg_email"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:hint="Email"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintVertical_bias="0.104"
+            android:enabled="false" app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"/>
+    <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="43dp" android:id="@+id/boton_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.735" app:layout_constraintVertical_bias="0.053"
+            app:layout_constraintStart_toStartOf="parent" android:src="@drawable/boton_edit"/>
+    <ImageButton
+            android:layout_width="33dp"
+            android:layout_height="44dp" android:id="@+id/boton_eliminar"
+            android:layout_marginTop="3dp"
+            app:layout_constraintEnd_toEndOf="@+id/rectanguloBlanco" app:layout_constraintHorizontal_bias="0.479"
+            app:layout_constraintVertical_bias="0.046"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" android:src="@drawable/boton_eliminar"
+            app:layout_constraintStart_toEndOf="@+id/boton_edit"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/reg_userName"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:hint="Name"
+            android:gravity="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.144"
+            android:enabled="false" app:layout_constraintHorizontal_bias="0.436"/>
+    <ImageButton
+            android:src="@drawable/floppy_disk__1_"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/disk_save"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.432" app:layout_constraintVertical_bias="0.43"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Email"
+            android:textStyle="bold"
+            android:textSize="19dp"
+            android:textColor="#000000"
+            android:background="@null"
+            android:ems="10"
+            android:id="@+id/editTextTextPersonName3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.299" app:layout_constraintVertical_bias="0.07"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintTop_toBottomOf="@+id/reg_userName"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Faction"
+            android:textSize="19dp"
+            android:textColor="#000000"
+            android:background="@null"
+            android:textStyle="bold"
+            android:ems="10"
+            android:id="@+id/editTextTextPersonName4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.299"
+            app:layout_constraintVertical_bias="0.004" app:layout_constraintTop_toBottomOf="@+id/reg_email"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Points"
+            android:textSize="19dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:background="@null"
+            android:ems="10"
+            android:enabled="false"
+            android:id="@+id/editTextTextPersonName5"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/reg_points"
+            app:layout_constraintTop_toBottomOf="@+id/reg_faction"
+            app:layout_constraintHorizontal_bias="0.299"
+            app:layout_constraintVertical_bias="0.0"/>
+    <ImageView
+            android:src="@drawable/bg_line"
+            android:layout_width="319dp"
+            android:layout_height="13dp" android:id="@+id/imageView4"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reg_userName"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName3"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
