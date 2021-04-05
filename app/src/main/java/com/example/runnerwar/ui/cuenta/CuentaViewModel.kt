@@ -22,14 +22,14 @@ class CuentaViewModel(private val repository: RegistroRepository) : ViewModel() 
 
 
 
-    fun update_user(user: UserUpdate) {
+    fun updateUser(user: UserUpdate) {
         viewModelScope.launch {
             val res: Response<UserResponse> = repository.update(user)
             _response.value = res
         }
     }
 
-    fun delete_user(user: DeleteUser) {
+    fun deleteUser(user: DeleteUser) {
         viewModelScope.launch {
             val res: Response<Codi> = repository.delete(user)
             _response_delete.value = res

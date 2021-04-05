@@ -2,7 +2,6 @@ package com.example.runnerwar.ui.cuenta
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +9,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.runnerwar.Model.Codi
 import com.example.runnerwar.Model.DeleteUser
 import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.Model.UserUpdate
-import com.example.runnerwar.NavActivity
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
 import com.example.runnerwar.ui.registro.RegistroViewModelFactory
-import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionActivity
-import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionViewModel
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
@@ -96,13 +91,13 @@ class CuentaFragment : Fragment() {
         disk_save.setOnClickListener {
             reg_userName.setEnabled(false)
             disk_save.setVisibility(View.INVISIBLE)
-            val user_up = UserUpdate(reg_userName.text.toString(), reg_email.text.toString())
-            cuentaViewModel.update_user(user_up)
+            val userUp = UserUpdate(reg_userName.text.toString(), reg_email.text.toString())
+            cuentaViewModel.updateUser(userUp)
         }
 
         boton_eliminar.setOnClickListener{
             val user = DeleteUser(email.toString())
-            cuentaViewModel.delete_user(user)
+            cuentaViewModel.deleteUser(user)
 
         }
     }
