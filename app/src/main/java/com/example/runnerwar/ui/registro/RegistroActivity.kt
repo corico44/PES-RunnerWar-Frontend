@@ -41,7 +41,6 @@ class RegistroActivity : AppCompatActivity() {
         val username = findViewById<EditText>(R.id.reg_userName)
         val email = findViewById<EditText>(R.id.reg_email)
         val password = findViewById<EditText>(R.id.reg_password)
-        //val conditions = findViewById<CheckBox>(R.id.reg_checkbox)
         val signup = findViewById<Button>(R.id.signup_button)
 
         signup.isEnabled = false
