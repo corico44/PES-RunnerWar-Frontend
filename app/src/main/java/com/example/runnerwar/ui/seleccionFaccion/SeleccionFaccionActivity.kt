@@ -67,37 +67,31 @@ class SeleccionFaccionActivity : AppCompatActivity() {
 
 
             }
-            //Toast.makeText(applicationContext, "Success", Toast.LENGTH_SHORT).show()
 
         })
 
         imageButton2.setOnClickListener{
             var user : UserForm = UserForm(email.toString(),username.toString(),password.toString(), "yellow")
             selFaccViewModel.signUp(user)
-            /*val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
-            startActivity(intent)*/
+
         }
 
         imageButton4.setOnClickListener{
             var user : UserForm = UserForm(email.toString(),username.toString(),password.toString(), "blue")
             selFaccViewModel.signUp(user)
-            /*val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
-            startActivity(intent)*/
+
         }
 
         imageButton5.setOnClickListener{
             var user : UserForm = UserForm(email.toString(),username.toString(),password.toString(), "red")
             selFaccViewModel.signUp(user)
-            /*val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
-            startActivity(intent)*/
+
         }
 
         imageButton6.setOnClickListener{
             var user : UserForm = UserForm(email.toString(),username.toString(),password.toString(), "green")
             selFaccViewModel.signUp(user)
 
-           /* val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
-            startActivity(intent)*/
         }
 
 

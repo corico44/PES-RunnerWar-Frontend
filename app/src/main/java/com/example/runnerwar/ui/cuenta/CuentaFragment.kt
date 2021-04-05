@@ -105,7 +105,5 @@ class CuentaFragment : Fragment() {
             cuentaViewModel.delete_user(user)
 
         }
-            //val intent = Intent (view.context, SeleccionFaccionActivity::class.java)
-            //startActivity(intent)
     }
 }
