@@ -112,9 +112,15 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
             afterTextChanged.invoke(editable.toString())
         }
 
+        /**
+         * esta funcion se llama antes de que el texto cambie
+         **/
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             println("Update")}
 
+        /**
+         * esta funcion indica que el texto ha cambiado
+         */
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) { println("Update")}
     })
 }
