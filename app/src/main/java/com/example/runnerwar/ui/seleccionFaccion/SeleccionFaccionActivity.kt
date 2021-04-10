@@ -91,7 +91,6 @@ class SeleccionFaccionActivity : AppCompatActivity() {
         imageButton6.setOnClickListener{
             var user : UserForm = UserForm(email.toString(),username.toString(),password.toString(), "green")
             selFaccViewModel.signUp(user)
-
         }
 
 

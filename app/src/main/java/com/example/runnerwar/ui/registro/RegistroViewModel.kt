@@ -1,16 +1,15 @@
 package com.example.runnerwar.ui.registro
 
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.runnerwar.Model.InfoUser
+import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Model.UserForm
 import com.example.runnerwar.Model.UserResponse
 
-import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -23,13 +22,6 @@ class RegistroViewModel(private val repository: RegistroRepository) : ViewModel(
     private val _registroForm = MutableLiveData<RegistroFormState>()
     val registroFormState: LiveData<RegistroFormState> = _registroForm
 
-
-    fun signUp(user: UserForm) {
-       viewModelScope.launch {
-           val res: Response<UserResponse> = repository.newUser(user)
-           _response.value = res
-       }
-    }
 
     fun singUpDataChanged(username: String,email: String, password: String) {
         if (!isUserNameValid(username) ) {
