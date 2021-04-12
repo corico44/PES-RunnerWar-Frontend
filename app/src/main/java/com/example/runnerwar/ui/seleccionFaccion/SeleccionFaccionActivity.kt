@@ -7,11 +7,15 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.runnerwar.Data.User.UserDataBase
+import com.example.runnerwar.Factories.UserViewModelFactory
+import com.example.runnerwar.Model.User
 import com.example.runnerwar.Model.UserForm
 import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.NavActivity
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
+import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroViewModelFactory
 
 
@@ -26,8 +30,11 @@ class SeleccionFaccionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seleccion_faccion)
 
-        val repository = RegistroRepository()
-        val viewModelFactory = RegistroViewModelFactory(repository,  2)
+        val userDao = UserDataBase.getDataBase(application).userDao()
+        val repository = UserRepository(userDao)
+        val viewModelFactory = UserViewModelFactory(repository,1)
+
+
 
         selFaccViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(SeleccionFaccionViewModel::class.java)
@@ -40,9 +47,7 @@ class SeleccionFaccionActivity : AppCompatActivity() {
         selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer { response ->
 
             if (response.isSuccessful){
-                val data: UserResponse? = response.body()
-
-
+                val data: User? = response.body()
 
                 if (data != null) {
                     Log.d("Response", data._id)
@@ -53,12 +58,12 @@ class SeleccionFaccionActivity : AppCompatActivity() {
                     Log.d("Response", data.points.toString())
 
                     val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
-                    intent.putExtra("email", data._id)
+                   /* intent.putExtra("email", data._id)
                     intent.putExtra("coins", data.coins)
                     intent.putExtra("faction", data.faction)
                     intent.putExtra("password", data.password)
                     intent.putExtra("points", data.points)
-                    intent.putExtra("username", data.accountname)
+                    intent.putExtra("username", data.accountname)*/
                     startActivity(intent)
 
                 }

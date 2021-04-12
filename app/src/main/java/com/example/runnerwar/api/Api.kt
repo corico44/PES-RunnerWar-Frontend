@@ -10,7 +10,7 @@ interface Api {
     @POST("/create")
     fun newUser(
         @Body user: UserForm
-    ) : Call<UserResponse>
+    ) : Call<User>
 
     @Headers("Content-Type: application/json")
     @PUT("/update_accountname")

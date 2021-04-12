@@ -9,11 +9,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.runnerwar.Data.User.UserDataBase
+import com.example.runnerwar.Factories.UserViewModelFactory
 import com.example.runnerwar.Model.DeleteUser
+import com.example.runnerwar.Model.User
 import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
+import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
 import com.example.runnerwar.ui.registro.RegistroViewModelFactory
 import kotlinx.android.synthetic.main.fragment_cuenta.*
@@ -32,8 +36,9 @@ class CuentaFragment : Fragment() {
 
     ): View? {
 
-        val repository = RegistroRepository()
-        val viewModelFactory = RegistroViewModelFactory(repository,  3)
+        val userDao = UserDataBase.getDataBase(activity?.application!!).userDao()
+        val repository = UserRepository(userDao)
+        val viewModelFactory = UserViewModelFactory(repository,2)
 
 
         cuentaViewModel =
@@ -88,7 +93,16 @@ class CuentaFragment : Fragment() {
             }
         })
 
-        disk_save.setOnClickListener {
+        cuentaViewModel.readAllData.observe(this@CuentaFragment, Observer { users ->
+            for (user : User in users){
+                reg_userName.setText(user.accountname)
+                reg_email.setText(user._id)
+                reg_faction.setText(user.faction)
+                reg_points.setText(user.points.toString())
+            }
+        })
+
+       /* disk_save.setOnClickListener {
             reg_userName.setEnabled(false)
             disk_save.setVisibility(View.INVISIBLE)
             val userUp = UserUpdate(reg_userName.text.toString(), reg_email.text.toString())
@@ -99,6 +113,6 @@ class CuentaFragment : Fragment() {
             val user = DeleteUser(email.toString())
             cuentaViewModel.deleteUser(user)
 
-        }
+        }*/
     }
 }

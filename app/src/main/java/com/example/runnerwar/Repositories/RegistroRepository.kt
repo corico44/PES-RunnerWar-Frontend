@@ -8,7 +8,7 @@ import retrofit2.awaitResponse
 class RegistroRepository {
 
 
-    suspend fun newUser(user: UserForm): Response<UserResponse> {
+    suspend fun newUser(user: UserForm): Response<User> {
         return RetrofitInstance.api.newUser(user).awaitResponse()
     }
 
