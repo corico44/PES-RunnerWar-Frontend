@@ -31,10 +31,8 @@ class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewM
                 val user : User? = res.body()
 
                 if (user != null) {
-                    //repository.deleteUser()
                     repository.addUser(user)
                 }
-
             }
             _response.value = res
         }

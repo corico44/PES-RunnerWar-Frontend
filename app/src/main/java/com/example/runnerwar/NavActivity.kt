@@ -14,7 +14,7 @@ class NavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
 
-
+        var logged_user = intent.extras?.getString("email")
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 

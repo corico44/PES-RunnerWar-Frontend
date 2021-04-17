@@ -12,7 +12,7 @@ import retrofit2.Response
 
 class CuentaViewModel(private val repository: UserRepository) : ViewModel() {
 
-    val readAllData: LiveData<List<User>>
+    val readAllData: LiveData<User>
 
 
 
@@ -26,14 +26,21 @@ class CuentaViewModel(private val repository: UserRepository) : ViewModel() {
         readAllData = repository.readAllData
     }
 
-    /*fun updateUser(user: UserUpdate) {
+
+
+    fun updateUser(user: UserUpdate) {
         viewModelScope.launch {
             val res: Response<UserResponse> = repository.update(user)
+
+            if (res.isSuccessful){
+                //Update local dataBase
+                repository.updateUser(user.accountname)
+            }
             _response.value = res
         }
     }
 
-    fun deleteUser(user: DeleteUser) {
+   /*fun deleteUser(user: DeleteUser) {
         viewModelScope.launch {
             val res: Response<Codi> = repository.delete(user)
             _response_delete.value = res

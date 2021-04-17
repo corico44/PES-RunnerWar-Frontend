@@ -35,33 +35,23 @@ class CuentaFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View? {
+        //Get logged User id
+        var loggedUser : String? = activity?.intent?.extras?.getString("email")
 
+        //Ini Cuenta viewModel
         val userDao = UserDataBase.getDataBase(activity?.application!!).userDao()
-        val repository = UserRepository(userDao)
+        val repository = UserRepository(userDao, loggedUser.toString())
         val viewModelFactory = UserViewModelFactory(repository,2)
-
-
         cuentaViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(CuentaViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_cuenta, container, false)
         return root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var username : String? = activity?.intent?.extras?.getString("username")
-        var email : String? = activity?.intent?.extras?.getString("email")
-        var faction : String? = activity?.intent?.extras?.getString("faction")
-        var points : String? = activity?.intent?.extras?.getString("points")
-
-        reg_userName.setText(username.toString())
-        reg_email.setText(email.toString())
-        reg_faction.setText(faction.toString())
-        reg_points.setText(points.toString())
 
         boton_edit.setOnClickListener {
             if (reg_userName.isEnabled) {
@@ -74,13 +64,23 @@ class CuentaFragment : Fragment() {
             }
         }
 
+        cuentaViewModel.readAllData.observe(this@CuentaFragment, Observer { user ->
+            if (user != null){
+                reg_userName.setText(user.accountname)
+                reg_email.setText(user._id)
+                reg_faction.setText(user.faction)
+                reg_points.setText(user.points.toString())
+            }
+
+        })
+
+
         cuentaViewModel.responseUpdate.observe(this@CuentaFragment, Observer { response ->
 
             if (response.isSuccessful){
                 val data: UserResponse? = response.body()
                 if (data != null) {
-                    reg_userName.setText(data.accountname.toString())
-                    Toast.makeText(activity?.applicationContext, "Success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity?.applicationContext, "Update successfully", Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -93,23 +93,15 @@ class CuentaFragment : Fragment() {
             }
         })
 
-        cuentaViewModel.readAllData.observe(this@CuentaFragment, Observer { users ->
-            for (user : User in users){
-                reg_userName.setText(user.accountname)
-                reg_email.setText(user._id)
-                reg_faction.setText(user.faction)
-                reg_points.setText(user.points.toString())
-            }
-        })
 
-       /* disk_save.setOnClickListener {
+       disk_save.setOnClickListener {
             reg_userName.setEnabled(false)
             disk_save.setVisibility(View.INVISIBLE)
             val userUp = UserUpdate(reg_userName.text.toString(), reg_email.text.toString())
             cuentaViewModel.updateUser(userUp)
         }
 
-        boton_eliminar.setOnClickListener{
+        /*boton_eliminar.setOnClickListener{
             val user = DeleteUser(email.toString())
             cuentaViewModel.deleteUser(user)
 

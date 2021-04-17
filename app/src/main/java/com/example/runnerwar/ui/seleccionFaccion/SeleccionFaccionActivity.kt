@@ -30,18 +30,18 @@ class SeleccionFaccionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seleccion_faccion)
 
-        val userDao = UserDataBase.getDataBase(application).userDao()
-        val repository = UserRepository(userDao)
-        val viewModelFactory = UserViewModelFactory(repository,1)
-
-
-
-        selFaccViewModel = ViewModelProviders.of(this, viewModelFactory)
-            .get(SeleccionFaccionViewModel::class.java)
 
         var username = intent.extras?.getString("username")
         var email = intent.extras?.getString("email")
         var password = intent.extras?.getString("password")
+
+
+        val userDao = UserDataBase.getDataBase(application).userDao()
+        val repository = UserRepository(userDao,email.toString())
+        val viewModelFactory = UserViewModelFactory(repository,1)
+        selFaccViewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(SeleccionFaccionViewModel::class.java)
+
 
 
         selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer { response ->
@@ -50,27 +50,12 @@ class SeleccionFaccionActivity : AppCompatActivity() {
                 val data: User? = response.body()
 
                 if (data != null) {
-                    Log.d("Response", data._id)
-                    Log.d("Response", data.accountname)
-                    Log.d("Response", data.password.toString())
-                    Log.d("Response", data.coins.toString())
-                    Log.d("Response", data.faction.toString())
-                    Log.d("Response", data.points.toString())
+                    Toast.makeText(applicationContext, "Welcome to RunnerWar $username", Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
-                   /* intent.putExtra("email", data._id)
-                    intent.putExtra("coins", data.coins)
-                    intent.putExtra("faction", data.faction)
-                    intent.putExtra("password", data.password)
-                    intent.putExtra("points", data.points)
-                    intent.putExtra("username", data.accountname)*/
+                    intent.putExtra("email", data._id)
                     startActivity(intent)
-
                 }
-
-
-
-
             }
 
         })
