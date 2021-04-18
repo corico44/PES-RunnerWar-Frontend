@@ -52,6 +52,7 @@ class CuentaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var loggedUser : String? = activity?.intent?.extras?.getString("email")
 
         boton_edit.setOnClickListener {
             if (reg_userName.isEnabled) {
@@ -101,10 +102,9 @@ class CuentaFragment : Fragment() {
             cuentaViewModel.updateUser(userUp)
         }
 
-        /*boton_eliminar.setOnClickListener{
-            val user = DeleteUser(email.toString())
+        boton_eliminar.setOnClickListener{
+            val user = DeleteUser(loggedUser.toString())
             cuentaViewModel.deleteUser(user)
-
-        }*/
+        }
     }
 }

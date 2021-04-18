@@ -40,12 +40,18 @@ class CuentaViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
-   /*fun deleteUser(user: DeleteUser) {
+   fun deleteUser(user: DeleteUser) {
         viewModelScope.launch {
-            val res: Response<Codi> = repository.delete(user)
+            val res: Response<Codi> = repository.deleteUser(user)
+
+            if (res.isSuccessful){
+                //Update local dataBase
+                repository.deleteUserFromLDB()
+            }
+
             _response_delete.value = res
         }
-    }*/
+    }
 
 
 }

@@ -2,10 +2,7 @@ package com.example.runnerwar.Repositories
 
 import androidx.lifecycle.LiveData
 import com.example.runnerwar.Data.User.UserDao
-import com.example.runnerwar.Model.User
-import com.example.runnerwar.Model.UserForm
-import com.example.runnerwar.Model.UserResponse
-import com.example.runnerwar.Model.UserUpdate
+import com.example.runnerwar.Model.*
 import com.example.runnerwar.api.RetrofitInstance
 import retrofit2.Response
 import retrofit2.awaitResponse
@@ -25,6 +22,10 @@ class UserRepository(private val userDao: UserDao, private val loggedUser: Strin
         return RetrofitInstance.api.updateUser(user).awaitResponse()
     }
 
+    suspend fun deleteUser(user: DeleteUser) : Response<Codi>{
+        return RetrofitInstance.api.deleteUser(user).awaitResponse()
+    }
+
 
     //Calls to Local Data Base
 
@@ -33,7 +34,15 @@ class UserRepository(private val userDao: UserDao, private val loggedUser: Strin
         userDao.addUser(user)
     }
 
-    fun updateUser(newUsername: String){
+    suspend fun updateUser(newUsername: String){
         userDao.updateAccountName(loggedUser, newUsername)
+    }
+
+    suspend fun deleteUserFromLDB(){
+        userDao.deleteUser(loggedUser)
+    }
+
+    suspend fun deleteAllDataFromLDB(){
+        userDao.cleanDataBase()
     }
 }

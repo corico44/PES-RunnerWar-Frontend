@@ -23,8 +23,13 @@ interface UserDao {
     fun readDataLoggedUser( idLoggedUser: String ): LiveData<User>
 
     @Query("UPDATE user_data SET accountname = :newUserName WHERE _id = :idLoggedUser ")
-    fun updateAccountName(idLoggedUser: String, newUserName: String)
+    suspend fun updateAccountName(idLoggedUser: String, newUserName: String)
 
-    /*@Query("DELETE FROM user_data")
-    suspend fun deleteUser()*/
+    @Query("DELETE FROM user_data WHERE _id = :idLoggedUser")
+    suspend fun deleteUser(idLoggedUser: String)
+
+    @Query("DELETE FROM user_data")
+    suspend fun cleanDataBase()
+
+
 }
