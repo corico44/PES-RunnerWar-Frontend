@@ -5,20 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.Window
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.Toast
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
-import com.example.runnerwar.Model.UserResponse
 
 
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
+import com.example.runnerwar.ui.login.LoginActivity
 import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionActivity
 import kotlinx.android.synthetic.main.login.*
 import kotlinx.android.synthetic.main.registro.*

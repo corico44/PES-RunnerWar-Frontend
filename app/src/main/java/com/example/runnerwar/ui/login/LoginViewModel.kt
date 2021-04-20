@@ -1,4 +1,4 @@
-package com.example.runnerwar.ui.registro
+package com.example.runnerwar.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +9,7 @@ import com.example.runnerwar.Model.LoginUser
 import com.example.runnerwar.Model.User
 import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.Repositories.UserRepository
+import com.example.runnerwar.ui.registro.RegistroFormState
 import kotlinx.coroutines.launch
 
 import retrofit2.Response
@@ -16,8 +17,8 @@ import retrofit2.Response
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private val _response= MutableLiveData<Response<Codi>>()
-    val responseCreate: LiveData<Response<Codi>> = _response
+    private val _response= MutableLiveData<Response<User>>()
+    val responseCreate: LiveData<Response<User>> = _response
 
     private val _registroForm = MutableLiveData<RegistroFormState>()
     val registroFormState: LiveData<RegistroFormState> = _registroForm
@@ -25,7 +26,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun logIn(loginUser: LoginUser) {
         viewModelScope.launch {
-            val res: Response<Codi> = repository.login(loginUser)
+            val res: Response<User> = repository.login(loginUser)
 
             _response.value = res
         }

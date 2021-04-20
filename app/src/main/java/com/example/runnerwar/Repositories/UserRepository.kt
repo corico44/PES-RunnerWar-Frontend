@@ -18,7 +18,7 @@ class UserRepository(private val userDao: UserDao, private val loggedUser: Strin
         return RetrofitInstance.api.newUser(user).awaitResponse()
     }
 
-    suspend fun login(loginUser: LoginUser): Response<Codi> {
+    suspend fun login(loginUser: LoginUser): Response<User> {
         // Call to API to add new user
         return RetrofitInstance.api.login(loginUser).awaitResponse()
     }
