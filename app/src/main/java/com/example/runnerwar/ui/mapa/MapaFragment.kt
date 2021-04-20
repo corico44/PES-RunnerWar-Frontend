@@ -29,18 +29,18 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
     private lateinit var currentLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val permissionCode = 101
-    private val Montjuic = LatLng(41.370950, 2.151949)
-    private val ParcSantJordi = LatLng(41.3643117,2.1517766)
+    private val Montjuic = LatLng(41.370951, 2.151949)
+    private val ParcSantJordi = LatLng(41.364311,2.151776)
     private val ParcEspanyaIndustrial = LatLng(41.377597, 2.141002)
-    private val ParcJoanMiro = LatLng(41.377658, 2.149280)
-    private val ParcCiutadela = LatLng(41.387480, 2.186332)
-    private val ParcCervantes = LatLng(41.383780, 2.106110)
-    private val ParcPedralbes = LatLng(41.3876058,2.117924)
-    private val ParcOreneta = LatLng(41.398790, 2.110879)
+    private val ParcJoanMiro = LatLng(41.377658, 2.149281)
+    private val ParcCiutadela = LatLng(41.387481, 2.186332)
+    private val ParcCervantes = LatLng(41.383781, 2.106111)
+    private val ParcPedralbes = LatLng(41.387606,2.117924)
+    private val ParcOreneta = LatLng(41.398791, 2.110879)
     private val ParcTuro = LatLng(41.395034, 2.140478)
-    private val ParcPuxet = LatLng(41.407385, 2.142330)
-    private val ParcGuell = LatLng(41.414370, 2.151912)
-    private val ParcGuinardo = LatLng(41.419185, 2.167050)
+    private val ParcPuxet = LatLng(41.407385, 2.142331)
+    private val ParcGuell = LatLng(41.414371, 2.151912)
+    private val ParcGuinardo = LatLng(41.419185, 2.167051)
     private val ParcHorta = LatLng(41.438897, 2.146656)
     private val ParcCreuetaColl = LatLng(41.418138, 2.146462)
     private val ParcTuroPeira = LatLng(41.432969, 2.164697)
@@ -88,7 +88,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun getParks(googleMap: GoogleMap?): ArrayList<LatLng> {
+    fun getParks(): ArrayList<LatLng> {
         val listLugaresInteres = ArrayList<LatLng>()
         listLugaresInteres.add(Montjuic)
         listLugaresInteres.add(ParcSantJordi)
@@ -118,7 +118,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
         googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.arrow_down_float))
         googleMap?.addMarker(markerOptions)
-        val listLugaresInteres = getParks(googleMap)
+        val listLugaresInteres = getParks()
         for (loc in listLugaresInteres) {
             googleMap?.addMarker(MarkerOptions().position(loc).title("Sitio de interes"))
 
