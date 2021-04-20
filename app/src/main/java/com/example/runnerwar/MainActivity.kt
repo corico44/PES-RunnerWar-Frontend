@@ -8,7 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.runnerwar.ui.maps.MapsActivity
+import com.example.runnerwar.ui.mapa.MapaFragment
 import com.example.runnerwar.ui.registro.RegistroActivity
 
 class MainActivity : AppCompatActivity() {
