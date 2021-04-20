@@ -13,6 +13,12 @@ interface Api {
     ) : Call<User>
 
     @Headers("Content-Type: application/json")
+    @GET("/login")
+    fun login(
+        @Body loginUser: LoginUser
+    ) : Call<Codi>
+
+    @Headers("Content-Type: application/json")
     @PUT("/update_accountname")
     fun updateUser(
         @Body user: UserUpdate
@@ -23,6 +29,8 @@ interface Api {
     fun deleteUser(
         @Body user: DeleteUser
     ) : Call<Codi>
+
+
 
 
 }

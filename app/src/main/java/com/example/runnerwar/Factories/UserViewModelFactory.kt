@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.cuenta.CuentaViewModel
+import com.example.runnerwar.ui.registro.LoginViewModel
 import com.example.runnerwar.ui.registro.RegistroViewModel
 import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionViewModel
 
@@ -13,8 +14,11 @@ class UserViewModelFactory(private val repository: UserRepository, private val n
             return SeleccionFaccionViewModel(repository) as T
         }
 
-        else {
+        else if(numView == 2){
             return CuentaViewModel(repository) as T
+        }
+        else{
+            return LoginViewModel(repository) as T
         }
     }
 }

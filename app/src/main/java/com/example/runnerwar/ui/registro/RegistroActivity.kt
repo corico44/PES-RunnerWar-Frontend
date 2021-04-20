@@ -20,6 +20,8 @@ import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
 import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionActivity
+import kotlinx.android.synthetic.main.login.*
+import kotlinx.android.synthetic.main.registro.*
 
 
 class RegistroActivity : AppCompatActivity() {
@@ -91,6 +93,10 @@ class RegistroActivity : AppCompatActivity() {
                 email.text.toString(),
                 password.text.toString()
             )
+        }
+
+        ex_us_login.setOnClickListener {
+            val intent = Intent(this@RegistroActivity, LoginActivity::class.java)
         }
 
         signup.setOnClickListener{
