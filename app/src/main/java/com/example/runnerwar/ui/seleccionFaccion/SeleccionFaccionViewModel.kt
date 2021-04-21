@@ -1,5 +1,6 @@
 package com.example.runnerwar.ui.seleccionFaccion
 
+import android.util.Base64
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroFormState
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.security.MessageDigest
 
 class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewModel() {
 
@@ -36,5 +38,11 @@ class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewM
             }
             _response.value = res
         }
+    }
+
+    fun hashString(input: String, algorithm: String): String    {
+        return MessageDigest.getInstance(algorithm)
+            .digest(input.toByteArray())
+            .fold("", { str, it -> str + "%02x".format(it) })
     }
 }

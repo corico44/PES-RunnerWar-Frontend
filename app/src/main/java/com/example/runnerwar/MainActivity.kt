@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.runnerwar.ui.login.LoginActivity
+import com.example.runnerwar.ui.registro.RegistroActivity
 
 
 class MainActivity : AppCompatActivity() {

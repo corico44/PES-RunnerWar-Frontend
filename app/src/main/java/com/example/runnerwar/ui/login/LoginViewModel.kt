@@ -13,6 +13,7 @@ import com.example.runnerwar.ui.registro.RegistroFormState
 import kotlinx.coroutines.launch
 
 import retrofit2.Response
+import java.security.MessageDigest
 
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
@@ -30,6 +31,12 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
             _response.value = res
         }
+    }
+
+    fun hashString(input: String, algorithm: String): String    {
+        return MessageDigest.getInstance(algorithm)
+            .digest(input.toByteArray())
+            .fold("", { str, it -> str + "%02x".format(it) })
     }
 
     fun loginDataChanged(email: String, password: String) {

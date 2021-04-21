@@ -13,7 +13,7 @@ interface Api {
     ) : Call<User>
 
     @Headers("Content-Type: application/json")
-    @GET("/login")
+    @POST("/login")
     fun login(
         @Body loginUser: LoginUser
     ) : Call<User>

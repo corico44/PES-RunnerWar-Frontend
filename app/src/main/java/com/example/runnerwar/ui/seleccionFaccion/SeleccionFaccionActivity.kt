@@ -3,6 +3,7 @@ package com.example.runnerwar.ui.seleccionFaccion
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -20,11 +21,16 @@ import com.example.runnerwar.ui.registro.RegistroViewModelFactory
 
 
 import kotlinx.android.synthetic.main.activity_seleccion_faccion.*
-
+import java.security.MessageDigest
+import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 
 class SeleccionFaccionActivity : AppCompatActivity() {
 
     private lateinit var  selFaccViewModel: SeleccionFaccionViewModel
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,30 +66,41 @@ class SeleccionFaccionActivity : AppCompatActivity() {
 
         })
 
+
         imageButton2.setOnClickListener{
+            var password = selFaccViewModel.hashString(password.toString(),"SHA-256")
             var user : UserForm = UserForm(email.toString(),username.toString(),password.toString(), "yellow")
+            Log.d("Enc_pas ", password)
             selFaccViewModel.signUp(user)
 
         }
 
         imageButton4.setOnClickListener{
+            var password = selFaccViewModel.hashString(password.toString(),"SHA-256")
             var user : UserForm = UserForm(email.toString(),username.toString(),password.toString(), "blue")
+            Log.d("Enc_pas ", password)
             selFaccViewModel.signUp(user)
 
         }
 
         imageButton5.setOnClickListener{
+            var password = selFaccViewModel.hashString(password.toString(),"SHA-256")
             var user : UserForm = UserForm(email.toString(),username.toString(),password.toString(), "red")
+            Log.d("Enc_pas ", password)
             selFaccViewModel.signUp(user)
 
         }
 
         imageButton6.setOnClickListener{
+            var password = selFaccViewModel.hashString(password.toString(),"SHA-256")
             var user : UserForm = UserForm(email.toString(),username.toString(),password.toString(), "green")
+            Log.d("Enc_pas ", password)
             selFaccViewModel.signUp(user)
         }
 
 
     }
+
 }
+
 

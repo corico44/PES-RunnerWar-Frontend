@@ -5,20 +5,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
 import com.example.runnerwar.Model.LoginUser
+import com.example.runnerwar.NavActivity
 
 
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
 import kotlinx.android.synthetic.main.login.*
+
 
 
 class LoginActivity : AppCompatActivity() {
@@ -69,6 +73,9 @@ class LoginActivity : AppCompatActivity() {
             if (response.isSuccessful){
                 //val data: Codi? = response.body()
                 val jsonString : String = response.body().toString()
+                val intent = Intent(this@LoginActivity, NavActivity::class.java)
+                startActivity(intent)
+                Toast.makeText(applicationContext, "Login Succesfull", Toast.LENGTH_SHORT).show()
                 /*if (data != null) {
                     if (data.result.equals(200)) {
                         Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
@@ -80,6 +87,8 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Login error", Toast.LENGTH_SHORT).show()
                     }
                 }*/
+            }else{
+                Toast.makeText(applicationContext, "Login Failed", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -102,7 +111,9 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this@LoginActivity, RegistroActivity::class.java)
         }
         signup_button.setOnClickListener {
-            var lu : LoginUser = LoginUser(email.text.toString(), password.text.toString())
+            var password = loginViewModel.hashString(password.text.toString(),"SHA-256")
+            var lu : LoginUser = LoginUser(email.text.toString(), password.toString())
+            Log.d("Enc_pas ", password)
             loginViewModel.logIn(lu)
             //val intent = Intent(this@LoginActivity, NavActivity::class.java)
             //startActivity(intent)
