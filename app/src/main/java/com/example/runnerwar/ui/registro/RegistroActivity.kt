@@ -93,6 +93,7 @@ class RegistroActivity : AppCompatActivity() {
 
         ex_us_login.setOnClickListener {
             val intent = Intent(this@RegistroActivity, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         signup.setOnClickListener{

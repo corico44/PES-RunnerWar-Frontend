@@ -14,7 +14,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
+import com.example.runnerwar.Model.Codi
 import com.example.runnerwar.Model.LoginUser
+import com.example.runnerwar.Model.User
 import com.example.runnerwar.NavActivity
 
 
@@ -71,24 +73,17 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.responseCreate.observe(this@LoginActivity, Observer { response ->
 
             if (response.isSuccessful){
-                //val data: Codi? = response.body()
-                val jsonString : String = response.body().toString()
-                val intent = Intent(this@LoginActivity, NavActivity::class.java)
-                startActivity(intent)
-                Toast.makeText(applicationContext, "Login Succesfull", Toast.LENGTH_SHORT).show()
-                /*if (data != null) {
-                    if (data.result.equals(200)) {
-                        Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
+                val data: User? = response.body()
 
+                if (data != null) {
+                    if (data._id != null) {
                         val intent = Intent(this@LoginActivity, NavActivity::class.java)
-                        intent.putExtra("email", email.toString())
                         startActivity(intent)
+                        Toast.makeText(applicationContext, "Login Succesfull", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(applicationContext, "Login error", Toast.LENGTH_SHORT).show()
                     }
-                }*/
-            }else{
-                Toast.makeText(applicationContext, "Login Failed", Toast.LENGTH_SHORT).show()
+                }
             }
 
         })
@@ -109,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
 
         CreateAccButto.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegistroActivity::class.java)
+            startActivity(intent)
         }
         signup_button.setOnClickListener {
             var password = loginViewModel.hashString(password.text.toString(),"SHA-256")
