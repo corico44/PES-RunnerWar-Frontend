@@ -5,7 +5,6 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface Api {
-
     @Headers("Content-Type: application/json")
     @POST("/create")
     fun newUser(
@@ -24,5 +23,25 @@ interface Api {
         @Body user: DeleteUser
     ) : Call<Codi>
 
+    @Headers("Content-Type: application/json")
+    @POST("/create/activity")
+    fun createActivity(
+        @Body activiy: ActivityForm
+    ) : Call<Activity>
+
+
+    @Headers("Content-Type: application/json")
+    @GET("/create/activity")
+    fun getActivity(
+        @Body user: DeleteUser
+    ) : Call<Activity>
+
+
+    @Headers("Content-Type: application/json")
+    @PUT("/create/activity")
+    fun updateActivity(
+        @Body activiy: Activity
+    ) : Call<Codi>
 
 }
+
