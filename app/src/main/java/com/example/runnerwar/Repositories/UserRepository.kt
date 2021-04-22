@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import com.example.runnerwar.Data.User.UserDao
 import com.example.runnerwar.Model.*
 import com.example.runnerwar.api.RetrofitInstance
+import com.example.runnerwar.util.Session
 import retrofit2.Response
 import retrofit2.awaitResponse
 
-class UserRepository(private val userDao: UserDao, private val loggedUser: String){
+class UserRepository(private val userDao: UserDao, var loggedUser: String){
 
-     var readAllData: LiveData<User> = userDao.readDataLoggedUser(loggedUser)
+     var readAllData: LiveData<User> = userDao.readDataLoggedUser(Session.getIdUsuario())
 
     //Calls to API
 
@@ -37,6 +38,10 @@ class UserRepository(private val userDao: UserDao, private val loggedUser: Strin
     suspend fun addUser(user: User){
         //Add to local Data Base
         userDao.addUser(user)
+    }
+
+    fun getUserLogged() : User{
+        return userDao.getUserLogged(loggedUser)
     }
 
     suspend fun updateUser(newUsername: String){

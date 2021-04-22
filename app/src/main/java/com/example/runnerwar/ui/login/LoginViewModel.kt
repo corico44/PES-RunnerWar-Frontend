@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.runnerwar.Model.Codi
 import com.example.runnerwar.Model.LoginUser
 import com.example.runnerwar.Model.User
-import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroFormState
+import com.example.runnerwar.util.Session
 import kotlinx.coroutines.launch
 
 import retrofit2.Response
@@ -29,6 +28,13 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         viewModelScope.launch {
             val res: Response<User> = repository.login(loginUser)
 
+            if (res.isSuccessful){
+                val user: User? = res.body()
+                if (user != null) {
+                    Session.setIdUsuario(user._id)
+                    repository.addUser(user)
+                }
+            }
             _response.value = res
         }
     }

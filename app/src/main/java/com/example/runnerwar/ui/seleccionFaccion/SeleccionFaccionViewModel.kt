@@ -12,6 +12,7 @@ import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.Repositories.RegistroRepository
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroFormState
+import com.example.runnerwar.util.Session
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.security.MessageDigest
@@ -33,6 +34,7 @@ class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewM
                 val user : User? = res.body()
 
                 if (user != null) {
+                    Session.setIdUsuario(user._id)
                     repository.addUser(user)
                 }
             }
