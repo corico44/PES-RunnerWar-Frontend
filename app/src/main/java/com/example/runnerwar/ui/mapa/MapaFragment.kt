@@ -210,6 +210,12 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
         lastLocation = currentLocation
 
        lastMarker = googleMap?.addMarker(markerOptions)
+
+       val listLugaresInteres = getParks()
+       for (loc in listLugaresInteres) {
+           googleMap?.addMarker(MarkerOptions().position(loc).title("Sitio de interes"))
+
+       }
     }
 
 
