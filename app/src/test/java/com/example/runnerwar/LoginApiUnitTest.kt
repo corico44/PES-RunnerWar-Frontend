@@ -47,7 +47,6 @@ class LoginApiUnitTest {
 
     }
 
-
     @Test
     suspend fun error_login_password(){
         var loginUser: LoginUser = LoginUser("example@default.com", "12345678")
