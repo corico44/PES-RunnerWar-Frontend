@@ -56,12 +56,6 @@ class RegistroViewModel(private val repository: RegistroRepository) : ViewModel(
 
     // A placeholder username validation check
     private fun isEmailValid(email: String): Boolean {
-        //if (!email.contains('@')) {
-            //Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
-        //} else {
-            //return email.isNotBlank()
-        //}
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
