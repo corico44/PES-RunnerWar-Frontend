@@ -1,6 +1,5 @@
 package com.example.runnerwar.api
 
-import com.example.runnerwar.util.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -2,7 +2,6 @@ package com.example.runnerwar
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,7 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intent = Intent(this@MainActivity, RegistroActivity::class.java)
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        intent.putExtra("some_error", " ")
         startActivity(intent)
     }
 }

@@ -10,19 +10,27 @@ interface Api {
     @POST("/create")
     fun newUser(
         @Body user: UserForm
-    ) : Call<UserResponse>
+    ) : Call<RegisterResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST("/login")
+    fun login(
+        @Body loginUser: LoginUser
+    ) : Call<LoginResponse>
 
     @Headers("Content-Type: application/json")
     @PUT("/update_accountname")
     fun updateUser(
         @Body user: UserUpdate
-    ) : Call<UserResponse>
+    ) : Call<RegisterResponse>
 
     @Headers("Content-Type: application/json")
     @POST("/delete")
     fun deleteUser(
         @Body user: DeleteUser
     ) : Call<Codi>
+
+
 
 
 }

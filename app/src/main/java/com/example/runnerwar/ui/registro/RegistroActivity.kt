@@ -5,21 +5,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.Window
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.Toast
+import android.widget.TextView
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
-import com.example.runnerwar.Model.UserResponse
 
 
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
+import com.example.runnerwar.ui.login.LoginActivity
 import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionActivity
+import kotlinx.android.synthetic.main.login.*
+import kotlinx.android.synthetic.main.registro.*
 
 
 class RegistroActivity : AppCompatActivity() {
@@ -42,6 +41,10 @@ class RegistroActivity : AppCompatActivity() {
         val email = findViewById<EditText>(R.id.reg_email)
         val password = findViewById<EditText>(R.id.reg_password)
         val signup = findViewById<Button>(R.id.signup_button)
+        val error = findViewById<TextView>(R.id.error)
+        val some_error = intent.extras?.getString("some_error")
+
+        error.text = some_error
 
         signup.isEnabled = false
         signup.isClickable=false
@@ -91,6 +94,11 @@ class RegistroActivity : AppCompatActivity() {
                 email.text.toString(),
                 password.text.toString()
             )
+        }
+
+        ex_us_login.setOnClickListener {
+            val intent = Intent(this@RegistroActivity, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         signup.setOnClickListener{
