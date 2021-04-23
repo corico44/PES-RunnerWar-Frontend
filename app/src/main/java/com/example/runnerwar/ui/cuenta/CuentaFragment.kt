@@ -100,5 +100,10 @@ class CuentaFragment : Fragment() {
             cuentaViewModel.deleteUser(user)
 
         }
+
+        boton_logout.setOnClickListener {
+            val intent = Intent(activity?.applicationContext, RegistroActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
