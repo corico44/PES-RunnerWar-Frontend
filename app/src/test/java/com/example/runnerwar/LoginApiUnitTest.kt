@@ -1,17 +1,25 @@
 package com.example.runnerwar
 
+import com.example.runnerwar.Model.LoginResponse
 import com.example.runnerwar.Model.LoginUser
 import com.example.runnerwar.Model.User
+import com.example.runnerwar.api.Api
 import com.example.runnerwar.api.RetrofitInstance
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.runBlocking
+
+import org.junit.Assert
 import org.junit.Test
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.awaitResponse
 
+
 class LoginApiUnitTest {
 
-    var api = RetrofitInstance.api
+    //var api = RetrofitInstance.api
+        var api = RetrofitInstance.api
 
     /*
 
@@ -24,51 +32,55 @@ class LoginApiUnitTest {
         faction: red
      */
 
+    @Test
+    fun addition_isCorrect() {
+        Assert.assertEquals(4, 2 + 2)
+    }
+
 
     @Test
-    suspend fun correct_login(){
-
-
+    fun correct_login(){
         var loginUser: LoginUser = LoginUser("example@default.com", "12345")
         var userLogged : User = User("example@default.com", 0, "red", "12345", 0, "example" )
 
-        val response : Response<User> = api.login(loginUser).awaitResponse()
+
+        val response : Response<LoginResponse> = runBlocking { api.login(loginUser).awaitResponse() }
         if(response.isSuccessful){
-            val res: User? = response.body()
-            assertEquals(res, userLogged)
+            val res: LoginResponse? = response.body()
+            val userLog : User = User(res!!._id,res!!.coins, res!!.faction, res!!.password, res!!.points, res!!.accountname)
+            assertEquals(userLog, userLogged)
         }
     }
 
     @Test
-    suspend fun error_login_email(){
+    fun error_login_email(){
         var loginUser: LoginUser = LoginUser("exampleError@default.com", "12345")
-        val response : Response<User> = api.login(loginUser).awaitResponse()
+        val response : Response<LoginResponse> = runBlocking {  api.login(loginUser).awaitResponse()}
         if(response.isSuccessful){
-            val res: User? = response.body()
-            assertEquals(res, null)
+            val res: LoginResponse? = response.body()
+            assertEquals(res!!.codi, 500)
         }
 
     }
 
     @Test
-    suspend fun error_login_password(){
+    fun error_login_password(){
         var loginUser: LoginUser = LoginUser("example@default.com", "12345678")
-        val response : Response<User> = api.login(loginUser).awaitResponse()
+        val response : Response<LoginResponse> = runBlocking { api.login(loginUser).awaitResponse()}
         if(response.isSuccessful){
-            val res: User? = response.body()
-            assertEquals(res, null)
+            val res: LoginResponse? = response.body()
+            assertEquals(res!!.codi, 500)
         }
 
     }
 
     @Test
-    suspend fun error_login_email_password(){
+    fun error_login_email_password(){
         var loginUser: LoginUser = LoginUser("exampleERrror@default.com", "12345678")
-        val response : Response<User> = api.login(loginUser).awaitResponse()
+        val response : Response<LoginResponse> = runBlocking {  api.login(loginUser).awaitResponse()}
         if(response.isSuccessful){
-            val res: User? = response.body()
-            assertEquals(res, null)
+            val res: LoginResponse? = response.body()
+            assertEquals(res!!.codi, 500)
         }
     }
-
 }
