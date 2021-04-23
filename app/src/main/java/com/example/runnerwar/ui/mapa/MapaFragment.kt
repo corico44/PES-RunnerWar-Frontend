@@ -31,12 +31,6 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.common.api.GoogleApiClient
 
 
-
-
-
-
-
-
 class MapaFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mapaViewModel: MapaViewModel
@@ -51,6 +45,24 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
 
     // globally declare LocationCallback
     private lateinit var locationCallback: LocationCallback
+
+    private val Montjuic = LatLng(41.370951, 2.151949)
+    private val ParcSantJordi = LatLng(41.364311,2.151776)
+    private val ParcEspanyaIndustrial = LatLng(41.377597, 2.141002)
+    private val ParcJoanMiro = LatLng(41.377658, 2.149281)
+    private val ParcCiutadela = LatLng(41.387481, 2.186332)
+    private val ParcCervantes = LatLng(41.383781, 2.106111)
+    private val ParcPedralbes = LatLng(41.387606,2.117924)
+    private val ParcOreneta = LatLng(41.398791, 2.110879)
+    private val ParcTuro = LatLng(41.395034, 2.140478)
+    private val ParcPuxet = LatLng(41.407385, 2.142331)
+    private val ParcGuell = LatLng(41.414371, 2.151912)
+    private val ParcGuinardo = LatLng(41.419185, 2.167051)
+    private val ParcHorta = LatLng(41.438897, 2.146656)
+    private val ParcCreuetaColl = LatLng(41.418138, 2.146462)
+    private val ParcTuroPeira = LatLng(41.432969, 2.164697)
+    private val ParcMirador = LatLng(41.368094, 2.167112)
+    private val ParcTeleferic = LatLng(41.371971, 2.172406)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -149,6 +161,29 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
         startLocationUpdates()
     }
 
+    fun getParks(): ArrayList<LatLng> {
+        val listLugaresInteres = ArrayList<LatLng>()
+        listLugaresInteres.add(Montjuic)
+        listLugaresInteres.add(ParcSantJordi)
+        listLugaresInteres.add(ParcEspanyaIndustrial)
+        listLugaresInteres.add(ParcJoanMiro)
+        listLugaresInteres.add(ParcCiutadela)
+        listLugaresInteres.add(ParcCervantes)
+        listLugaresInteres.add(ParcPedralbes)
+        listLugaresInteres.add(ParcOreneta)
+        listLugaresInteres.add(ParcTuro)
+        listLugaresInteres.add(ParcPuxet)
+        listLugaresInteres.add(ParcGuell)
+        listLugaresInteres.add(ParcGuinardo)
+        listLugaresInteres.add(ParcHorta)
+        listLugaresInteres.add(ParcCreuetaColl)
+        listLugaresInteres.add(ParcTuroPeira)
+        listLugaresInteres.add(ParcMirador)
+        listLugaresInteres.add(ParcTeleferic)
+
+        return listLugaresInteres
+    }
+
 
    override fun onMapReady(googleMap: GoogleMap?) {
        if(lastLocation != null) {
@@ -167,7 +202,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
        }
 
         val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
-        val markerOptions = MarkerOptions().position(latLng).title("I am here!")
+        val markerOptions = MarkerOptions().position(latLng).title("Estoy aqui")
         googleMap?.animateCamera(CameraUpdateFactory.newLatLng(latLng))
         googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.arrow_down_float))

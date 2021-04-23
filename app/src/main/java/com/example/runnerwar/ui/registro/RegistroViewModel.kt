@@ -62,7 +62,7 @@ class RegistroViewModel(private val repository: RegistroRepository) : ViewModel(
         //} else {
             //return email.isNotBlank()
         //}
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
 
