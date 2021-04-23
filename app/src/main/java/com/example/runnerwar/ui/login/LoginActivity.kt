@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 
@@ -47,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
         val email = findViewById<EditText>(R.id.cuenta_email)
         val password = findViewById<EditText>(R.id.password_signup)
         val login = findViewById<Button>(R.id.signup_button)
+        val error = findViewById<TextView>(R.id.error)
 
         login.isEnabled = true
         login.isClickable = true
@@ -70,22 +72,17 @@ class LoginActivity : AppCompatActivity() {
 
         })
 
-        loginViewModel.responseCreate.observe(this@LoginActivity, Observer { response ->
+        loginViewModel.responseCreate.observe(this@LoginActivity, Observer {
 
-            if (response.isSuccessful){
-                val data: User? = response.body()
-
-                if (data != null) {
-                    if (data._id != null) {
-                        val intent = Intent(this@LoginActivity, NavActivity::class.java)
-                        startActivity(intent)
-                        Toast.makeText(applicationContext, "Login Succesfull", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(applicationContext, "Login error", Toast.LENGTH_SHORT).show()
-                    }
-                }
+            val statReg = it ?: return@Observer
+            if (statReg.result == 200){
+                Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@LoginActivity, NavActivity::class.java)
+                startActivity(intent)
             }
-
+            else {
+                error.text = "Email or password incorrect"
+            }
         })
 
         email.afterTextChanged {

@@ -16,7 +16,7 @@ interface Api {
     @POST("/login")
     fun login(
         @Body loginUser: LoginUser
-    ) : Call<User>
+    ) : Call<LoginResponse>
 
     @Headers("Content-Type: application/json")
     @PUT("/update_accountname")

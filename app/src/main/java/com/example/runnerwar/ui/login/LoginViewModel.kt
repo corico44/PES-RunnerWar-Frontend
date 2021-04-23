@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.runnerwar.Model.LoginUser
-import com.example.runnerwar.Model.User
+import com.example.runnerwar.Model.*
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroFormState
 import com.example.runnerwar.util.Session
@@ -17,8 +16,8 @@ import java.security.MessageDigest
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private val _response= MutableLiveData<Response<User>>()
-    val responseCreate: LiveData<Response<User>> = _response
+    private val _response= MutableLiveData<Codi>()
+    val responseCreate: LiveData<Codi> = _response
 
     private val _registroForm = MutableLiveData<RegistroFormState>()
     val registroFormState: LiveData<RegistroFormState> = _registroForm
@@ -26,16 +25,22 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun logIn(loginUser: LoginUser) {
         viewModelScope.launch {
-            val res: Response<User> = repository.login(loginUser)
+            val res: Response<LoginResponse> = repository.login(loginUser)
+            var status: Codi = Codi(500)
 
             if (res.isSuccessful){
-                val user: User? = res.body()
-                if (user != null) {
-                    Session.setIdUsuario(user._id)
-                    repository.addUser(user)
+                val userRes : LoginResponse? = res.body()
+
+                if (userRes != null) {
+                    status = Codi(userRes.codi)
+                    if (status.result == 200) {
+                        val user : User = User(userRes._id,userRes.coins, userRes.faction, userRes.password, userRes.points, userRes.accountname)
+                        Session.setIdUsuario(user._id)
+                        repository.addUser(user)
+                    }
                 }
             }
-            _response.value = res
+            _response.value = status
         }
     }
 
