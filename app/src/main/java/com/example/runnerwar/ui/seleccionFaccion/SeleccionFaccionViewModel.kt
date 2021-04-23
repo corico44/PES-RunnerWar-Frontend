@@ -1,15 +1,13 @@
 package com.example.runnerwar.ui.seleccionFaccion
 
-import android.util.Base64
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.runnerwar.Data.User.UserDataBase
+import com.example.runnerwar.Model.Codi
+import com.example.runnerwar.Model.RegisterResponse
 import com.example.runnerwar.Model.User
 import com.example.runnerwar.Model.UserForm
-import com.example.runnerwar.Model.UserResponse
-import com.example.runnerwar.Repositories.RegistroRepository
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroFormState
 import com.example.runnerwar.util.Session
@@ -19,8 +17,8 @@ import java.security.MessageDigest
 
 class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewModel() {
 
-    private val _response= MutableLiveData<Response<User>>()
-    val responseCreate: LiveData<Response<User>> = _response
+    private val _response= MutableLiveData<Codi>()
+    val responseCreate: LiveData<Codi> = _response
 
     private val _registroForm = MutableLiveData<RegistroFormState>()
     val registroFormState: LiveData<RegistroFormState> = _registroForm
@@ -28,17 +26,21 @@ class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewM
 
     fun signUp(user: UserForm) {
         viewModelScope.launch {
-            val res: Response<User> = repository.newUser(user)
-
+            val res: Response<RegisterResponse> = repository.newUser(user)
+            var status: Codi = Codi(500)
             if (res.isSuccessful){
-                val user : User? = res.body()
+                val userRes : RegisterResponse? = res.body()
 
-                if (user != null) {
-                    Session.setIdUsuario(user._id)
-                    repository.addUser(user)
+                if (userRes != null) {
+                    status = Codi(userRes.codi)
+                    if (status.result == 200) {
+                        val user : User = User(userRes._id,userRes.coins, userRes.faction, userRes.password, userRes.points, userRes.accountname)
+                        Session.setIdUsuario(user._id)
+                        repository.addUser(user)
+                    }
                 }
             }
-            _response.value = res
+            _response.value = status
         }
     }
 
@@ -46,5 +48,9 @@ class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewM
         return MessageDigest.getInstance(algorithm)
             .digest(input.toByteArray())
             .fold("", { str, it -> str + "%02x".format(it) })
+    }
+
+    private fun isValidUser(res: RegisterResponse) : Boolean{
+        return  res.codi == 200
     }
 }

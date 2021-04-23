@@ -3,7 +3,6 @@ package com.example.runnerwar.ui.seleccionFaccion
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -12,19 +11,13 @@ import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
 import com.example.runnerwar.Model.User
 import com.example.runnerwar.Model.UserForm
-import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.NavActivity
 import com.example.runnerwar.R
-import com.example.runnerwar.Repositories.RegistroRepository
 import com.example.runnerwar.Repositories.UserRepository
-import com.example.runnerwar.ui.registro.RegistroViewModelFactory
+import com.example.runnerwar.ui.registro.RegistroActivity
 
 
 import kotlinx.android.synthetic.main.activity_seleccion_faccion.*
-import java.security.MessageDigest
-import javax.crypto.Cipher
-import javax.crypto.spec.IvParameterSpec
-import javax.crypto.spec.SecretKeySpec
 
 class SeleccionFaccionActivity : AppCompatActivity() {
 
@@ -50,20 +43,18 @@ class SeleccionFaccionActivity : AppCompatActivity() {
 
 
 
-        selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer { response ->
-
-            if (response.isSuccessful){
-                val data: User? = response.body()
-
-                if (data != null) {
-                    Toast.makeText(applicationContext, "Welcome to RunnerWar $username", Toast.LENGTH_SHORT).show()
-
-                    val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
-                    intent.putExtra("email", data._id)
-                    startActivity(intent)
-                }
+        selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer {
+            val statReg = it ?: return@Observer
+            if (statReg.result == 200){
+                Toast.makeText(applicationContext, "Welcome to RunnerWar $username", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
+                startActivity(intent)
             }
-
+            else {
+                val intent = Intent(this@SeleccionFaccionActivity, RegistroActivity::class.java)
+                intent.putExtra("some_error", "Email:  $email  or Username: $username already exists")
+                startActivity(intent)
+            }
         })
 
 

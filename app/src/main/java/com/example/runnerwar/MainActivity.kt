@@ -13,7 +13,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        val intent = Intent(this@MainActivity, RegistroActivity::class.java)
+        intent.putExtra("some_error", " ")
         startActivity(intent)
     }
 }

@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
@@ -40,6 +41,10 @@ class RegistroActivity : AppCompatActivity() {
         val email = findViewById<EditText>(R.id.reg_email)
         val password = findViewById<EditText>(R.id.reg_password)
         val signup = findViewById<Button>(R.id.signup_button)
+        val error = findViewById<TextView>(R.id.error)
+        val some_error = intent.extras?.getString("some_error")
+
+        error.text = some_error
 
         signup.isEnabled = false
         signup.isClickable=false

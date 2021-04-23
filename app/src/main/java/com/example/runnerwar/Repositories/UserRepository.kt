@@ -14,7 +14,7 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
 
     //Calls to API
 
-    suspend fun newUser(user: UserForm): Response<User> {
+    suspend fun newUser(user: UserForm): Response<RegisterResponse> {
         // Call to API to add new user
         return RetrofitInstance.api.newUser(user).awaitResponse()
     }
@@ -24,7 +24,7 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
         return RetrofitInstance.api.login(loginUser).awaitResponse()
     }
 
-    suspend fun update(user: UserUpdate) : Response<UserResponse> {
+    suspend fun update(user: UserUpdate) : Response<RegisterResponse> {
         return RetrofitInstance.api.updateUser(user).awaitResponse()
     }
 

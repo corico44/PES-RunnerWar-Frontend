@@ -12,14 +12,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
 import com.example.runnerwar.Model.DeleteUser
-import com.example.runnerwar.Model.User
-import com.example.runnerwar.Model.UserResponse
+import com.example.runnerwar.Model.RegisterResponse
 import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.R
-import com.example.runnerwar.Repositories.RegistroRepository
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
-import com.example.runnerwar.ui.registro.RegistroViewModelFactory
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
@@ -79,7 +76,7 @@ class CuentaFragment : Fragment() {
         cuentaViewModel.responseUpdate.observe(this@CuentaFragment, Observer { response ->
 
             if (response.isSuccessful){
-                val data: UserResponse? = response.body()
+                val data: RegisterResponse? = response.body()
                 if (data != null) {
                     Toast.makeText(activity?.applicationContext, "Update successfully", Toast.LENGTH_SHORT).show()
                 }

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.runnerwar.Model.*
-import com.example.runnerwar.Repositories.RegistroRepository
 import com.example.runnerwar.Repositories.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -16,8 +15,8 @@ class CuentaViewModel(private val repository: UserRepository) : ViewModel() {
 
 
 
-    private val _response= MutableLiveData<Response<UserResponse>>()
-    val responseUpdate: LiveData<Response<UserResponse>> = _response
+    private val _response= MutableLiveData<Response<RegisterResponse>>()
+    val responseUpdate: LiveData<Response<RegisterResponse>> = _response
 
     private val _response_delete= MutableLiveData<Response<Codi>>()
     val responseDelete: LiveData<Response<Codi>> = _response_delete
@@ -30,7 +29,7 @@ class CuentaViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun updateUser(user: UserUpdate) {
         viewModelScope.launch {
-            val res: Response<UserResponse> = repository.update(user)
+            val res: Response<RegisterResponse> = repository.update(user)
 
             if (res.isSuccessful){
                 //Update local dataBase

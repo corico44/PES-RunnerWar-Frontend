@@ -6,11 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.runnerwar.Model.User
-import com.example.runnerwar.Model.UserResponse
-import com.example.runnerwar.Model.UserUpdate
-import com.example.runnerwar.api.RetrofitInstance
-import retrofit2.Response
-import retrofit2.awaitResponse
 
 // Contains the methods used for accessing the database
 @Dao

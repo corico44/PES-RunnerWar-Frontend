@@ -10,11 +10,14 @@ import retrofit2.Response
 import retrofit2.awaitResponse
 
 class LoginApiUnitTest {
+
     var api = RetrofitInstance.api
 
-
-    //Abans de fer el login ha de existir un usuari registrat al sistema amb els següents paràmetres
     /*
+
+        Test para comprobar las llamadas a la Api relacionadas con el Login
+
+        Antes de hacer el login debe haberse hecho un registro con los siguientes datos:
         emai: example@default.com
         accountname: example
         password: 12345
