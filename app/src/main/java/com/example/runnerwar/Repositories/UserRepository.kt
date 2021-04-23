@@ -41,15 +41,15 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
     }
 
     fun getUserLogged() : User{
-        return userDao.getUserLogged(loggedUser)
+        return userDao.getUserLogged(Session.getIdUsuario())
     }
 
     suspend fun updateUser(newUsername: String){
-        userDao.updateAccountName(loggedUser, newUsername)
+        userDao.updateAccountName(Session.getIdUsuario(), newUsername)
     }
 
     suspend fun deleteUserFromLDB(){
-        userDao.deleteUser(loggedUser)
+        userDao.deleteUser(Session.getIdUsuario())
     }
 
     suspend fun deleteAllDataFromLDB(){
