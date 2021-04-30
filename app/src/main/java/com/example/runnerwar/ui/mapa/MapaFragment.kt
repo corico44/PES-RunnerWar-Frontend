@@ -29,10 +29,14 @@ import android.hardware.SensorManager
 import android.os.Build
 import android.os.Looper
 import androidx.core.content.ContextCompat
+import com.example.runnerwar.Model.LugarInteresResponse
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.common.api.GoogleApiClient
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
 class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,  LocationListener,GoogleApiClient.OnConnectionFailedListener{
@@ -49,6 +53,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     private var mMap: GoogleMap? = null
     internal var mCurrLocationMarker: Marker? = null
     internal lateinit var mLastLocation: Location
+    private lateinit var lugaresInteres: List<LugarInteresResponse>
 
 
     override fun onCreateView(
@@ -69,11 +74,24 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect()
         }
+        getLugaresInteres()
         val mapFragment = childFragmentManager.findFragmentById(com.example.runnerwar.R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
     }
 
-   override fun onMapReady(googleMap: GoogleMap?) {
+
+    suspend fun getLugaresInteresSuspend() {
+        lugaresInteres = mapaViewModel.getLugaresInteres()!!
+    }
+
+    fun getLugaresInteres() = runBlocking { // this: CoroutineScope
+        launch { // launch a new coroutine and continue
+            getLugaresInteresSuspend()
+        }
+    }
+
+
+    override fun onMapReady(googleMap: GoogleMap?) {
        mMap = googleMap
        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
            if (ContextCompat.checkSelfPermission(activity!!,
@@ -94,6 +112,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
             .addOnConnectionFailedListener(this)
             .addApi(LocationServices.API).build()
         mGoogleApiClient!!.connect()
+
     }
 
     override fun onConnected(p0: Bundle?) {

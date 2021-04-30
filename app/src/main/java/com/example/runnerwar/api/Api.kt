@@ -30,6 +30,11 @@ interface Api {
         @Body user: DeleteUser
     ) : Call<Codi>
 
+    @Headers("Content-Type: application/json")
+    @GET("/cosas")
+    fun getLugaresInteres() : Call<List<LugarInteresResponse>>
+
+
 
 
 
