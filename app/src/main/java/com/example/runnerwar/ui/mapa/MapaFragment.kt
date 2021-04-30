@@ -26,43 +26,30 @@ import android.location.LocationManager
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import android.hardware.SensorManager
+import android.os.Build
+import android.os.Looper
+import androidx.core.content.ContextCompat
+import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.common.api.GoogleApiClient
 
 
-class MapaFragment : Fragment(), OnMapReadyCallback {
+class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,  LocationListener,GoogleApiClient.OnConnectionFailedListener{
 
     private lateinit var mapaViewModel: MapaViewModel
-    private lateinit var currentLocation: Location
-    private var lastLocation: Location = Location("dummyprovider");
-    private var lastMarker: Marker? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private val permissionCode = 101
-    // globally declare LocationRequest
-    private lateinit var locationRequest: LocationRequest
-    private var mapFragment: SupportMapFragment? = null
 
     // globally declare LocationCallback
     private lateinit var locationCallback: LocationCallback
+    internal var mGoogleApiClient: GoogleApiClient? = null
 
-    private val Montjuic = LatLng(41.370951, 2.151949)
-    private val ParcSantJordi = LatLng(41.364311,2.151776)
-    private val ParcEspanyaIndustrial = LatLng(41.377597, 2.141002)
-    private val ParcJoanMiro = LatLng(41.377658, 2.149281)
-    private val ParcCiutadela = LatLng(41.387481, 2.186332)
-    private val ParcCervantes = LatLng(41.383781, 2.106111)
-    private val ParcPedralbes = LatLng(41.387606,2.117924)
-    private val ParcOreneta = LatLng(41.398791, 2.110879)
-    private val ParcTuro = LatLng(41.395034, 2.140478)
-    private val ParcPuxet = LatLng(41.407385, 2.142331)
-    private val ParcGuell = LatLng(41.414371, 2.151912)
-    private val ParcGuinardo = LatLng(41.419185, 2.167051)
-    private val ParcHorta = LatLng(41.438897, 2.146656)
-    private val ParcCreuetaColl = LatLng(41.418138, 2.146462)
-    private val ParcTuroPeira = LatLng(41.432969, 2.164697)
-    private val ParcMirador = LatLng(41.368094, 2.167112)
-    private val ParcTeleferic = LatLng(41.371971, 2.172406)
+    internal lateinit var mLocationRequest: LocationRequest
+    internal var mFusedLocationClient: FusedLocationProviderClient? = null
+    private var mMap: GoogleMap? = null
+    internal var mCurrLocationMarker: Marker? = null
+    internal lateinit var mLastLocation: Location
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,155 +65,79 @@ class MapaFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view,savedInstanceState)
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(activity!!)
-        var locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
         var mGoogleApiClient: GoogleApiClient? = null
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect()
         }
-
-        getLocationUpdates()
-    }
-
-    // A REVISAR
-    private fun fetchLocation(currentLocation: Location) {
-
-        Toast.makeText(activity?.application!!, currentLocation.latitude.toString() + "" +
-                currentLocation.longitude, Toast.LENGTH_SHORT).show()
         val mapFragment = childFragmentManager.findFragmentById(com.example.runnerwar.R.id.map) as SupportMapFragment?
-        println("antes del mapa")
         mapFragment!!.getMapAsync(this)
-
-
     }
-
-    /**
-     * call this method in onCreate
-     * onLocationResult call when location is changed
-     */
-    private fun getLocationUpdates()
-    {
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context!!)
-        locationRequest = LocationRequest()
-        locationRequest.interval = 5000
-        locationRequest.fastestInterval = 5000
-        locationRequest.smallestDisplacement = 170f // 170 m = 0.1 mile
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY //set according to your app function
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                locationResult ?: return
-
-                if (locationResult.locations.isNotEmpty()) {
-                    // get latest location
-                    val location =
-                        locationResult.lastLocation
-                    // use your location object
-                    // get latitude , longitude and other info from this
-                    // Aquí tratar los valores para ponerlos como current y actualizar el mapa
-                    if (location != null) {
-                        currentLocation = location
-                        fetchLocation(currentLocation)
-                        println("entro")
-                        // fetchLocation()
-                    }
-                }
-
-            }
-        }
-    }
-
-    //start location updates
-    private fun startLocationUpdates() {
-        fusedLocationProviderClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            null /* Looper */
-        )
-    }
-
-    // stop location updates
-    private fun stopLocationUpdates() {
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-    }
-
-    // stop receiving location update when activity not visible/foreground
-    override fun onPause() {
-        super.onPause()
-        stopLocationUpdates()
-    }
-
-    // start receiving location update when activity  visible/foreground
-    override fun onResume() {
-        super.onResume()
-        startLocationUpdates()
-    }
-
-    fun getParks(): ArrayList<LatLng> {
-        val listLugaresInteres = ArrayList<LatLng>()
-        listLugaresInteres.add(Montjuic)
-        listLugaresInteres.add(ParcSantJordi)
-        listLugaresInteres.add(ParcEspanyaIndustrial)
-        listLugaresInteres.add(ParcJoanMiro)
-        listLugaresInteres.add(ParcCiutadela)
-        listLugaresInteres.add(ParcCervantes)
-        listLugaresInteres.add(ParcPedralbes)
-        listLugaresInteres.add(ParcOreneta)
-        listLugaresInteres.add(ParcTuro)
-        listLugaresInteres.add(ParcPuxet)
-        listLugaresInteres.add(ParcGuell)
-        listLugaresInteres.add(ParcGuinardo)
-        listLugaresInteres.add(ParcHorta)
-        listLugaresInteres.add(ParcCreuetaColl)
-        listLugaresInteres.add(ParcTuroPeira)
-        listLugaresInteres.add(ParcMirador)
-        listLugaresInteres.add(ParcTeleferic)
-
-        return listLugaresInteres
-    }
-
 
    override fun onMapReady(googleMap: GoogleMap?) {
-       if(lastLocation != null) {
-               if((!lastLocation.latitude.equals(currentLocation.latitude)) ||
-                   (!lastLocation.longitude.equals(currentLocation.longitude)))
-               {
-
-                   if(lastMarker != null){
-                       println("entro remove")
-                       println(lastMarker)
-                       lastMarker!!.remove()
-
-                   }
-
-               }
+       mMap = googleMap
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+           if (ContextCompat.checkSelfPermission(activity!!,
+                   Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+               buildGoogleApiClient()
+               mMap!!.isMyLocationEnabled = true
+           }
+       } else {
+           buildGoogleApiClient()
+           mMap!!.isMyLocationEnabled = true
        }
+   }
 
-        val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
-        val markerOptions = MarkerOptions().position(latLng).title("Estoy aqui")
-        googleMap?.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-        googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.arrow_down_float))
-
-        lastLocation = currentLocation
-
-       lastMarker = googleMap?.addMarker(markerOptions)
-
-       val listLugaresInteres = getParks()
-       for (loc in listLugaresInteres) {
-           googleMap?.addMarker(MarkerOptions().position(loc).title("Sitio de interes"))
-
-       }
+    @Synchronized
+    protected fun buildGoogleApiClient() {
+        mGoogleApiClient = GoogleApiClient.Builder(activity!!)
+            .addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this)
+            .addApi(LocationServices.API).build()
+        mGoogleApiClient!!.connect()
     }
 
-
-    /*
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>,
-                                            grantResults: IntArray) {
-        when (requestCode) {
-            permissionCode -> if (grantResults.isNotEmpty() && grantResults[0] ==
-                PackageManager.PERMISSION_GRANTED) {
-                fetchLocation()
-            }
+    override fun onConnected(p0: Bundle?) {
+        mLocationRequest = LocationRequest()
+        locationCallback = LocationCallback()
+        mLocationRequest.interval = 1000
+        mLocationRequest.fastestInterval = 1000
+        mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        if (ContextCompat.checkSelfPermission(activity!!,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
+            mFusedLocationClient?.requestLocationUpdates(mLocationRequest,locationCallback, Looper.myLooper())
         }
-    }*/
+    }
+
+    override fun onLocationChanged(location: Location) {
+
+        mLastLocation = location
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker!!.remove()
+        }
+        //Place current location marker
+        val latLng = LatLng(location.latitude, location.longitude)
+        val markerOptions = MarkerOptions()
+        markerOptions.position(latLng)
+        markerOptions.title("Current Position")
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+        mCurrLocationMarker = mMap!!.addMarker(markerOptions)
+
+        //move map camera
+        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15f))
+
+        //stop location updates
+        if (mGoogleApiClient != null) {
+            mFusedLocationClient?.removeLocationUpdates(locationCallback)
+        }
+    }
+
+    override fun onConnectionFailed(connectionResult: ConnectionResult) {
+        Toast.makeText(activity?.application!!,"connection failed", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onConnectionSuspended(p0: Int) {
+        Toast.makeText(activity?.application!!,"connection suspended", Toast.LENGTH_SHORT).show()
+    }
 }
