@@ -1,11 +1,14 @@
 package com.example.runnerwar
 
+import android.Manifest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.runnerwar.Services.ContarPasosService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 
@@ -13,10 +16,17 @@ class NavActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
-
-
-
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
+
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
+            ContarPasosService.RECORD_REQUEST_CODE
+        )
+
+
+        Intent(this, ContarPasosService::class.java).also {
+            startService(it)
+        }
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -29,5 +39,8 @@ class NavActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
     }
+
+
+
 
 }

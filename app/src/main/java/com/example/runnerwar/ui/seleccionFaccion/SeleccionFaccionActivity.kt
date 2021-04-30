@@ -1,10 +1,12 @@
 package com.example.runnerwar.ui.seleccionFaccion
 
+import android.Manifest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Model.UserForm
@@ -12,6 +14,7 @@ import com.example.runnerwar.Model.UserResponse
 import com.example.runnerwar.NavActivity
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.RegistroRepository
+import com.example.runnerwar.Services.ContarPasosService
 import com.example.runnerwar.ui.registro.RegistroViewModelFactory
 
 
@@ -32,6 +35,8 @@ class SeleccionFaccionActivity : AppCompatActivity() {
         selFaccViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(SeleccionFaccionViewModel::class.java)
 
+
+
         var username = intent.extras?.getString("username")
         var email = intent.extras?.getString("email")
         var password = intent.extras?.getString("password")
@@ -51,6 +56,8 @@ class SeleccionFaccionActivity : AppCompatActivity() {
                     Log.d("Response", data.coins.toString())
                     Log.d("Response", data.faction.toString())
                     Log.d("Response", data.points.toString())
+
+
 
                     val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
                     intent.putExtra("email", data._id)
