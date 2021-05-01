@@ -13,6 +13,7 @@ import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionViewModel
 class LugaresViewModelFactory(private val repository: LugarInteresRepository, private val numView : Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if ( numView == 1){
+            println("ENTRO PARA CREAR LA VIEWMODEL")
             return MapaViewModel(repository) as T
         }
         else{

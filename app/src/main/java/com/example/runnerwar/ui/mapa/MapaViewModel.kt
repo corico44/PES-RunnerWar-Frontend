@@ -3,28 +3,33 @@ package com.example.runnerwar.ui.mapa
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.runnerwar.Model.Codi
-import com.example.runnerwar.Model.LoginResponse
-import com.example.runnerwar.Model.LugarInteresResponse
-import com.example.runnerwar.Model.User
+import androidx.lifecycle.viewModelScope
+import com.example.runnerwar.Model.*
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroFormState
 import com.example.runnerwar.util.Session
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 
 class MapaViewModel(private val repository: LugarInteresRepository) : ViewModel() {
 
-    private val _response = MutableLiveData<LugarInteresResponse>()
-    val responseCreate: LiveData<LugarInteresResponse> = _response
+    private var _response = MutableLiveData<List<LugarInteresResponse>>()
+    var responseCreate: LiveData<List<LugarInteresResponse>> = _response
 
-    suspend fun getLugaresInteres(): List<LugarInteresResponse>? {
+   fun getLugaresInteres() {
+        viewModelScope.launch {
+            val res: Response<List<LugarInteresResponse>> = repository.getLugaresInteres()
 
-        val res: Response<List<LugarInteresResponse>> = repository.getLugaresInteres()
-        if (res.isSuccessful){
-            val userRes : List<LugarInteresResponse>? = res.body()
-            return userRes
+            if (res.isSuccessful){
+                val userRes : List<LugarInteresResponse>? = res.body()
+
+                if (userRes != null) {
+                    _response.value = userRes
+                }
+            }
         }
-        return emptyList()
     }
 }

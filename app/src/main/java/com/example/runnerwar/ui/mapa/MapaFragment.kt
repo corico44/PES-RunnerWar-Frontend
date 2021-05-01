@@ -3,40 +3,31 @@ package com.example.runnerwar.ui.mapa
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.runnerwar.Factories.LugaresViewModelFactory
+import com.example.runnerwar.Model.LugarInteresResponse
+import com.example.runnerwar.Repositories.LugarInteresRepository
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import android.R
-import android.content.Context
-import android.content.Context.LOCATION_SERVICE
-import android.location.LocationManager
-import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import android.hardware.SensorManager
-import android.os.Build
-import android.os.Looper
-import androidx.core.content.ContextCompat
-import com.example.runnerwar.Model.LugarInteresResponse
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.common.api.GoogleApiClient
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import com.google.android.gms.maps.model.MarkerOptions
 
 
 class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,  LocationListener,GoogleApiClient.OnConnectionFailedListener{
@@ -53,7 +44,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     private var mMap: GoogleMap? = null
     internal var mCurrLocationMarker: Marker? = null
     internal lateinit var mLastLocation: Location
-    private lateinit var lugaresInteres: List<LugarInteresResponse>
+    private var lugaresInteres: List<LugarInteresResponse>? = null
 
 
     override fun onCreateView(
@@ -61,8 +52,18 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mapaViewModel =
-            ViewModelProviders.of(this).get(MapaViewModel::class.java)
+
+        val repository = LugarInteresRepository()
+        val viewModelFactory = LugaresViewModelFactory(repository, 1)
+
+        mapaViewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(MapaViewModel::class.java)
+
+        mapaViewModel.responseCreate.observe(activity!! , Observer {
+            lugaresInteres = it
+            cosas()
+        })
+
         val root = inflater.inflate(com.example.runnerwar.R.layout.fragment_mapa, container, false)
 
         return root
@@ -74,19 +75,41 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect()
         }
-        getLugaresInteres()
+        //getLugaresInteres()
+        //println("TITULO: " + lugaresInteres.get(0)._id)
+        //println("LATITUD: " + lugaresInteres.get(0).latitud)
+        //println("LONGITUD: " + lugaresInteres.get(0).longitud)
+        //println("DESCRIPCION: " + lugaresInteres.get(0).descripcion)
         val mapFragment = childFragmentManager.findFragmentById(com.example.runnerwar.R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
     }
 
 
-    suspend fun getLugaresInteresSuspend() {
+    /*suspend fun getLugaresInteresSuspend() {
         lugaresInteres = mapaViewModel.getLugaresInteres()!!
     }
 
     fun getLugaresInteres() = runBlocking { // this: CoroutineScope
         launch { // launch a new coroutine and continue
             getLugaresInteresSuspend()
+        }
+    }*/
+
+    /*fun radioLugarInteres(location: Location){
+        for(item in lugaresInteres){
+            //COMPROBAR QUE LA LATITUD Y LONGITUD VARIA SEGUN EL RADIO QUE VEMOS EN GOOGLE MAPS
+            if((location.latitude >= (item.latitude + 0.01))){
+
+            }
+        }
+    }*/
+
+    fun cosas() {
+        if(lugaresInteres != null){
+            for(item in lugaresInteres!!){
+                val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
+                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(item.descripcion) })
+            }
         }
     }
 
@@ -103,6 +126,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
            buildGoogleApiClient()
            mMap!!.isMyLocationEnabled = true
        }
+        mapaViewModel.getLugaresInteres()
    }
 
     @Synchronized
