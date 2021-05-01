@@ -9,13 +9,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.runnerwar.Data.User.UserDataBase
+import com.example.runnerwar.Factories.UserViewModelFactory
 import com.example.runnerwar.Model.DeleteUser
-import com.example.runnerwar.Model.UserResponse
+import com.example.runnerwar.Model.RegisterResponse
 import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.R
-import com.example.runnerwar.Repositories.RegistroRepository
+import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
-import com.example.runnerwar.ui.registro.RegistroViewModelFactory
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
@@ -31,32 +32,24 @@ class CuentaFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View? {
+        //Get logged User id
+        var loggedUser : String? = activity?.intent?.extras?.getString("email")
 
-        val repository = RegistroRepository()
-        val viewModelFactory = RegistroViewModelFactory(repository,  3)
-
-
+        //Ini Cuenta viewModel
+        val userDao = UserDataBase.getDataBase(activity?.application!!).userDao()
+        val repository = UserRepository(userDao, loggedUser.toString())
+        val viewModelFactory = UserViewModelFactory(repository,2)
         cuentaViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(CuentaViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_cuenta, container, false)
         return root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var username : String? = activity?.intent?.extras?.getString("username")
-        var email : String? = activity?.intent?.extras?.getString("email")
-        var faction : String? = activity?.intent?.extras?.getString("faction")
-        var points : String? = activity?.intent?.extras?.getString("points")
-
-        reg_userName.setText(username.toString())
-        reg_email.setText(email.toString())
-        reg_faction.setText(faction.toString())
-        reg_points.setText(points.toString())
+        var loggedUser : String? = activity?.intent?.extras?.getString("email")
 
         boton_edit.setOnClickListener {
             if (reg_userName.isEnabled) {
@@ -69,13 +62,23 @@ class CuentaFragment : Fragment() {
             }
         }
 
+        cuentaViewModel.readAllData.observe(this@CuentaFragment, Observer { user ->
+            if (user != null){
+                reg_userName.setText(user.accountname)
+                reg_email.setText(user._id)
+                reg_faction.setText(user.faction)
+                reg_points.setText(user.points.toString())
+            }
+
+        })
+
+
         cuentaViewModel.responseUpdate.observe(this@CuentaFragment, Observer { response ->
 
             if (response.isSuccessful){
-                val data: UserResponse? = response.body()
+                val data: RegisterResponse? = response.body()
                 if (data != null) {
-                    reg_userName.setText(data.accountname.toString())
-                    Toast.makeText(activity?.applicationContext, "Success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity?.applicationContext, "Update successfully", Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -88,7 +91,8 @@ class CuentaFragment : Fragment() {
             }
         })
 
-        disk_save.setOnClickListener {
+
+       disk_save.setOnClickListener {
             reg_userName.setEnabled(false)
             disk_save.setVisibility(View.INVISIBLE)
             val userUp = UserUpdate(reg_userName.text.toString(), reg_email.text.toString())
@@ -96,9 +100,13 @@ class CuentaFragment : Fragment() {
         }
 
         boton_eliminar.setOnClickListener{
-            val user = DeleteUser(email.toString())
+            val user = DeleteUser(loggedUser.toString())
             cuentaViewModel.deleteUser(user)
+        }
 
+        boton_logout.setOnClickListener {
+            val intent = Intent(activity?.applicationContext, RegistroActivity::class.java)
+            startActivity(intent)
         }
     }
 }

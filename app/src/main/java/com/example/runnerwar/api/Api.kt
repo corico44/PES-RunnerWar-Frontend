@@ -5,6 +5,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface Api {
+
     @Headers("Content-Type: application/json")
     @POST("/create")
     fun newUser(
@@ -44,4 +45,3 @@ interface Api {
     ) : Call<Codi>
 
 }
-

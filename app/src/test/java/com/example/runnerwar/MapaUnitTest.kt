@@ -1,9 +1,7 @@
 package com.example.runnerwar
 
 import com.example.runnerwar.ui.mapa.MapaFragment
-import com.example.runnerwar.ui.registro.RegistroActivity
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -14,6 +12,7 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class MapaUnitTest {
+
     var resultLugaresInteres = MapaFragment()
     private var Montjuic = LatLng(41.370951, 2.151949)
     private var ParcSantJordi = LatLng(41.364311,2.151776)

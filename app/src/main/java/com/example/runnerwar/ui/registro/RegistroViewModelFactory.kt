@@ -6,15 +6,9 @@ import com.example.runnerwar.Repositories.RegistroRepository
 import com.example.runnerwar.ui.cuenta.CuentaViewModel
 import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionViewModel
 
-class RegistroViewModelFactory (private val repository: RegistroRepository, private val value: Int) :ViewModelProvider.Factory {
+class RegistroViewModelFactory (private val repository : RegistroRepository, private val value: Int) :ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(value == 1) {
-            return RegistroViewModel(repository) as T
-        } else if (value == 2){
-            return SeleccionFaccionViewModel(repository) as T
-        } else {
-            return CuentaViewModel(repository) as T
-        }
+        return RegistroViewModel(repository) as T
     }
 
 }

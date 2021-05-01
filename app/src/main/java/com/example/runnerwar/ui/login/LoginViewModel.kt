@@ -1,28 +1,57 @@
-package com.example.runnerwar.ui.registro
+package com.example.runnerwar.ui.login
 
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.runnerwar.Model.RegisterResponse
+import androidx.lifecycle.viewModelScope
+import com.example.runnerwar.Model.*
+import com.example.runnerwar.Repositories.UserRepository
+import com.example.runnerwar.ui.registro.RegistroFormState
+import com.example.runnerwar.util.Session
+import kotlinx.coroutines.launch
 
-import com.example.runnerwar.Repositories.RegistroRepository
 import retrofit2.Response
+import java.security.MessageDigest
 
 
-class RegistroViewModel(private val repository: RegistroRepository) : ViewModel() {
+class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private val _response= MutableLiveData<Response<RegisterResponse>>()
-    val responseCreate: LiveData<Response<RegisterResponse>> = _response
+    private val _response= MutableLiveData<Codi>()
+    val responseCreate: LiveData<Codi> = _response
 
     private val _registroForm = MutableLiveData<RegistroFormState>()
     val registroFormState: LiveData<RegistroFormState> = _registroForm
 
 
-    fun singUpDataChanged(username: String,email: String, password: String) {
-        if (!isUserNameValid(username) ) {
-            _registroForm.value = RegistroFormState(usernameError = "Not a valid username" )
-        } else if (!isEmailValid(email) ) {
+    fun logIn(loginUser: LoginUser) {
+        viewModelScope.launch {
+            val res: Response<LoginResponse> = repository.login(loginUser)
+            var status: Codi = Codi(500)
+
+            if (res.isSuccessful){
+                val userRes : LoginResponse? = res.body()
+
+                if (userRes != null) {
+                    status = Codi(userRes.codi)
+                    if (status.result == 200) {
+                        val user : User = User(userRes._id,userRes.coins, userRes.faction, userRes.password, userRes.points, userRes.accountname)
+                        Session.setIdUsuario(user._id)
+                        repository.addUser(user)
+                    }
+                }
+            }
+            _response.value = status
+        }
+    }
+
+    fun hashString(input: String, algorithm: String): String    {
+        return MessageDigest.getInstance(algorithm)
+            .digest(input.toByteArray())
+            .fold("", { str, it -> str + "%02x".format(it) })
+    }
+
+    fun loginDataChanged(email: String, password: String) {
+        if (!isEmailValid(email) ) {
             _registroForm.value = RegistroFormState(emailError = "Not a valid email" )
         } else if (!isPasswordValid(password)) {
             if(!contieneMinuscula(password)){
@@ -44,10 +73,14 @@ class RegistroViewModel(private val repository: RegistroRepository) : ViewModel(
 
     // A placeholder username validation check
     private fun isEmailValid(email: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        //if (!email.contains('@')) {
+        //Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+        //} else {
+        //return email.isNotBlank()
+        //}
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
-
-
     private fun contieneMayuscula(a: String): Boolean {
         for(i in 0..(a.length-1)) {
             if (a[i] in 'A'..'Z') {

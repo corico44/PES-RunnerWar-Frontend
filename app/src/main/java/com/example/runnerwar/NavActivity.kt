@@ -16,6 +16,9 @@ class NavActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
+
+        var logged_user = intent.extras?.getString("email")
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         ActivityCompat.requestPermissions(this,
@@ -39,8 +42,5 @@ class NavActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
     }
-
-
-
 
 }
