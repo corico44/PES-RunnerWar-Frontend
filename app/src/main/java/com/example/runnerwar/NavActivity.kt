@@ -5,11 +5,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.runnerwar.Services.ContarPasosService
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 
 class NavActivity : AppCompatActivity() {
@@ -21,10 +23,17 @@ class NavActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        ActivityCompat.requestPermissions(this,
+        /*ActivityCompat.requestPermissions(this@NavActivity,
             arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
             ContarPasosService.RECORD_REQUEST_CODE
-        )
+        )*/
+
+        ContarPasosService.responsePasos.observe(this, Observer { response ->
+
+            pasosTextView.text = response.toString()
+
+        })
+
 
 
         Intent(this, ContarPasosService::class.java).also {
@@ -40,6 +49,11 @@ class NavActivity : AppCompatActivity() {
             )
         )*/
         navView.setupWithNavController(navController)
+
+
+
+
+
 
     }
 

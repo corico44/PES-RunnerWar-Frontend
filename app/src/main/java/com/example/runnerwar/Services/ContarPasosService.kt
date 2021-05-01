@@ -11,6 +11,8 @@ import android.hardware.SensorManager
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 
 class ContarPasosService : IntentService("ContarPasosService"), SensorEventListener{
@@ -18,15 +20,20 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
     private lateinit var msensorManager: SensorManager
     private lateinit var mSensor: Sensor
 
+
+
     init {
         instance = this
-     }
+    }
 
     companion object{
         private  lateinit var instance: ContarPasosService
+
         var isRunning = false
         var pasos = 0
         val RECORD_REQUEST_CODE = 101
+        private val _response= MutableLiveData<Int>()
+        val responsePasos: LiveData<Int> = _response
 
 
         fun stopService(){
@@ -52,7 +59,7 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
         }
 
         while (isRunning){
-            //Log.d("ContarPasosService","Running" )
+            //Log.d("ContarPasosService","Pasos: $pasos" )
         }
 
 
@@ -61,15 +68,15 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event!!.sensor == mSensor){
-
-            pasos = event.values[0].toInt()
+            pasos++
+            _response.value = pasos
             Log.d("ContarPasosService","Pasos: $pasos" )
 
         }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        TODO("Not yet implemented")
+
     }
 
 
