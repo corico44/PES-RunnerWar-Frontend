@@ -21,8 +21,6 @@ class MainActivity : AppCompatActivity() {
 
 
         //val intent = Intent(this@MainActivity, RegistroActivity::class.java)
-        var intent = Intent(this@MainActivity, NavActivity::class.java)
-        startActivity(intent)
 
         intent = Intent(this@MainActivity, LoginActivity::class.java)
         intent.putExtra("some_error", " ")
