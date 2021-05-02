@@ -28,15 +28,10 @@ class NavActivity : AppCompatActivity() {
             ContarPasosService.RECORD_REQUEST_CODE
         )*/
 
-        ContarPasosService.responsePasos.observe(this, Observer { response ->
-
-            pasosTextView.text = response.toString()
-
-        })
-
 
 
         Intent(this, ContarPasosService::class.java).also {
+            ContarPasosService.context = application
             startService(it)
         }
 
