@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".ui.seleccionFaccion.SeleccionFaccionActivity">
         </activity>
+        <activity android:name=".ui.cambiarFaccion.CambiarFaccionActivity"></activity>
         <activity android:name=".ui.registro.RegistroActivity">
         </activity>
         <activity

@@ -30,7 +30,10 @@ interface Api {
         @Body user: DeleteUser
     ) : Call<Codi>
 
-
-
+    @Headers("Content-Type: application/json")
+    @POST("/update/cuenta/faction")
+    fun changeFaction(
+        @Body faction: FactionForm
+    ) : Call<Codi>
 
 }
