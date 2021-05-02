@@ -14,14 +14,21 @@ import retrofit2.Response
 import java.security.MessageDigest
 
 class CambiarFaccionViewModel (private  val repository: UserRepository) : ViewModel(){
+
+    val readAllData: LiveData<User>
     private val _response= MutableLiveData<Response<Codi>>()
     val responseChangeFaction: LiveData<Response<Codi>> = _response
+
+    init {
+        readAllData = repository.readAllData
+    }
 
     fun changeFaction(faction: FactionForm) {
         viewModelScope.launch {
             val res: Response<Codi> = repository.changeFaction(faction)
             if (res.isSuccessful) {
-               repository.changeFaction(faction)
+                //Update local dataBase
+               repository.updateFaction(faction.faction)
             }
             _response.value = res
         }

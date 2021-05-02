@@ -52,11 +52,11 @@ class CambiarFaccionActivity : AppCompatActivity(){
         selCambiarFacViewModel.responseChangeFaction.observe(this@CambiarFaccionActivity, Observer{ response ->
             if (response.isSuccessful){
                 Toast.makeText(applicationContext, "Update faction successfully", Toast.LENGTH_SHORT).show()
-                val intent = Intent(applicationContext, CuentaFragment::class.java)
+                val intent = Intent(applicationContext, NavActivity::class.java)
                 startActivity(intent)
             }else{
                 Toast.makeText(applicationContext, "Update faction failed", Toast.LENGTH_SHORT).show()
-                val intent = Intent(applicationContext, CuentaFragment::class.java)
+                val intent = Intent(applicationContext, NavActivity::class.java)
                 startActivity(intent)
             }
 

@@ -53,6 +53,10 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
         userDao.updateAccountName(Session.getIdUsuario(), newUsername)
     }
 
+    suspend fun updateFaction(newFaction: String){
+        userDao.updateFaction(Session.getIdUsuario(), newFaction)
+    }
+
     suspend fun deleteUserFromLDB(){
         userDao.deleteUser(Session.getIdUsuario())
     }
