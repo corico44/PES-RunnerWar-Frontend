@@ -61,7 +61,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
 
         mapaViewModel.responseCreate.observe(activity!! , Observer {
             lugaresInteres = it
-            cosas()
+            añadirLugaresInteresMapa()
         })
 
         val root = inflater.inflate(com.example.runnerwar.R.layout.fragment_mapa, container, false)
@@ -75,42 +75,33 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect()
         }
-        //getLugaresInteres()
-        //println("TITULO: " + lugaresInteres.get(0)._id)
-        //println("LATITUD: " + lugaresInteres.get(0).latitud)
-        //println("LONGITUD: " + lugaresInteres.get(0).longitud)
-        //println("DESCRIPCION: " + lugaresInteres.get(0).descripcion)
         val mapFragment = childFragmentManager.findFragmentById(com.example.runnerwar.R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
     }
+    
+    fun radioLugarInteres(location: Location){
+        for(item in lugaresInteres!!){
+            //COMPROBAR QUE LA LATITUD Y LONGITUD VARIA SEGUN EL RADIO QUE VEMOS EN GOOGLE MAPS
+            val number = item.latitud.toString().split(".")
 
+            println("ENTRO")
+            println(number[1])
 
-    /*suspend fun getLugaresInteresSuspend() {
-        lugaresInteres = mapaViewModel.getLugaresInteres()!!
+        }
     }
 
-    fun getLugaresInteres() = runBlocking { // this: CoroutineScope
-        launch { // launch a new coroutine and continue
-            getLugaresInteresSuspend()
-        }
-    }*/
-
-    /*fun radioLugarInteres(location: Location){
-        for(item in lugaresInteres){
-            //COMPROBAR QUE LA LATITUD Y LONGITUD VARIA SEGUN EL RADIO QUE VEMOS EN GOOGLE MAPS
-            if((location.latitude >= (item.latitude + 0.01))){
-
-            }
-        }
-    }*/
-
-    fun cosas() {
+    fun añadirLugaresInteresMapa() {
         if(lugaresInteres != null){
             for(item in lugaresInteres!!){
                 val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
-                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(item.descripcion) })
+                val descripcion = "Coordenadas: (" + item.latitud + "),(" + item.longitud + ")"
+                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(descripcion) })
             }
         }
+    }
+
+    fun devolverLugaresInteres(): List<LugarInteresResponse>? {
+        return lugaresInteres
     }
 
 
@@ -173,6 +164,9 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         //stop location updates
         if (mGoogleApiClient != null) {
             mFusedLocationClient?.removeLocationUpdates(locationCallback)
+        }
+        if(lugaresInteres != null){
+            radioLugarInteres(location)
         }
     }
 
