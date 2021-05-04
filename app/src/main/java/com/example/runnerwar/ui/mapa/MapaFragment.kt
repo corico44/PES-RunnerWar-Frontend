@@ -43,6 +43,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     internal var mCurrLocationMarker: Marker? = null
     internal lateinit var mLastLocation: Location
     private var lugaresInteres: List<LugarInteresResponse>? = null
+    private var myList: MutableList<Circle> = mutableListOf<Circle>()
 
 
     override fun onCreateView(
@@ -78,16 +79,44 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     }
 
     fun añadirLugaresInteresMapa() {
+        var i = 0
         if(lugaresInteres != null){
             for(item in lugaresInteres!!){
                 val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
-                val descripcion = "Coordenadas: (" + item.latitud + "),(" + item.longitud + ")"
-                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(descripcion) })
+                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(item.descripcion) })
                 var circleOptions = CircleOptions()
                 circleOptions = circleOptions?.center(position)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
                     ?.strokeWidth(2f)!!
-                mMap?.addCircle(circleOptions)
+                var circle = mMap?.addCircle(circleOptions)
+                if (circle != null) {
+                    myList.add(i,circle)
+                }
+                ++i
             }
+            var loc = LatLng(41.377403, 2.147728)
+            for(cir in myList){
+                println("llamo x veces")
+                estaDentro(loc,cir)
+            }
+        }
+    }
+
+    fun estaDentro(location: LatLng, circle: Circle) {
+        val distance = FloatArray(2)
+        val currentLatitude = location.latitude
+        val currentLongitude = location.longitude
+        val circleLatitude = circle.center.latitude
+        val circleLongitude = circle.center.longitude
+
+        Location.distanceBetween(
+            currentLatitude, currentLongitude,
+            circleLatitude, circleLongitude, distance
+        )
+        if (distance[0] <= circle!!.radius) {
+            println("ESTOY DENTRO DEL CIRCULO " + circleLatitude + " " + circleLongitude)
+
+        } else {
+            println("ESTOY FUERA DEL CIRCULO")
         }
     }
 
@@ -99,6 +128,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
 
     override fun onMapReady(googleMap: GoogleMap?) {
        mMap = googleMap
+        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(41.399483, 2.169323), 15f));
        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
            if (ContextCompat.checkSelfPermission(activity!!,
                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
