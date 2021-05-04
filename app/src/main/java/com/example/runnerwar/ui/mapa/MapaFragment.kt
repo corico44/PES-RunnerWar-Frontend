@@ -2,6 +2,7 @@ package com.example.runnerwar.ui.mapa
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -24,10 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 
 
 class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,  LocationListener,GoogleApiClient.OnConnectionFailedListener{
@@ -78,17 +76,6 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         val mapFragment = childFragmentManager.findFragmentById(com.example.runnerwar.R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
     }
-    
-    fun radioLugarInteres(location: Location){
-        for(item in lugaresInteres!!){
-            //COMPROBAR QUE LA LATITUD Y LONGITUD VARIA SEGUN EL RADIO QUE VEMOS EN GOOGLE MAPS
-            val number = item.latitud.toString().split(".")
-
-            println("ENTRO")
-            println(number[1])
-
-        }
-    }
 
     fun añadirLugaresInteresMapa() {
         if(lugaresInteres != null){
@@ -96,9 +83,14 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
                 val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
                 val descripcion = "Coordenadas: (" + item.latitud + "),(" + item.longitud + ")"
                 mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(descripcion) })
+                var circleOptions = CircleOptions()
+                circleOptions = circleOptions?.center(position)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
+                    ?.strokeWidth(2f)!!
+                mMap?.addCircle(circleOptions)
             }
         }
     }
+
 
     fun devolverLugaresInteres(): List<LugarInteresResponse>? {
         return lugaresInteres
@@ -164,9 +156,6 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         //stop location updates
         if (mGoogleApiClient != null) {
             mFusedLocationClient?.removeLocationUpdates(locationCallback)
-        }
-        if(lugaresInteres != null){
-            radioLugarInteres(location)
         }
     }
 
