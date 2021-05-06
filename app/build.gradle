@@ -32,6 +32,11 @@ android {
     }
 }
 
+apply plugin: 'com.android.application'
+dependencies {
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
