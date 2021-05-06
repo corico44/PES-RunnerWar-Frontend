@@ -30,7 +30,11 @@ interface Api {
         @Body user: DeleteUser
     ) : Call<Codi>
 
-
+    @Headers("Content-Type: application/json")
+    @POST("/consult/other/account")
+    fun searchUser(
+        @Body searchUser: SearchUser
+    ) : Call<SearchResponse>
 
 
 }

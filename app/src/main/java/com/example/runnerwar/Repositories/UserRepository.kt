@@ -32,6 +32,11 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
         return RetrofitInstance.api.deleteUser(user).awaitResponse()
     }
 
+    suspend fun searchUser(searchUser: SearchUser) : Response<SearchResponse>{
+        return RetrofitInstance.api.searchUser(searchUser).awaitResponse()
+    }
+
+
 
     //Calls to Local Data Base
 

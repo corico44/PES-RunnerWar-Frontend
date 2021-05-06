@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
@@ -16,6 +17,7 @@ import com.example.runnerwar.Model.RegisterResponse
 import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
+import com.example.runnerwar.ui.buscarCuenta.SearchFragment
 import com.example.runnerwar.ui.registro.RegistroActivity
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
@@ -25,6 +27,7 @@ import kotlinx.android.synthetic.main.registro.*
 class CuentaFragment : Fragment() {
 
     private lateinit var cuentaViewModel: CuentaViewModel
+    private lateinit var searchFragment: SearchFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,6 +110,15 @@ class CuentaFragment : Fragment() {
         boton_logout.setOnClickListener {
             val intent = Intent(activity?.applicationContext, RegistroActivity::class.java)
             startActivity(intent)
+        }
+
+        boton_search.setOnClickListener{
+            val transaction: FragmentTransaction
+            transaction = fragmentManager?.beginTransaction()!!
+            transaction.replace(R.id.boton_search,searchFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+
         }
     }
 }
