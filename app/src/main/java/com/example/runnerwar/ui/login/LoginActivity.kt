@@ -25,6 +25,7 @@ import com.example.runnerwar.NavActivity
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
+import com.example.runnerwar.util.Session
 import kotlinx.android.synthetic.main.login.*
 
 
@@ -74,17 +75,28 @@ class LoginActivity : AppCompatActivity() {
         })
 
         loginViewModel.responseCreate.observe(this@LoginActivity, Observer {
-
             val statReg = it ?: return@Observer
             if (statReg.result == 200){
-                Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this@LoginActivity, NavActivity::class.java)
-                startActivity(intent)
+                loginViewModel.initServiceContarPasos(application)
             }
             else {
                 error.text = "Email or password incorrect"
             }
         })
+
+
+        loginViewModel.responseActivity.observe(this@LoginActivity, Observer {
+            val stat= it ?: return@Observer
+            if(stat.result ==200){
+                Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@LoginActivity, NavActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
+
+
+
 
         email.afterTextChanged {
             loginViewModel.loginDataChanged(

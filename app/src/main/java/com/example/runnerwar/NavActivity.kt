@@ -6,29 +6,39 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.runnerwar.Data.DailyActivity.ActivityDataBase
+import com.example.runnerwar.Data.User.UserDataBase
+import com.example.runnerwar.Factories.ActivityViewModelFactory
+import com.example.runnerwar.Repositories.ActivityRepository
 import com.example.runnerwar.Services.ContarPasosService
+import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_cuenta.*
+import kotlinx.coroutines.runBlocking
 
 class NavActivity : AppCompatActivity() {
+
+    private lateinit var navViewModel: NavViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
 
-        var logged_user = intent.extras?.getString("email")
-
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        /*ActivityCompat.requestPermissions(this@NavActivity,
-            arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
-            ContarPasosService.RECORD_REQUEST_CODE
-        )*/
+        val activityDao = ActivityDataBase.getDataBase(application).activityDao()
+        val repository: ActivityRepository = ActivityRepository(activityDao)
+        val viewModelFactory = ActivityViewModelFactory(repository)
+        navViewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(NavViewModel::class.java)
 
 
+        //navViewModel.initServiceContarPasos()
 
         Intent(this, ContarPasosService::class.java).also {
             ContarPasosService.context = application
@@ -45,11 +55,11 @@ class NavActivity : AppCompatActivity() {
         )*/
         navView.setupWithNavController(navController)
 
+    }
 
-
-
-
-
+     override fun onStop() {
+        super.onPause()
+        navViewModel.updateActivityData()
     }
 
 }

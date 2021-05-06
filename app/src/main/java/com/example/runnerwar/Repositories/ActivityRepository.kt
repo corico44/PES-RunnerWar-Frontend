@@ -1,21 +1,23 @@
 package com.example.runnerwar.Repositories
 
 import com.example.runnerwar.Data.DailyActivity.ActivityDao
-import com.example.runnerwar.Model.Activity
-import com.example.runnerwar.Model.ActivityForm
-import com.example.runnerwar.Model.Codi
+import com.example.runnerwar.Model.*
 import com.example.runnerwar.api.RetrofitInstance
 import retrofit2.Response
 import retrofit2.awaitResponse
 
 class ActivityRepository(private val activityDao: ActivityDao) {
 
-    suspend fun newActivity(activity: ActivityForm) : Response<Activity> {
+    suspend fun newActivity(activity: ActivityForm) : Response<ActivityResponse> {
         return RetrofitInstance.api.createActivity(activity).awaitResponse()
     }
 
-    suspend fun updateActivity(activity: Activity) : Response<Codi> {
+    suspend fun updateActivity(activity: ActivityUpdate) : Response<ActivityResponse> {
         return RetrofitInstance.api.updateActivity(activity).awaitResponse()
+    }
+
+    suspend fun getActivity(accountname : String , date: String) : Response<ActivityResponse>? {
+        return RetrofitInstance.api.getActivity(accountname, date)?.awaitResponse()
     }
 
 

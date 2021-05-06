@@ -1,8 +1,7 @@
 package com.example.runnerwar.Model
 
-import java.util.*
-
-data class ActivityForm(
+data class ActivityUpdate(
     var accountname : String,
-    var date: String
+    var date: String,
+    var km: Int
 )

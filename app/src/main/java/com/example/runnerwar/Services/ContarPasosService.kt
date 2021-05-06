@@ -9,15 +9,21 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Build
+import android.os.Debug
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.runnerwar.Data.DailyActivity.ActivityDataBase
 import com.example.runnerwar.Model.Activity
+import com.example.runnerwar.Model.ActivityForm
+import com.example.runnerwar.Model.ActivityResponse
+import com.example.runnerwar.Model.ActivityUpdate
 import com.example.runnerwar.Repositories.ActivityRepository
 import com.example.runnerwar.util.Session
 import kotlinx.coroutines.runBlocking
+import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -26,7 +32,7 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
 
     private lateinit var msensorManager: SensorManager
     private lateinit var mSensor: Sensor
-    private val repository : ActivityRepository
+
 
 
 
@@ -35,34 +41,30 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
         val activityDao = ActivityDataBase.getDataBase(context).activityDao()
         repository = ActivityRepository(activityDao)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            setDate()
-        }
 
-        activity = existActivity()
 
-        if (activity == null) { //Activity dont exist
-            activity = Activity(Session.getIdUsuario(), date, Session.getAccountname(), 0,0 )
-            runBlocking { repository.createActivityLDB(activity!!) } // Create a new activity
-        }
+
+
+
     }
 
 
     companion object{
         private  lateinit var instance: ContarPasosService
         private lateinit var date: String
-        private var activity : Activity? = null
+        private lateinit var activity : Activity
         lateinit var context: Context
+        private  lateinit var  repository : ActivityRepository
         var isRunning = false
 
 
         private val _response= MutableLiveData<Activity>()
         val dataActivity: LiveData<Activity> = _response
-        /*fun stopService(){
-            isRunning= false
-            instance.stopSelf()
 
-        }*/
+        fun getActivitySession() : Activity{
+            return activity!!
+        }
+
     }
 
 
@@ -70,6 +72,7 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
     override fun onHandleIntent(intent: Intent?) {
         msensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mSensor =  msensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+        activity = runBlocking { repository.getActivityLDB(Session.getIdUsuario(), Session.getCurrentDate()) }
 
         isRunning = true
 
@@ -86,10 +89,10 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
 
         if (event!!.sensor == mSensor){
             activity!!.steps++
-            runBlocking { repository.updateStepsLDB(Session.getIdUsuario(), date, activity!!.steps) }
+            runBlocking { repository.updateStepsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity!!.steps) }
             if (activity!!.steps%20 == 0){
                 activity!!.points = activity!!.steps/20
-                runBlocking { repository.updatePointsLDB(Session.getIdUsuario(), date, activity!!.points) }
+                runBlocking { repository.updatePointsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity!!.points) }
             }
             _response.value = activity
         }
@@ -99,9 +102,6 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
 
     }
 
-    private fun existActivity(): Activity {
-        return runBlocking { repository.getActivityLDB(Session.getIdUsuario(), date) }
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setDate() {

@@ -31,24 +31,26 @@ interface Api {
         @Body user: DeleteUser
     ) : Call<Codi>
 
+
+
     @Headers("Content-Type: application/json")
     @POST("/create/activity")
     fun createActivity(
         @Body activiy: ActivityForm
-    ) : Call<Activity>
+    ) : Call<ActivityResponse>
 
 
     @Headers("Content-Type: application/json")
-    @GET("/create/activity")
+    @GET("/consult/activity")
     fun getActivity(
-        @Body user: DeleteUser
-    ) : Call<Activity>
+        @Query("accountname") accountname : String, @Query("date") date: String
+    ) : Call<ActivityResponse>?
 
 
     @Headers("Content-Type: application/json")
-    @PUT("/create/activity")
+    @PUT("/update/activity")
     fun updateActivity(
-        @Body activiy: Activity
-    ) : Call<Codi>
+        @Body activiy: ActivityUpdate
+    ) : Call<ActivityResponse>
 
 }

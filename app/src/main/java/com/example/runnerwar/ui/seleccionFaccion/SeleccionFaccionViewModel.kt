@@ -35,7 +35,7 @@ class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewM
                     status = Codi(userRes.codi!!)
                     if (status.result == 200) {
                         val user : User = User(userRes._id!!,userRes.coins!!, userRes.faction!!, userRes.password!!, userRes.points!!, userRes.accountname!!)
-                        Session.setIdUsuario(user._id)
+                        Session.setSession(user._id, user.accountname)
                         repository.addUser(user)
                     }
                 }
