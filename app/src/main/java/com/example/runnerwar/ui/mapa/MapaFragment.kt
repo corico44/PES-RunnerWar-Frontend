@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Factories.LugaresViewModelFactory
 import com.example.runnerwar.Model.LugarInteresResponse
+import com.example.runnerwar.Model.ZonaDeConfrontacion
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -43,6 +44,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     internal var mCurrLocationMarker: Marker? = null
     internal lateinit var mLastLocation: Location
     private var lugaresInteres: List<LugarInteresResponse>? = null
+    private var zonasConfrontacion: List<ZonaDeConfrontacion>? = null
 
 
     override fun onCreateView(
@@ -62,10 +64,18 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
             añadirLugaresInteresMapa()
         })
 
+        mapaViewModel.responseZC.observe(activity!! , Observer {
+            zonasConfrontacion = it
+            añadirZonasDeConfrontacionMapa()
+        })
+
         val root = inflater.inflate(com.example.runnerwar.R.layout.fragment_mapa, container, false)
 
         return root
     }
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view,savedInstanceState)
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(activity!!)
@@ -89,6 +99,20 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
                 mMap?.addCircle(circleOptions)
             }
         }
+    }
+
+    private fun añadirZonasDeConfrontacionMapa() {
+        /*if(zonasConfrontacion != null){
+            for(item in zonasConfrontacion!!){
+                val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
+                val descripcion = "Coordenadas: (" + item.latitud + "),(" + item.longitud + ")"
+                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(descripcion) })
+                var circleOptions = CircleOptions()
+                circleOptions = circleOptions?.center(position)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
+                    ?.strokeWidth(2f)!!
+                mMap?.addCircle(circleOptions)
+            }
+        }*/
     }
 
 

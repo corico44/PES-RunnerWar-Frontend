@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.example.runnerwar.Repositories.UserRepository
+import com.example.runnerwar.Repositories.ZonasDeConfrontacionRepository
 import com.example.runnerwar.ui.cuenta.CuentaViewModel
 import com.example.runnerwar.ui.login.LoginViewModel
 import com.example.runnerwar.ui.mapa.MapaViewModel
@@ -14,7 +15,8 @@ class LugaresViewModelFactory(private val repository: LugarInteresRepository, pr
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if ( numView == 1){
             println("ENTRO PARA CREAR LA VIEWMODEL")
-            return MapaViewModel(repository) as T
+            val repositoryZC = ZonasDeConfrontacionRepository()
+            return MapaViewModel(repository, repositoryZC) as T
         }
         else{
             return null as T

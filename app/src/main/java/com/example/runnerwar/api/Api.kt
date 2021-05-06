@@ -36,4 +36,16 @@ interface Api {
     fun getLugaresInteres() : Call<List<LugarInteresResponse>>
 
 
+    //Zonas de Confrontacion
+
+    @Headers("Content-Type: application/json")
+    @GET("/zona_confrontacion")
+    fun getZonasDeConfrontacion() : Call<List<ZonaDeConfrontacion>>
+
+    @Headers("Content-Type: application/json")
+    @GET("/consult/zona_confrontacion")
+    fun getZonaDeConfrontacion(
+        @Query("nombre") nombreZona: String
+    ) : Call<ZonaDeConfrontacion>
+
 }
