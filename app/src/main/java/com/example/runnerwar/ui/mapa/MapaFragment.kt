@@ -27,6 +27,16 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import android.R
+
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.LatLng
+
+
+
+
+
+
 
 
 class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,  LocationListener,GoogleApiClient.OnConnectionFailedListener{
@@ -102,17 +112,28 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     }
 
     private fun añadirZonasDeConfrontacionMapa() {
-        /*if(zonasConfrontacion != null){
+        if(zonasConfrontacion != null){
             for(item in zonasConfrontacion!!){
-                val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
+
+                val polygonOptions = PolygonOptions().add(
+                    LatLng(item.punto1[0], item.punto1[1]),
+                    LatLng(item.punto2[0], item.punto2[1]),
+                    LatLng(item.punto3[0], item.punto3[1]),
+                    LatLng(item.punto4[0], item.punto4[1])
+                ).strokeColor(Color.GRAY)
+                    .fillColor(0x303C4144)
+                    .strokeWidth(5.0f)
+                mMap?.addPolygon(polygonOptions)
+
+               /* val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
                 val descripcion = "Coordenadas: (" + item.latitud + "),(" + item.longitud + ")"
                 mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(descripcion) })
                 var circleOptions = CircleOptions()
                 circleOptions = circleOptions?.center(position)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
                     ?.strokeWidth(2f)!!
-                mMap?.addCircle(circleOptions)
+                mMap?.addCircle(circleOptions)*/
             }
-        }*/
+        }
     }
 
 
@@ -133,7 +154,15 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
            buildGoogleApiClient()
            mMap!!.isMyLocationEnabled = true
        }
+
+        val success = googleMap!!.setMapStyle(
+            MapStyleOptions.loadRawResourceStyle(
+                activity, com.example.runnerwar.R.raw.style_map
+            )
+        )
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(41.39250648830166, 2.160515736802735),13f))
         mapaViewModel.getLugaresInteres()
+        mapaViewModel.getZonasDeConfrontacion()
    }
 
     @Synchronized

@@ -2,10 +2,10 @@ package com.example.runnerwar.Model
 
 data class ZonaDeConfrontacion(
     var _id : String,
-    var punto1: String,
-    var punto2: String,
-    var punto3: String,
-    var punto4: String,
+    var punto1: Array<Double>,
+    var punto2: Array<Double>,
+    var punto3: Array<Double>,
+    var punto4:  Array<Double>,
     var puntuacion: Int,
     var descripcion : String,
     var dominant_team: String,
