@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">RunnerWar</string>
     <string name="action_settings">Settings</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -15,4 +16,8 @@
     <string name="title_calendario">Calendario</string>
     <string name="title_cuenta">Cuenta</string>
     <string name="google_maps_key">AIzaSyCde9hpifqdn88nwA1vY6tX9feFiwKXsCI</string>
+    <string name="api_key">46z48ju2p7dt</string>
+    <string name="search"> + </string>
+
+
 </resources>

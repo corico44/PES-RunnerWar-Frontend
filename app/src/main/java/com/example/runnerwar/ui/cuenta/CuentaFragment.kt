@@ -17,6 +17,7 @@ import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
+import io.getstream.chat.android.client.ChatClient
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.registro.*
 class CuentaFragment : Fragment() {
 
     private lateinit var cuentaViewModel: CuentaViewModel
+    private val client = ChatClient.instance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,6 +107,7 @@ class CuentaFragment : Fragment() {
         }
 
         boton_logout.setOnClickListener {
+            client.disconnect()
             val intent = Intent(activity?.applicationContext, RegistroActivity::class.java)
             startActivity(intent)
         }

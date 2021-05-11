@@ -21,11 +21,11 @@ class CalendarioFragment : Fragment() {
     ): View? {
         calendarioViewModel =
             ViewModelProviders.of(this).get(CalendarioViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_chat, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        calendarioViewModel.text.observe(viewLifecycleOwner, Observer {
+        val root = inflater.inflate(R.layout.fragment_channel, container, false)
+        //val textView: TextView = root.findViewById(R.id.text_notifications)
+        /*calendarioViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
-        })
+        })*/
         return root
     }
 }

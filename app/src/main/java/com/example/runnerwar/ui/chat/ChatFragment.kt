@@ -1,31 +1,66 @@
 package com.example.runnerwar.ui.chat
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import com.example.runnerwar.R
+import com.getstream.sdk.chat.viewmodel.MessageInputViewModel
+import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel
+import io.getstream.chat.android.ui.message.input.viewmodel.bindView
+import io.getstream.chat.android.ui.message.list.header.viewmodel.MessageListHeaderViewModel
+import io.getstream.chat.android.ui.message.list.header.viewmodel.bindView
+import io.getstream.chat.android.ui.message.list.viewmodel.bindView
+import io.getstream.chat.android.ui.message.list.viewmodel.factory.MessageListViewModelFactory
+import kotlinx.android.synthetic.main.fragment_chat.view.*
+
+
+
 
 class ChatFragment : Fragment() {
 
-    private lateinit var chatViewModel: ChatViewModel
+    private var channelId: String? = null
+
+    private lateinit var root : View
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            channelId = it.getString("cid")
+        }
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        chatViewModel =
-            ViewModelProviders.of(this).get(ChatViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_chat, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        chatViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        // Inflate the layout for this fragment
+
+        root = inflater.inflate(R.layout.fragment_chat, container, false)
+
+        root.messagesHeaderView.setBackButtonClickListener{
+            requireActivity().onBackPressed()
+        }
+
+        setupMessage()
+
+
         return root
     }
+
+    private fun setupMessage() {
+        val factory = MessageListViewModelFactory(cid = channelId!!)
+
+        val messageListHeaderViewModel: MessageListHeaderViewModel by viewModels { factory }
+        val messageListViewModel: MessageListViewModel by viewModels { factory }
+        val messageInputViewModel: MessageInputViewModel by viewModels { factory }
+
+        messageListHeaderViewModel.bindView(root.messagesHeaderView, viewLifecycleOwner)
+        messageListViewModel.bindView(root.messageList, viewLifecycleOwner)
+        messageInputViewModel.bindView(root.messageInputView, viewLifecycleOwner)
+
+    }
+
 }
