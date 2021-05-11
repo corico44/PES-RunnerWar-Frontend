@@ -127,7 +127,7 @@ class MapaFragment : Fragment(),
         }
     }
 
-    
+
     fun estaDentro(location: Location, circles: MutableList<Circle>) {
         for(i in circles.indices){
             val distance = FloatArray(2)
