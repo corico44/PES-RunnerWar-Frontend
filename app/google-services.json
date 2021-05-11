@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1054517802738",
+    "project_id": "runnerwar",
+    "storage_bucket": "runnerwar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054517802738:android:2587fcaeee5cb4613e826b",
+        "android_client_info": {
+          "package_name": "com.example.runnerwar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054517802738-1ra88vp8rnhfg8qk23i4sklios7i1m6d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9JMZevRZOlSGH1MU-ZbYXucV2-g57LKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054517802738-1ra88vp8rnhfg8qk23i4sklios7i1m6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

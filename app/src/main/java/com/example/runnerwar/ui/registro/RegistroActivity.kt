@@ -28,15 +28,21 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.common.SignInButton
-import com.google.android.gms.common.api.GoogleApiClient
 
 
 class RegistroActivity : AppCompatActivity() {
 
     private val RC_SIGN_IN = 10
+
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var  registroViewModel: RegistroViewModel
 
@@ -48,7 +54,8 @@ class RegistroActivity : AppCompatActivity() {
         // the GoogleSignInAccount will be non-null.
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        val account = GoogleSignIn.getLastSignedInAccount(this)
+        val currentUser = auth.currentUser
+
         //updateUI(account)
     }
 
@@ -59,12 +66,14 @@ class RegistroActivity : AppCompatActivity() {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
 
         // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        auth = Firebase.auth
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registro)
@@ -183,16 +192,45 @@ class RegistroActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.w("RC", "llega aqui")
         super.onActivityResult(requestCode, resultCode, data)
-        Log.w("RC", RC_SIGN_IN.toString() + " " +  requestCode.toString())
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
+        if (requestCode == RC_SIGN_IN) {  if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+                Log.d("success", "firebaseAuthWithGoogle:" + account.id)
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w("fail", "Google sign in failed", e)
+            }
         }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("success", "signInWithCredential:success")
+                    val user = auth.currentUser
+                    val intent = Intent(this@RegistroActivity, SeleccionFaccionActivity::class.java)
+                    if (user != null) {
+                        intent.putExtra("username", user.displayName.toString())
+                        intent.putExtra("email", user.email.toString())
+                        intent.putExtra("password", user.hashCode().toString())
+                    }
+                    startActivity(intent)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("fail", "signInWithCredential:failure", task.exception)
+                    val intent = Intent(this@RegistroActivity,this@RegistroActivity::class.java)
+                    startActivity(intent)
+                }
+            }
     }
 
     fun signIn() {
