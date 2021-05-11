@@ -35,5 +35,10 @@ interface Api {
     @GET("/lugar_interes")
     fun getLugaresInteres() : Call<List<LugarInteresResponse>>
 
+    @Headers("Content-Type: application/json")
+    @PUT("/points/add")
+    fun updatePoints(
+        @Body pointsUpdate: PointsUpdate
+    ) : Call<LoginResponse>
 
 }

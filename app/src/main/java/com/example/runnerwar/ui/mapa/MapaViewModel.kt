@@ -32,4 +32,12 @@ class MapaViewModel(private val repository: LugarInteresRepository) : ViewModel(
             }
         }
     }
+
+
+    fun updatePoints(lu: PointsUpdate) {
+        viewModelScope.launch {
+            val res: Response<LoginResponse> = repository.updatePoints(lu)
+
+        }
+    }
 }

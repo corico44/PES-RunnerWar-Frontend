@@ -17,6 +17,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Factories.LugaresViewModelFactory
 import com.example.runnerwar.Model.LugarInteresResponse
+import com.example.runnerwar.Model.PointsUpdate
+import com.example.runnerwar.NavActivity
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -26,10 +28,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.handy.opinion.utils.LocationHelper
-import com.google.android.gms.maps.model.MarkerOptions
-
-
-
 
 
 class MapaFragment : Fragment(),
@@ -51,6 +49,7 @@ class MapaFragment : Fragment(),
     private var lugaresInteres: List<LugarInteresResponse>? = null
     private var myList: MutableList<Circle> = mutableListOf<Circle>()
     private var estaDentro: MutableList<Boolean> = mutableListOf<Boolean>()
+    private var email: String? = null
 
 
     override fun onCreateView(
@@ -69,6 +68,10 @@ class MapaFragment : Fragment(),
             lugaresInteres = it
             añadirLugaresInteresMapa()
         })
+
+        val activity: NavActivity? = activity as NavActivity?
+        email = activity?.getMyEmail()
+
         val root = inflater.inflate(com.example.runnerwar.R.layout.fragment_mapa, container, false)
 
         return root
@@ -83,8 +86,6 @@ class MapaFragment : Fragment(),
                 if(!myList.isEmpty()){
                     estaDentro(mLastLocation,myList)
                 }
-                //val text = "Location: " + mLastLocation.latitude + "," + mLastLocation.longitude
-                //Toast.makeText(activity!!,text, Toast.LENGTH_SHORT).show()
             }
         })
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(activity!!)
@@ -126,8 +127,7 @@ class MapaFragment : Fragment(),
         }
     }
 
-
-
+    
     fun estaDentro(location: Location, circles: MutableList<Circle>) {
         for(i in circles.indices){
             val distance = FloatArray(2)
@@ -144,17 +144,18 @@ class MapaFragment : Fragment(),
 
             if (distance[0] <= circles[i]!!.radius) {
                 if(!estaDentro[i]) {
-                    Toast.makeText(activity!!, "ESTAS DENTRO DE UN LUGAR DE INTERES", Toast.LENGTH_SHORT).show()
+                    var lu : PointsUpdate? = email?.let { PointsUpdate(it, 100) }
+                    if (lu != null) {
+                        mapaViewModel.updatePoints(lu)
+                    }
+                    Toast.makeText(activity!!, "Estas dentro de un lugar de interes", Toast.LENGTH_SHORT).show()
                     estaDentro[i] = true
-
                 }
             }
+
             else {
-                //estaDentroLugarInteres = false
                 estaDentro[i] = false
             }
-            //var texto = "El valor del bool es " + estaDentro[i].toString()
-            //Toast.makeText(activity!!, texto, Toast.LENGTH_SHORT).show()
         }
 
     }

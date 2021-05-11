@@ -14,12 +14,13 @@ import kotlinx.android.synthetic.main.fragment_cuenta.*
 
 class NavActivity : AppCompatActivity() {
 
+    private var email: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
 
-        var logged_user = intent.extras?.getString("email")
-
+        email = intent.extras?.getString("email").toString()
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -32,6 +33,10 @@ class NavActivity : AppCompatActivity() {
         )*/
         navView.setupWithNavController(navController)
 
+    }
+
+    fun getMyEmail(): String? {
+        return email
     }
 
 }
