@@ -27,7 +27,6 @@ import kotlinx.android.synthetic.main.registro.*
 class CuentaFragment : Fragment() {
 
     private lateinit var cuentaViewModel: CuentaViewModel
-    private lateinit var searchFragment: SearchFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -113,12 +112,11 @@ class CuentaFragment : Fragment() {
         }
 
         boton_search.setOnClickListener{
+            //androidx.appcompat.widget.AppCompatImageButton cannot be cast to android.view.ViewGroup
             val transaction: FragmentTransaction
             transaction = fragmentManager?.beginTransaction()!!
-            transaction.replace(R.id.boton_search,searchFragment)
-            transaction.addToBackStack(null)
+            transaction.replace(R.id.boton_search,SearchFragment())
             transaction.commit()
-
         }
     }
 }
