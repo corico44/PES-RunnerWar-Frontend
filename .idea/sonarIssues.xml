@@ -98,6 +98,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/runnerwar/ui/mapa/LocationHelper.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/runnerwar/ui/mapa/MapaFragment.kt">
           <value>
             <set />

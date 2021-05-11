@@ -21,14 +21,20 @@ import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.handy.opinion.utils.LocationHelper
+import com.google.android.gms.maps.model.MarkerOptions
 
 
-class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,  LocationListener,GoogleApiClient.OnConnectionFailedListener{
+
+
+
+class MapaFragment : Fragment(),
+
+    OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     private lateinit var mapaViewModel: MapaViewModel
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -44,6 +50,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     internal lateinit var mLastLocation: Location
     private var lugaresInteres: List<LugarInteresResponse>? = null
     private var myList: MutableList<Circle> = mutableListOf<Circle>()
+    private var estaDentro: MutableList<Boolean> = mutableListOf<Boolean>()
 
 
     override fun onCreateView(
@@ -62,13 +69,24 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
             lugaresInteres = it
             añadirLugaresInteresMapa()
         })
-
         val root = inflater.inflate(com.example.runnerwar.R.layout.fragment_mapa, container, false)
 
         return root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view,savedInstanceState)
+        LocationHelper().startListeningUserLocation(activity!!, object : LocationHelper.MyLocationListener {
+            override fun onLocationChanged(location: Location) {
+                // Here you got user location :)
+                mLastLocation = location
+                //addToMap(mLastLocation)
+                if(!myList.isEmpty()){
+                    estaDentro(mLastLocation,myList)
+                }
+                //val text = "Location: " + mLastLocation.latitude + "," + mLastLocation.longitude
+                //Toast.makeText(activity!!,text, Toast.LENGTH_SHORT).show()
+            }
+        })
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(activity!!)
         var mGoogleApiClient: GoogleApiClient? = null
         if (mGoogleApiClient != null) {
@@ -93,54 +111,69 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
                 }
                 ++i
             }
-            var loc = LatLng(41.377403, 2.147728)
-            for(cir in myList){
-                println("llamo x veces")
-                estaDentro(loc,cir)
+            var loc = LatLng(41.379961, 2.134193)
+            mMap?.addMarker(loc?.let { MarkerOptions().position(it)})
+            var circleOptions = CircleOptions()
+            circleOptions = circleOptions?.center(loc)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
+                ?.strokeWidth(2f)!!
+            var circle = mMap?.addCircle(circleOptions)
+            if (circle != null) {
+                myList.add(circle)
             }
         }
-    }
-
-    fun estaDentro(location: LatLng, circle: Circle) {
-        val distance = FloatArray(2)
-        val currentLatitude = location.latitude
-        val currentLongitude = location.longitude
-        val circleLatitude = circle.center.latitude
-        val circleLongitude = circle.center.longitude
-
-        Location.distanceBetween(
-            currentLatitude, currentLongitude,
-            circleLatitude, circleLongitude, distance
-        )
-        if (distance[0] <= circle!!.radius) {
-            println("ESTOY DENTRO DEL CIRCULO " + circleLatitude + " " + circleLongitude)
-
-        } else {
-            println("ESTOY FUERA DEL CIRCULO")
+        for(i in myList.indices){
+            estaDentro.add(false)
         }
     }
 
 
-    fun devolverLugaresInteres(): List<LugarInteresResponse>? {
-        return lugaresInteres
+
+    fun estaDentro(location: Location, circles: MutableList<Circle>) {
+        for(i in circles.indices){
+            val distance = FloatArray(2)
+            val currentLatitude = location.latitude
+            val currentLongitude = location.longitude
+            val circleLatitude = circles[i].center.latitude
+            val circleLongitude = circles[i].center.longitude
+
+            Location.distanceBetween(
+                currentLatitude, currentLongitude,
+                circleLatitude, circleLongitude, distance
+            )
+
+
+            if (distance[0] <= circles[i]!!.radius) {
+                if(!estaDentro[i]) {
+                    Toast.makeText(activity!!, "ESTAS DENTRO DE UN LUGAR DE INTERES", Toast.LENGTH_SHORT).show()
+                    estaDentro[i] = true
+
+                }
+            }
+            else {
+                //estaDentroLugarInteres = false
+                estaDentro[i] = false
+            }
+            //var texto = "El valor del bool es " + estaDentro[i].toString()
+            //Toast.makeText(activity!!, texto, Toast.LENGTH_SHORT).show()
+        }
+
     }
 
-
     override fun onMapReady(googleMap: GoogleMap?) {
-       mMap = googleMap
-        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(41.399483, 2.169323), 15f));
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-           if (ContextCompat.checkSelfPermission(activity!!,
-                   Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-               buildGoogleApiClient()
-               mMap!!.isMyLocationEnabled = true
-           }
-       } else {
-           buildGoogleApiClient()
-           mMap!!.isMyLocationEnabled = true
-       }
+        mMap = googleMap
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(activity!!,
+                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient()
+                mMap!!.isMyLocationEnabled = true
+            }
+        } else {
+            buildGoogleApiClient()
+            mMap!!.isMyLocationEnabled = true
+        }
         mapaViewModel.getLugaresInteres()
    }
+
 
     @Synchronized
     protected fun buildGoogleApiClient() {
@@ -151,6 +184,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         mGoogleApiClient!!.connect()
 
     }
+
 
     override fun onConnected(p0: Bundle?) {
         mLocationRequest = LocationRequest()
@@ -165,30 +199,6 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         }
     }
 
-    override fun onLocationChanged(location: Location) {
-
-        mLastLocation = location
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker!!.remove()
-        }
-        //Place current location marker
-        val latLng = LatLng(location.latitude, location.longitude)
-        val markerOptions = MarkerOptions()
-        markerOptions.position(latLng)
-        markerOptions.title("Current Position")
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-        mCurrLocationMarker = mMap!!.addMarker(markerOptions)
-
-        //move map camera
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15f))
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            mFusedLocationClient?.removeLocationUpdates(locationCallback)
-        }
-    }
-
     override fun onConnectionFailed(connectionResult: ConnectionResult) {
         Toast.makeText(activity?.application!!,"connection failed", Toast.LENGTH_SHORT).show()
     }
@@ -196,4 +206,5 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     override fun onConnectionSuspended(p0: Int) {
         Toast.makeText(activity?.application!!,"connection suspended", Toast.LENGTH_SHORT).show()
     }
+
 }

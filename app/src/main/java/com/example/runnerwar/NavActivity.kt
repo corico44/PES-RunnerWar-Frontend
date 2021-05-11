@@ -1,15 +1,19 @@
 package com.example.runnerwar
 
 import android.content.Intent
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.handy.opinion.utils.LocationHelper
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 
 class NavActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
