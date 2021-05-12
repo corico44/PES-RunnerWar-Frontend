@@ -33,6 +33,10 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
         return RetrofitInstance.api.changeFaction(faction).awaitResponse()
     }
 
+    suspend fun dailyLogin(email: MailForm) : Response<Codi> {
+        return RetrofitInstance.api.dailyLogin(email).awaitResponse()
+    }
+
     suspend fun deleteUser(user: DeleteUser) : Response<Codi>{
         return RetrofitInstance.api.deleteUser(user).awaitResponse()
     }
