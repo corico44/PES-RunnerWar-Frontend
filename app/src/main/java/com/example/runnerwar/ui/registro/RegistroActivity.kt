@@ -40,7 +40,6 @@ import com.google.android.gms.common.SignInButton
 
 class RegistroActivity : AppCompatActivity() {
 
-    private val RC_SIGN_IN = 10
 
     private lateinit var auth: FirebaseAuth
 
@@ -54,26 +53,28 @@ class RegistroActivity : AppCompatActivity() {
         // the GoogleSignInAccount will be non-null.
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        val currentUser = auth.currentUser
 
         //updateUI(account)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
-
-        // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         auth = Firebase.auth
+
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+
+
+
+        // Build a GoogleSignInClient with the options specified by gso.
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registro)
@@ -194,6 +195,8 @@ class RegistroActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+
+        Log.w("2", "entra result")
         if (requestCode == RC_SIGN_IN) {  if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
@@ -210,6 +213,7 @@ class RegistroActivity : AppCompatActivity() {
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
+        Log.w("2", "entra auth with google")
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
@@ -242,6 +246,10 @@ class RegistroActivity : AppCompatActivity() {
         val result = startActivityForResult(signInIntent, RC_SIGN_IN)
         Log.w("res", result.toString())
         Log.w("2.3", "pasa activity for result")
+    }
+
+    companion object {
+        private const val RC_SIGN_IN = 9001
     }
 }
 
