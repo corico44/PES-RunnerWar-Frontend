@@ -79,6 +79,7 @@ class LoginActivity : AppCompatActivity() {
             if (statReg.result == 200){
                 Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@LoginActivity, NavActivity::class.java)
+                intent.putExtra("email", email.text.toString())
                 startActivity(intent)
             }
             else {

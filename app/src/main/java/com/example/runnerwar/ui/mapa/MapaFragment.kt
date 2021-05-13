@@ -15,20 +15,25 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.LugaresViewModelFactory
 import com.example.runnerwar.Model.LugarInteresResponse
+import com.example.runnerwar.Model.PointsUpdate
+import com.example.runnerwar.NavActivity
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.handy.opinion.utils.LocationHelper
 
 
-class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,  LocationListener,GoogleApiClient.OnConnectionFailedListener{
+class MapaFragment : Fragment(),
+
+    OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     private lateinit var mapaViewModel: MapaViewModel
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -43,6 +48,9 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     internal var mCurrLocationMarker: Marker? = null
     internal lateinit var mLastLocation: Location
     private var lugaresInteres: List<LugarInteresResponse>? = null
+    private var myList: MutableList<Circle> = mutableListOf<Circle>()
+    private var estaDentro: MutableList<Boolean> = mutableListOf<Boolean>()
+    private var email: String? = null
 
 
     override fun onCreateView(
@@ -50,8 +58,8 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val repository = LugarInteresRepository()
+        val userDao = UserDataBase.getDataBase(activity?.application!!).userDao()
+        val repository = LugarInteresRepository(userDao)
         val viewModelFactory = LugaresViewModelFactory(repository, 1)
 
         mapaViewModel = ViewModelProviders.of(this, viewModelFactory)
@@ -62,12 +70,25 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
             añadirLugaresInteresMapa()
         })
 
+        val activity: NavActivity? = activity as NavActivity?
+        email = activity?.getMyEmail()
+
         val root = inflater.inflate(com.example.runnerwar.R.layout.fragment_mapa, container, false)
 
         return root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view,savedInstanceState)
+        LocationHelper().startListeningUserLocation(activity!!, object : LocationHelper.MyLocationListener {
+            override fun onLocationChanged(location: Location) {
+                // Here you got user location :)
+                mLastLocation = location
+                //addToMap(mLastLocation)
+                if(!myList.isEmpty()){
+                    estaDentro(mLastLocation,myList)
+                }
+            }
+        })
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(activity!!)
         var mGoogleApiClient: GoogleApiClient? = null
         if (mGoogleApiClient != null) {
@@ -78,39 +99,83 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     }
 
     fun añadirLugaresInteresMapa() {
+        var i = 0
         if(lugaresInteres != null){
             for(item in lugaresInteres!!){
                 val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
-                val descripcion = "Coordenadas: (" + item.latitud + "),(" + item.longitud + ")"
-                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(descripcion) })
+                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(item.descripcion) })
                 var circleOptions = CircleOptions()
                 circleOptions = circleOptions?.center(position)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
                     ?.strokeWidth(2f)!!
-                mMap?.addCircle(circleOptions)
+                var circle = mMap?.addCircle(circleOptions)
+                if (circle != null) {
+                    myList.add(i,circle)
+                }
+                ++i
             }
+            var loc = LatLng(41.379961, 2.134193)
+            mMap?.addMarker(loc?.let { MarkerOptions().position(it)})
+            var circleOptions = CircleOptions()
+            circleOptions = circleOptions?.center(loc)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
+                ?.strokeWidth(2f)!!
+            var circle = mMap?.addCircle(circleOptions)
+            if (circle != null) {
+                myList.add(circle)
+            }
+        }
+        for(i in myList.indices){
+            estaDentro.add(false)
         }
     }
 
 
-    fun devolverLugaresInteres(): List<LugarInteresResponse>? {
-        return lugaresInteres
+    fun estaDentro(location: Location, circles: MutableList<Circle>) {
+        for(i in circles.indices){
+            val distance = FloatArray(2)
+            val currentLatitude = location.latitude
+            val currentLongitude = location.longitude
+            val circleLatitude = circles[i].center.latitude
+            val circleLongitude = circles[i].center.longitude
+
+            Location.distanceBetween(
+                currentLatitude, currentLongitude,
+                circleLatitude, circleLongitude, distance
+            )
+
+
+            if (distance[0] <= circles[i]!!.radius) {
+                if(!estaDentro[i]) {
+                    var lu : PointsUpdate? = email?.let { PointsUpdate(it, 100) }
+                    if (lu != null) {
+                        mapaViewModel.updatePoints(lu)
+                    }
+                    Toast.makeText(activity!!, "Estas dentro de un lugar de interes", Toast.LENGTH_SHORT).show()
+                    estaDentro[i] = true
+                }
+            }
+
+            else {
+                estaDentro[i] = false
+            }
+        }
+
     }
 
-
     override fun onMapReady(googleMap: GoogleMap?) {
-       mMap = googleMap
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-           if (ContextCompat.checkSelfPermission(activity!!,
-                   Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-               buildGoogleApiClient()
-               mMap!!.isMyLocationEnabled = true
-           }
-       } else {
-           buildGoogleApiClient()
-           mMap!!.isMyLocationEnabled = true
-       }
+        mMap = googleMap
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(activity!!,
+                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient()
+                mMap!!.isMyLocationEnabled = true
+            }
+        } else {
+            buildGoogleApiClient()
+            mMap!!.isMyLocationEnabled = true
+        }
         mapaViewModel.getLugaresInteres()
    }
+
 
     @Synchronized
     protected fun buildGoogleApiClient() {
@@ -121,6 +186,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         mGoogleApiClient!!.connect()
 
     }
+
 
     override fun onConnected(p0: Bundle?) {
         mLocationRequest = LocationRequest()
@@ -135,30 +201,6 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
         }
     }
 
-    override fun onLocationChanged(location: Location) {
-
-        mLastLocation = location
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker!!.remove()
-        }
-        //Place current location marker
-        val latLng = LatLng(location.latitude, location.longitude)
-        val markerOptions = MarkerOptions()
-        markerOptions.position(latLng)
-        markerOptions.title("Current Position")
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-        mCurrLocationMarker = mMap!!.addMarker(markerOptions)
-
-        //move map camera
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15f))
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            mFusedLocationClient?.removeLocationUpdates(locationCallback)
-        }
-    }
-
     override fun onConnectionFailed(connectionResult: ConnectionResult) {
         Toast.makeText(activity?.application!!,"connection failed", Toast.LENGTH_SHORT).show()
     }
@@ -166,4 +208,5 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
     override fun onConnectionSuspended(p0: Int) {
         Toast.makeText(activity?.application!!,"connection suspended", Toast.LENGTH_SHORT).show()
     }
+
 }

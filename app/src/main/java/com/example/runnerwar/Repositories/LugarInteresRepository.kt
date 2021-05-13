@@ -1,6 +1,5 @@
 package com.example.runnerwar.Repositories
 
-import androidx.lifecycle.LiveData
 import com.example.runnerwar.Data.User.UserDao
 import com.example.runnerwar.Model.*
 import com.example.runnerwar.api.RetrofitInstance
@@ -8,7 +7,7 @@ import com.example.runnerwar.util.Session
 import retrofit2.Response
 import retrofit2.awaitResponse
 
-class LugarInteresRepository(){
+class LugarInteresRepository(private val userDao: UserDao){
 
     //Calls to API
     suspend fun getLugaresInteres(): Response<List<LugarInteresResponse>> {
@@ -16,5 +15,16 @@ class LugarInteresRepository(){
         println("ESTOY EN EL REPOSITORIO")
         return RetrofitInstance.api.getLugaresInteres().awaitResponse()
     }
+
+    //Calls to API
+    suspend fun updatePoints(lu: PointsUpdate): Response<LoginResponse> {
+        return RetrofitInstance.api.updatePoints(lu).awaitResponse()
+    }
+
+
+    suspend fun updatePoints(points: Int) {
+        userDao.updatePoints(Session.getIdUsuario(), points)
+    }
+
 
 }
