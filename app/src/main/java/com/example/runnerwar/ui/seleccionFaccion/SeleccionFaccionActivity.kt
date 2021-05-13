@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
-import com.example.runnerwar.Model.User
 import com.example.runnerwar.Model.UserForm
 import com.example.runnerwar.NavActivity
 import com.example.runnerwar.R
@@ -45,7 +44,7 @@ class SeleccionFaccionActivity : AppCompatActivity() {
 
         selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer {
             val statReg = it ?: return@Observer
-            if (statReg.result == 200){
+            if (statReg.codi == 200){
                 Toast.makeText(applicationContext, "Welcome to RunnerWar $username", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
                 startActivity(intent)

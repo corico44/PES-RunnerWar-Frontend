@@ -36,6 +36,18 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
         return RetrofitInstance.api.searchUser(searchUser).awaitResponse()
     }
 
+    suspend fun addFriend(user: Friendship) : Response<Codi>{
+        return RetrofitInstance.api.addFriend(user).awaitResponse()
+    }
+
+    suspend fun deleteFriend(user: Friendship) : Response<Codi>{
+        return RetrofitInstance.api.deleteFriend(user).awaitResponse()
+    }
+
+    suspend fun searchFriend(user: Friendship) : Response<Codi>{
+        return RetrofitInstance.api.searchFriend(user).awaitResponse()
+    }
+
 
 
     //Calls to Local Data Base

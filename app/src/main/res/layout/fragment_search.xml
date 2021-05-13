@@ -7,46 +7,72 @@
         android:layout_height="match_parent"
     tools:context=".ui.buscarCuenta.SearchFragment" android:importantForAccessibility="no">
 
-        <TextView
-            android:id="@+id/SearchUser"
-            android:layout_width="300dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="6dp"
-            android:hint="Search user"
-            app:layout_constraintEnd_toStartOf="@+id/boton_searchuser"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <Button
             android:id="@+id/boton_searchuser"
-            android:layout_width="91dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="90dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="2dp"
             android:text="SEARCH"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/SearchUser"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/SearchUser"
+            android:layout_width="320dp"
+            android:layout_height="51dp"
+            android:ems="10"
+            android:enabled="false"
+            android:gravity="center"
+            android:hint="Accountname"
+            android:inputType="textEmailAddress"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
+            app:layout_constraintVertical_bias="0.144" />
 
         <TextView
             android:id="@+id/UserRetornat"
-            android:layout_width="358dp"
+            android:layout_width="350dp"
             android:layout_height="40dp"
             android:layout_marginTop="47dp"
-            android:layout_marginEnd="37dp"
             android:text="TextView"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/boton_searchuser" />
 
         <TextView
             android:id="@+id/FactionSUser"
-            android:layout_width="355dp"
-            android:layout_height="33dp"
+            android:layout_width="350dp"
+            android:layout_height="40dp"
             android:layout_marginTop="1dp"
-            android:layout_marginEnd="38dp"
             android:text="TextView"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/UserRetornat" />
+
+        <ImageButton
+            android:id="@+id/boton_add_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@android:drawable/ic_input_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FactionSUser" />
+
+        <ImageButton
+            android:id="@+id/boton_delete_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@android:drawable/ic_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/FactionSUser" />
 </androidx.constraintlayout.widget.ConstraintLayout>

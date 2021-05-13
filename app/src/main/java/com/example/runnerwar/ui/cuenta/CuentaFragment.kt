@@ -113,10 +113,8 @@ class CuentaFragment : Fragment() {
 
         boton_search.setOnClickListener{
             //androidx.appcompat.widget.AppCompatImageButton cannot be cast to android.view.ViewGroup
-            val transaction: FragmentTransaction
-            transaction = fragmentManager?.beginTransaction()!!
-            transaction.replace(R.id.boton_search,SearchFragment())
-            transaction.commit()
+            val transaction: FragmentTransaction = fragmentManager?.beginTransaction()!!
+            transaction.replace(R.id.nav_host_fragment,SearchFragment()).commit()
         }
     }
 }

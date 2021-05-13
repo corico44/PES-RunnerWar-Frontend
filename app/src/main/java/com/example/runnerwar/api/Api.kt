@@ -36,5 +36,22 @@ interface Api {
         @Body searchUser: SearchUser
     ) : Call<SearchResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST("/add_friend")
+    fun addFriend(
+        @Body user: Friendship
+    ) : Call<Codi>
+
+    @Headers("Content-Type: application/json")
+    @POST("/delete_friend")
+    fun deleteFriend(
+        @Body user: Friendship
+    ) : Call<Codi>
+
+    @Headers("Content-Type: application/json")
+    @POST("/search_friend")
+    fun searchFriend(
+        @Body user: Friendship
+    ) : Call<Codi>
 
 }

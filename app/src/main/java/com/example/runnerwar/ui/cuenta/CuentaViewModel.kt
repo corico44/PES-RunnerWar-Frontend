@@ -13,8 +13,6 @@ class CuentaViewModel(private val repository: UserRepository) : ViewModel() {
 
     val readAllData: LiveData<User>
 
-
-
     private val _response= MutableLiveData<Response<RegisterResponse>>()
     val responseUpdate: LiveData<Response<RegisterResponse>> = _response
 
