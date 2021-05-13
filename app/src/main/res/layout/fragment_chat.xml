@@ -12,11 +12,11 @@
             android:layout_width="392dp"
             android:layout_height="604dp" android:id="@+id/imageView4"
             android:alpha="1" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="340dp"/>
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="350dp"/>
     <io.getstream.chat.android.ui.message.list.MessageListView
             android:id="@+id/messageList"
             android:layout_width="396dp"
-            android:layout_height="664dp"
+            android:layout_height="673dp"
             android:background="#6300BCD4"
             app:streamUiMessageBackgroundColorMine="#FFFFFF"
             app:streamUiMessageBackgroundColorTheirs="#4C73A7"
@@ -27,8 +27,8 @@
     </io.getstream.chat.android.ui.message.list.MessageListView>
     <io.getstream.chat.android.ui.message.input.MessageInputView
             android:id="@+id/messageInputView"
-            android:layout_width="393dp"
-            android:layout_height="85dp"
+            android:layout_width="392dp"
+            android:layout_height="68dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
