@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.LugaresViewModelFactory
 import com.example.runnerwar.Model.LugarInteresResponse
 import com.example.runnerwar.Model.PointsUpdate
@@ -57,8 +58,8 @@ class MapaFragment : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val repository = LugarInteresRepository()
+        val userDao = UserDataBase.getDataBase(activity?.application!!).userDao()
+        val repository = LugarInteresRepository(userDao)
         val viewModelFactory = LugaresViewModelFactory(repository, 1)
 
         mapaViewModel = ViewModelProviders.of(this, viewModelFactory)

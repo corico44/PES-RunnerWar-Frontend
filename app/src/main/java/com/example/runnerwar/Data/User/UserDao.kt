@@ -23,6 +23,9 @@ interface UserDao {
     @Query("UPDATE user_data SET accountname = :newUserName WHERE _id = :idLoggedUser ")
     suspend fun updateAccountName(idLoggedUser: String, newUserName: String)
 
+    @Query("UPDATE user_data SET points = points + :newPoints WHERE _id = :idLoggedUser ")
+    suspend fun updatePoints(idLoggedUser: String, newPoints: Int)
+
     @Query("DELETE FROM user_data WHERE _id = :idLoggedUser")
     suspend fun deleteUser(idLoggedUser: String)
 
