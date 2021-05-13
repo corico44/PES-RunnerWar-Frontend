@@ -28,10 +28,14 @@ class CuentaViewModel(private val repository: UserRepository) : ViewModel() {
     fun updateUser(user: UserUpdate) {
         viewModelScope.launch {
             val res: Response<RegisterResponse> = repository.update(user)
+            val data: RegisterResponse? = res.body()
 
             if (res.isSuccessful){
                 //Update local dataBase
-                repository.updateUser(user.accountname)
+                if (data != null) {
+                    if (data.codi == 200)
+                        repository.updateUser(user.accountname)
+                }
             }
             _response.value = res
         }
