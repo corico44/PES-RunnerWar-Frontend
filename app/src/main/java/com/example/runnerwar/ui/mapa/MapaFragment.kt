@@ -20,6 +20,7 @@ import com.example.runnerwar.Factories.LugaresViewModelFactory
 import com.example.runnerwar.Model.LugarInteresResponse
 import com.example.runnerwar.Model.PointsUpdate
 import com.example.runnerwar.NavActivity
+import com.example.runnerwar.Model.ZonaDeConfrontacion
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -29,6 +30,16 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.handy.opinion.utils.LocationHelper
+import android.R
+
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.LatLng
+
+
+
+
+
+
 
 
 class MapaFragment : Fragment(),
@@ -51,6 +62,7 @@ class MapaFragment : Fragment(),
     private var myList: MutableList<Circle> = mutableListOf<Circle>()
     private var estaDentro: MutableList<Boolean> = mutableListOf<Boolean>()
     private var email: String? = null
+    private var zonasConfrontacion: List<ZonaDeConfrontacion>? = null
 
 
     override fun onCreateView(
@@ -73,10 +85,18 @@ class MapaFragment : Fragment(),
         val activity: NavActivity? = activity as NavActivity?
         email = activity?.getMyEmail()
 
+        mapaViewModel.responseZC.observe(activity!! , Observer {
+            zonasConfrontacion = it
+            añadirZonasDeConfrontacionMapa()
+        })
+
         val root = inflater.inflate(com.example.runnerwar.R.layout.fragment_mapa, container, false)
 
         return root
     }
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view,savedInstanceState)
         LocationHelper().startListeningUserLocation(activity!!, object : LocationHelper.MyLocationListener {
@@ -128,6 +148,31 @@ class MapaFragment : Fragment(),
         }
     }
 
+    private fun añadirZonasDeConfrontacionMapa() {
+        if(zonasConfrontacion != null){
+            for(item in zonasConfrontacion!!){
+
+                val polygonOptions = PolygonOptions().add(
+                    LatLng(item.punto1[0], item.punto1[1]),
+                    LatLng(item.punto2[0], item.punto2[1]),
+                    LatLng(item.punto3[0], item.punto3[1]),
+                    LatLng(item.punto4[0], item.punto4[1])
+                ).strokeColor(Color.GRAY)
+                    .fillColor(0x303C4144)
+                    .strokeWidth(5.0f)
+                mMap?.addPolygon(polygonOptions)
+
+               /* val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
+                val descripcion = "Coordenadas: (" + item.latitud + "),(" + item.longitud + ")"
+                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(descripcion) })
+                var circleOptions = CircleOptions()
+                circleOptions = circleOptions?.center(position)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
+                    ?.strokeWidth(2f)!!
+                mMap?.addCircle(circleOptions)*/
+            }
+        }
+    }
+
 
     fun estaDentro(location: Location, circles: MutableList<Circle>) {
         for(i in circles.indices){
@@ -173,7 +218,14 @@ class MapaFragment : Fragment(),
             buildGoogleApiClient()
             mMap!!.isMyLocationEnabled = true
         }
+        val success = googleMap!!.setMapStyle(
+            MapStyleOptions.loadRawResourceStyle(
+                activity, com.example.runnerwar.R.raw.style_map
+            )
+        )
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(41.39250648830166, 2.160515736802735),13f))
         mapaViewModel.getLugaresInteres()
+        mapaViewModel.getZonasDeConfrontacion()
    }
 
 

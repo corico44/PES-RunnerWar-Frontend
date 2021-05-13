@@ -6,28 +6,41 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.runnerwar.Model.*
 import com.example.runnerwar.Repositories.LugarInteresRepository
-import com.example.runnerwar.Repositories.UserRepository
-import com.example.runnerwar.ui.registro.RegistroFormState
-import com.example.runnerwar.util.Session
-import kotlinx.coroutines.async
+import com.example.runnerwar.Repositories.ZonasDeConfrontacionRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 
-class MapaViewModel(private val repository: LugarInteresRepository) : ViewModel() {
+class MapaViewModel(private val repositoryLI: LugarInteresRepository, private val repositoryZC : ZonasDeConfrontacionRepository) : ViewModel() {
 
-    private var _response = MutableLiveData<List<LugarInteresResponse>>()
+    private var _response= MutableLiveData<List<LugarInteresResponse>>()
     var responseCreate: LiveData<List<LugarInteresResponse>> = _response
+
+    private var _responseZC = MutableLiveData<List<ZonaDeConfrontacion>>()
+    var responseZC: LiveData<List<ZonaDeConfrontacion>> = _responseZC
 
    fun getLugaresInteres() {
         viewModelScope.launch {
-            val res: Response<List<LugarInteresResponse>> = repository.getLugaresInteres()
+            val res: Response<List<LugarInteresResponse>> = repositoryLI.getLugaresInteres()
 
             if (res.isSuccessful){
                 val userRes : List<LugarInteresResponse>? = res.body()
 
                 if (userRes != null) {
                     _response.value = userRes
+                }
+            }
+        }
+    }
+
+    fun getZonasDeConfrontacion(){
+        viewModelScope.launch {
+            val res: Response<List<ZonaDeConfrontacion>> = repositoryZC.getZonasDeConfrontacion()
+
+            if (res.isSuccessful){
+                val zc : List<ZonaDeConfrontacion>? = res.body()
+
+                if (zc != null) {
+                    _responseZC.value = zc
                 }
             }
         }
