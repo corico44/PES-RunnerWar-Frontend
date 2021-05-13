@@ -31,6 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.handy.opinion.utils.LocationHelper
 import android.R
+import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.LatLng

@@ -49,10 +49,10 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
 
     fun updatePoints(lu: PointsUpdate) {
         viewModelScope.launch {
-            val res: Response<LoginResponse> = repository.updatePoints(lu)
+            val res: Response<LoginResponse> = repositoryLI.updatePoints(lu)
 
             if(res.isSuccessful){
-                repository.updatePoints(lu.points)
+                repositoryLI.updatePoints(lu.points)
             }
         }
     }
