@@ -63,14 +63,17 @@ class SearchFragment : Fragment() {
         }
 
         searchViewModel.userSearched.observe(this@SearchFragment, Observer {
-            UserRetornat.setVisibility(View.VISIBLE)
-            FactionSUser.setVisibility(View.VISIBLE)
+            if (it._id != null) {
+                UserRetornat.setVisibility(View.VISIBLE)
+                FactionSUser.setVisibility(View.VISIBLE)
 
-            friends = Friendship(Session.getIdUsuario(), it._id)
-            searchViewModel.searchFriend(friends)
-            UserRetornat.text = it.accountname
-            FactionSUser.text = it.faction
-
+                friends = Friendship(Session.getIdUsuario(), it._id)
+                searchViewModel.searchFriend(friends)
+                UserRetornat.text = it.accountname
+                FactionSUser.text = it.faction
+            }
+            else
+                Toast.makeText(activity?.applicationContext, "User doesn't exist", Toast.LENGTH_SHORT).show()
         })
 
         searchViewModel.responseSearch.observe(this@SearchFragment, Observer { response ->
