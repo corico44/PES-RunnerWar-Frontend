@@ -51,7 +51,6 @@ class MapaFragment : Fragment(),
     internal lateinit var mLastLocation: Location
     private var lugaresInteres: List<LugarInteresResponse>? = null
     private var myList: MutableList<Circle> = mutableListOf<Circle>()
-    private var email: String? = null
 
 
     override fun onCreateView(
@@ -71,8 +70,6 @@ class MapaFragment : Fragment(),
             añadirLugaresInteresMapa()
         })
 
-        val activity: NavActivity? = activity as NavActivity?
-        email = activity?.getMyEmail()
 
         val root = inflater.inflate(com.example.runnerwar.R.layout.fragment_mapa, container, false)
 
@@ -151,6 +148,7 @@ class MapaFragment : Fragment(),
                 if(!CheckLugarInteres.estaDentro[i]) {
                     var lu : PointsUpdate? = PointsUpdate(Session.getIdUsuario(), 100)
                     if (lu != null) {
+                        println("MI MAIL " + lu.email)
                         mapaViewModel.updatePoints(lu)
                     }
                     Toast.makeText(activity!!, "Estas dentro de un lugar de interes", Toast.LENGTH_SHORT).show()
