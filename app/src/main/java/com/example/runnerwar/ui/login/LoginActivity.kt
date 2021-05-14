@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -16,9 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
-import com.example.runnerwar.Model.Codi
 import com.example.runnerwar.Model.LoginUser
-import com.example.runnerwar.Model.User
 import com.example.runnerwar.NavActivity
 
 
@@ -76,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.responseCreate.observe(this@LoginActivity, Observer {
 
             val statReg = it ?: return@Observer
-            if (statReg.result == 200){
+            if (statReg.codi == 200){
                 Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@LoginActivity, NavActivity::class.java)
                 startActivity(intent)

@@ -1,7 +1,5 @@
 package com.example.runnerwar
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import com.example.runnerwar.Model.*
 import com.example.runnerwar.api.RetrofitInstance
 import kotlinx.coroutines.runBlocking
@@ -10,8 +8,6 @@ import retrofit2.Response
 import retrofit2.awaitResponse
 import com.example.runnerwar.Model.FactionForm
 
-import com.example.runnerwar.api.Api
-import junit.framework.Assert
 import org.junit.Assert.assertEquals
 
 class CambiarFaccionUnitTest {
@@ -35,7 +31,7 @@ class CambiarFaccionUnitTest {
 
         val response : Response<Codi> = runBlocking{api.changeFaction(faction).awaitResponse()}
         if(response.isSuccessful){
-            assertEquals(200, response.body()?.result)
+            assertEquals(200, response.body()?.codi)
         }
 
     }

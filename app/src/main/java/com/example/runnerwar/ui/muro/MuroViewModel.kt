@@ -17,15 +17,21 @@ class MuroViewModel (private val repository: UserRepository) : ViewModel() {
     }
     val text: LiveData<String> = _text
 
-    private val _response_daily= MutableLiveData<Response<Codi>>()
-    val responseDaily: LiveData<Response<Codi>> = _response_daily
+    private val _response_daily= MutableLiveData<Codi>()
+    val responseDaily: LiveData<Codi> = _response_daily
 
 
     fun dailyLogin(mail : MailForm){
         viewModelScope.launch {
             val res: Response<Codi> = repository.dailyLogin(mail)
 
-            _response_daily.value = res
+            if (res.isSuccessful){
+                val userRes : Codi? = res.body()
+
+                if (userRes != null) {
+                    _response_daily.value = userRes
+                }
+            }
         }
     }
 }

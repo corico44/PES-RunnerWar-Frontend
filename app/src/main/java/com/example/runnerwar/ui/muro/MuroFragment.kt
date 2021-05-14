@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
+import com.example.runnerwar.Model.Codi
 import com.example.runnerwar.Model.DeleteUser
 import com.example.runnerwar.Model.MailForm
 import com.example.runnerwar.Model.RegisterResponse
@@ -27,6 +28,7 @@ class MuroFragment : Fragment() {
 
         super.onStart()
             //openPopUpDailyLogin()
+            println("EL CORREO ES: " + Session.getIdUsuario().toString())
             val mail = MailForm(Session.getIdUsuario().toString())
             muroViewModel.dailyLogin(mail)
     }
@@ -45,8 +47,12 @@ class MuroFragment : Fragment() {
             ViewModelProviders.of(this, viewModelFactory).get(MuroViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_muro, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        muroViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+
+        muroViewModel.responseDaily.observe(viewLifecycleOwner, Observer {
+            var successCode = Codi(200)
+            if(it == successCode){
+                openPopUpDailyLogin()
+            }
         })
         return root
     }
@@ -54,11 +60,9 @@ class MuroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         muroViewModel.responseDaily.observe(this@MuroFragment, Observer { response ->
-            if (response.isSuccessful){
-                openPopUpDailyLogin()
-            }
         })
     }
+
     fun openPopUpDailyLogin(){
         val dialogBuilder = AlertDialog.Builder(activity)
 
