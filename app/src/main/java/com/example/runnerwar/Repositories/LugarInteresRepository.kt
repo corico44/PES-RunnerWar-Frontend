@@ -21,7 +21,6 @@ class LugarInteresRepository(private val userDao: UserDao){
         return RetrofitInstance.api.updatePoints(lu).awaitResponse()
     }
 
-
     suspend fun updatePoints(points: Int) {
         userDao.updatePoints(Session.getIdUsuario(), points)
     }

@@ -27,6 +27,7 @@ class MuroViewModel (private val repository: UserRepository) : ViewModel() {
 
             if (res.isSuccessful){
                 val userRes : Codi? = res.body()
+                repository.updatePoints(20)
 
                 if (userRes != null) {
                     _response_daily.value = userRes

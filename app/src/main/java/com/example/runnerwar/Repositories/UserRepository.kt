@@ -86,4 +86,8 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
     suspend fun deleteAllDataFromLDB(){
         userDao.cleanDataBase()
     }
+
+    suspend fun updatePoints(points: Int) {
+        userDao.updatePoints(Session.getIdUsuario(), points)
+    }
 }
