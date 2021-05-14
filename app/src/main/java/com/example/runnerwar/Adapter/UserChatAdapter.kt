@@ -5,21 +5,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.runnerwar.R
-import com.example.runnerwar.ui.chat.UsersFragment
+
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.models.User
 import io.getstream.chat.android.ui.avatar.AvatarView
 import kotlinx.android.synthetic.main.user_row_layout.view.*
-import android.os.Bundle
 
-import android.R.attr.action
-import androidx.core.os.bundleOf
+import androidx.appcompat.app.AppCompatActivity
+import com.example.runnerwar.ui.chat.ChatFragment
 
 
 class UserChatAdapter  : RecyclerView.Adapter<UserChatAdapter.ViewHolder>(){
@@ -48,6 +49,7 @@ class UserChatAdapter  : RecyclerView.Adapter<UserChatAdapter.ViewHolder>(){
         holder.itemPicture .setUserData(currentUser)
         holder.itemUsername.text = currentUser.id
         holder.itemLastActive.text = convertDate(currentUser.lastActive!!.time)
+
         holder.createButton.setOnClickListener {
             createNewChannel(currentUser.id, holder)
         }
@@ -81,9 +83,10 @@ class UserChatAdapter  : RecyclerView.Adapter<UserChatAdapter.ViewHolder>(){
     }
 
    private fun navigateToChatFragment(holder: ViewHolder, cid: String) {
+
        val bundle = bundleOf("cid" to cid)
-        holder.itemView.findNavController().navigate(R.id.action_navigation_users_to_chat,bundle)
-    }
+        holder.itemView.findNavController().navigate(R.id.navigation_chat, bundle)
+   }
 
 
 }

@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.runnerwar.ui.login.LoginActivity
 import com.example.runnerwar.ui.mapa.MapaFragment
-import com.example.runnerwar.ui.registro.RegistroActivity
+
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.logger.ChatLogLevel
 import io.getstream.chat.android.livedata.ChatDomain

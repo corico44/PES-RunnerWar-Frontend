@@ -76,9 +76,9 @@ class ChannelFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_users_to_chat,bundle)
         }
 
-        /*channelsView.setChannelDeleteClickListener{ channel ->
+        channelView.setChannelDeleteClickListener{ channel ->
             deleteChannel(channel)
-        }*/
+        }
 
         return root
     }

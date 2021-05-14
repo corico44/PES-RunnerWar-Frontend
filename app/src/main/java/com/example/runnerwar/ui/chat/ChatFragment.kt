@@ -62,5 +62,4 @@ class ChatFragment : Fragment() {
         messageInputViewModel.bindView(root.messageInputView, viewLifecycleOwner)
 
     }
-
 }

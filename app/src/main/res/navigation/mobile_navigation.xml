@@ -38,11 +38,15 @@
             android:name="com.example.runnerwar.ui.cuenta.CuentaFragment"
             android:label="@string/title_cuenta"
             tools:layout="@layout/fragment_cuenta"/>
-    <fragment android:id="@+id/navigation_users" android:name="com.example.runnerwar.ui.chat.UsersFragment"
+
+    <fragment android:id="@+id/navigation_users"
+              android:name="com.example.runnerwar.ui.chat.UsersFragment"
               android:label="fragment_users"
               tools:layout="@layout/fragment_users">
-        <action android:id="@+id/action_navigation_users_to_chat" app:destination="@id/navigation_chat"/>
+        <action android:id="@+id/action_navigation_users_to_chat"
+                app:destination="@id/navigation_chat"/>
     </fragment>
+
     <fragment android:id="@+id/navigation_chat" android:name="com.example.runnerwar.ui.chat.ChatFragment"
               android:label="fragment_chat" tools:layout="@layout/fragment_chat">
         <argument android:name="channelId" app:argType="string"/>
