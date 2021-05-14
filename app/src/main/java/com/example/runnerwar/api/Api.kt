@@ -79,4 +79,11 @@ interface Api {
         @Body faction: FactionForm
     ) : Call<Codi>
 
+    @Headers("Content-Type: application/json")
+    @POST("/daily_login")
+    fun dailyLogin(
+            @Body mail: MailForm
+    ) : Call<Codi>
+
+
 }
