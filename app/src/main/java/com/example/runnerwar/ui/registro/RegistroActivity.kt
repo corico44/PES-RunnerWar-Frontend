@@ -223,6 +223,7 @@ class RegistroActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     val intent = Intent(this@RegistroActivity, SeleccionFaccionActivity::class.java)
                     if (user != null) {
+                        println(user.hashCode())
                         intent.putExtra("username", user.displayName.toString())
                         intent.putExtra("email", user.email.toString())
                         intent.putExtra("password", user.hashCode().toString())

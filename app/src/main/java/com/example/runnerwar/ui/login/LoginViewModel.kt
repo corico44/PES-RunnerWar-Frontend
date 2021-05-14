@@ -37,9 +37,11 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
             var status: Codi = Codi(500)
 
             if (res.isSuccessful){
+
                 val userRes : LoginResponse? = res.body()
 
                 if (userRes != null) {
+
                     status = Codi(userRes.codi)
                     if (status.codi == 200) {
                         val user : User = User(userRes._id,userRes.coins, userRes.faction, userRes.password, userRes.points, userRes.accountname)

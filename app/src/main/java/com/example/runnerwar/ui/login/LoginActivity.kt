@@ -111,10 +111,10 @@ class LoginActivity : AppCompatActivity() {
             if (statReg.codi == 200){
                 Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@LoginActivity, NavActivity::class.java)
-                intent.putExtra("email", email.text.toString())
                 startActivity(intent)
             }
             else {
+
                 error.text = "Email or password incorrect"
             }
         })
@@ -152,7 +152,8 @@ class LoginActivity : AppCompatActivity() {
         signInButton.setOnClickListener{
             var user = auth.currentUser
             var pass = loginViewModel.hashString(user.hashCode().toString(),"SHA-256")
-            var lu : LoginUser = LoginUser(user.email.toString(), pass)
+            println(user.hashCode())
+            var lu : LoginUser = LoginUser("cairigaray999@gmail.com", pass)
             loginViewModel.logIn(lu)
         }
 

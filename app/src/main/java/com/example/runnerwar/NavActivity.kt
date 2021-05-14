@@ -26,8 +26,6 @@ import kotlinx.coroutines.runBlocking
 
 class NavActivity : AppCompatActivity() {
 
-    private var email: String? = null
-
 
     private lateinit var navViewModel: NavViewModel
 
@@ -35,7 +33,7 @@ class NavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
 
-        email = intent.extras?.getString("email").toString()
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val activityDao = ActivityDataBase.getDataBase(application).activityDao()
@@ -63,12 +61,10 @@ class NavActivity : AppCompatActivity() {
 
     }
 
-    fun getMyEmail(): String? {
-        return email
-    }
 
      override fun onStop() {
-        super.onPause()
+         super.onStop()
+         super.onPause()
         navViewModel.updateActivityData()
     }
 
