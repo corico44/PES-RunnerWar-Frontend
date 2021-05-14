@@ -19,6 +19,10 @@ import com.example.runnerwar.Model.PointsUpdate
 import com.example.runnerwar.NavActivity
 import com.example.runnerwar.Model.ZonaDeConfrontacion
 import com.example.runnerwar.Repositories.LugarInteresRepository
+import com.example.runnerwar.util.CheckLugarInteres
+import com.example.runnerwar.util.Session
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -95,8 +99,6 @@ class MapaFragment : Fragment(),
             añadirLugaresInteresMapa()
         })
 
-        val activity: NavActivity? = activity as NavActivity?
-        email = activity?.getMyEmail()
 
         mapaViewModel.responseZC.observe(activity!! , Observer {
             zonasConfrontacion = it
@@ -163,8 +165,11 @@ class MapaFragment : Fragment(),
                 myList.add(circle)
             }
         }
-        for(i in myList.indices){
-            estaDentro.add(false)
+        if(!CheckLugarInteres.firstTime) {
+            CheckLugarInteres.firstTime = true
+            for (i in myList.indices) {
+                CheckLugarInteres.estaDentro.add(false)
+            }
         }
     }
 
@@ -209,18 +214,14 @@ class MapaFragment : Fragment(),
 
 
             if (distance[0] <= circles[i]!!.radius) {
-                if(!estaDentro[i]) {
-                    var lu : PointsUpdate? = email?.let { PointsUpdate(it, 100) }
+                if(!CheckLugarInteres.estaDentro[i]) {
+                    var lu : PointsUpdate? = PointsUpdate(Session.getIdUsuario(), 100)
                     if (lu != null) {
                         mapaViewModel.updatePoints(lu)
                     }
                     Toast.makeText(activity!!, "Estas dentro de un lugar de interes", Toast.LENGTH_SHORT).show()
-                    estaDentro[i] = true
+                    CheckLugarInteres.estaDentro[i] = true
                 }
-            }
-
-            else {
-                estaDentro[i] = false
             }
         }
 

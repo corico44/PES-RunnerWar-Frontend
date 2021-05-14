@@ -52,7 +52,8 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
             val res: Response<LoginResponse> = repositoryLI.updatePoints(lu)
 
             if(res.isSuccessful){
-                repositoryLI.updatePoints(lu.points)
+                println("ACTUALIZO LOCAL")
+                repositoryLI.updatePointsLocal(lu.points)
             }
         }
     }
