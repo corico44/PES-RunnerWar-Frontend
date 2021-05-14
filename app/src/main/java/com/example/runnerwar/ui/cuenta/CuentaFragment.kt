@@ -18,6 +18,7 @@ import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.buscarCuenta.SearchFragment
+import com.example.runnerwar.ui.cambiarFaccion.CambiarFaccionActivity
 import com.example.runnerwar.ui.registro.RegistroActivity
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
@@ -63,6 +64,11 @@ class CuentaFragment : Fragment() {
                 reg_userName.setEnabled(true)
                 disk_save.setVisibility(View.VISIBLE)
             }
+        }
+
+        cambiarFaccion.setOnClickListener{
+            val intent = Intent(activity?.applicationContext, CambiarFaccionActivity::class.java)
+            startActivity(intent)
         }
 
         cuentaViewModel.readAllData.observe(this@CuentaFragment, Observer { user ->

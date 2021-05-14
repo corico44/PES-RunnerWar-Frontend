@@ -73,5 +73,10 @@ interface Api {
     fun searchFriend(
         @Body user: Friendship
     ) : Call<Codi>
+    @Headers("Content-Type: application/json")
+    @POST("/update/cuenta/faction")
+    fun changeFaction(
+        @Body faction: FactionForm
+    ) : Call<Codi>
 
 }

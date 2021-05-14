@@ -3,11 +3,11 @@ package com.example.runnerwar.Factories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.runnerwar.Repositories.UserRepository
-import com.example.runnerwar.ui.buscarCuenta.SearchViewModel
 import com.example.runnerwar.ui.cuenta.CuentaViewModel
 import com.example.runnerwar.ui.login.LoginViewModel
 import com.example.runnerwar.ui.registro.RegistroViewModel
 import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionViewModel
+
 
 class UserViewModelFactory(private val repository: UserRepository, private val numView : Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -20,7 +20,10 @@ class UserViewModelFactory(private val repository: UserRepository, private val n
         else if(numView == 3){
             return SearchViewModel(repository) as T
         }
-        else{
+        else if(numView == 4){
+            return CambiarFaccionViewModel(repository) as T
+        }
+        else {
             return LoginViewModel(repository) as T
         }
     }
