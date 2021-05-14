@@ -26,8 +26,11 @@ interface ActivityDao {
 
 
     // Updates
-    @Query("UPDATE activity_data SET points = :points WHERE _id = :idLoggedUser AND date = :date ")
+    @Query("UPDATE activity_data SET points = points + :points WHERE _id = :idLoggedUser AND date = :date ")
     suspend fun updatePoints(idLoggedUser: String, date: String,  points: Int)
+
+    @Query("UPDATE activity_data SET points = :points WHERE _id = :idLoggedUser AND date = :date ")
+    suspend fun updateAllDataPoints(idLoggedUser: String, date: String,  points: Int)
 
     @Query("UPDATE activity_data SET steps = :steps WHERE _id = :idLoggedUser AND date = :date ")
     suspend fun updateSteps(idLoggedUser: String, date: String,  steps: Int)

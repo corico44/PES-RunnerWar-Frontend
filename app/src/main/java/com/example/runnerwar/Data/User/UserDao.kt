@@ -29,5 +29,8 @@ interface UserDao {
     @Query("DELETE FROM user_data")
     suspend fun cleanDataBase()
 
+    @Query("UPDATE  user_data SET points = points + :points WHERE _id = :idLoggedUser")
+    suspend fun updatePoints(idLoggedUser: String, points: Int)
+
 
 }

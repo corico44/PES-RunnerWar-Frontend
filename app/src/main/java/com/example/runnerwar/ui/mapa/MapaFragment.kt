@@ -77,10 +77,8 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionC
 
 
         ContarPasosService.dataActivity.observe(this, Observer { response ->
-
             pointsView.text = response.points.toString()
             stepsView.text = response.steps.toString()
-
         })
 
     }

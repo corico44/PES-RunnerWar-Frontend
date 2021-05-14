@@ -37,13 +37,12 @@ class NavActivity : AppCompatActivity() {
         navViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(NavViewModel::class.java)
 
-
-        //navViewModel.initServiceContarPasos()
-
         Intent(this, ContarPasosService::class.java).also {
             ContarPasosService.context = application
             startService(it)
         }
+
+
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each

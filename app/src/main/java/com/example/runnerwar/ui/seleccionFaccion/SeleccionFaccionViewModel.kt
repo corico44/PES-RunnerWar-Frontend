@@ -1,13 +1,13 @@
 package com.example.runnerwar.ui.seleccionFaccion
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.runnerwar.Model.Codi
-import com.example.runnerwar.Model.RegisterResponse
-import com.example.runnerwar.Model.User
-import com.example.runnerwar.Model.UserForm
+import com.example.runnerwar.Data.DailyActivity.ActivityDataBase
+import com.example.runnerwar.Model.*
+import com.example.runnerwar.Repositories.ActivityRepository
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroFormState
 import com.example.runnerwar.util.Session
@@ -22,6 +22,9 @@ class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewM
 
     private val _registroForm = MutableLiveData<RegistroFormState>()
     val registroFormState: LiveData<RegistroFormState> = _registroForm
+
+    private val _response_activity = MutableLiveData<Codi>()
+    val responseActivity: LiveData<Codi> =  _response_activity
 
 
     fun signUp(user: UserForm) {
@@ -53,4 +56,50 @@ class SeleccionFaccionViewModel(private  val repository: UserRepository) : ViewM
     private fun isValidUser(res: RegisterResponse) : Boolean{
         return  res.codi == 200
     }
+
+    fun initServiceContarPasos( app : Context){
+        val activityDao = ActivityDataBase.getDataBase(app).activityDao()
+        var repositoryAct = ActivityRepository(activityDao)
+
+
+        viewModelScope.launch {
+            val response : Response<ActivityResponse> = repositoryAct.getActivity(Session.getAccountname(), Session.getCurrentDate())!!
+            var actRes : ActivityResponse? = null
+            if (response.isSuccessful){
+                actRes = response.body()!!
+
+            }
+
+            if (actRes!!.codi == 500) { //Activity doesn't exist
+                val activity = Activity(Session.getIdUsuario(), Session.getCurrentDate(), Session.getAccountname(), 0,0 )
+                repositoryAct.createActivityLDB(activity)  // Create a new activity in Local
+                val exists : Response<ActivityResponse> = repositoryAct.newActivity(ActivityForm(activity.accountname, activity.date))
+                if (exists.isSuccessful){
+                    actRes = exists.body()
+                }
+            }
+            else { //Activity exists
+
+                val activityDB: Activity? =
+                    repositoryAct.getActivityLDB(Session.getIdUsuario(), Session.getCurrentDate())
+                val activity = Activity(
+                    Session.getIdUsuario(),
+                    Session.getCurrentDate(),
+                    Session.getAccountname(),
+                    actRes.km!!,
+                    actRes.km!! / 20
+                )
+
+                if (activityDB == null) { //Activity dont exist
+                    repositoryAct.createActivityLDB(activity) // Create a new activity
+                } else {
+                    repositoryAct.updateStepsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity.steps)
+                    repositoryAct.updatePointsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity.steps / 20)
+                }
+            }
+            _response_activity.value = Codi(200)
+
+        }
+    }
+
 }

@@ -21,6 +21,8 @@ class ActivityRepository(private val activityDao: ActivityDao) {
     }
 
 
+
+
     //Calls to Local Dta Base
 
     //--Inserts--
@@ -44,6 +46,10 @@ class ActivityRepository(private val activityDao: ActivityDao) {
     //--Updates--
     suspend fun updatePointsLDB(idLoggedUser: String, date: String,  points: Int){
         activityDao.updatePoints(idLoggedUser,date,points)
+    }
+
+    suspend fun updateAllDataPointsLDB(idLoggedUser: String, date: String,  points: Int){
+        activityDao.updateAllDataPoints(idLoggedUser,date,points)
     }
 
     suspend fun updateStepsLDB(idLoggedUser: String, date: String,  steps: Int){

@@ -9,19 +9,21 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Build
-import android.os.Debug
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.runnerwar.Data.DailyActivity.ActivityDataBase
+import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Model.Activity
-import com.example.runnerwar.Model.ActivityForm
-import com.example.runnerwar.Model.ActivityResponse
-import com.example.runnerwar.Model.ActivityUpdate
+import com.example.runnerwar.Model.LoginResponse
+import com.example.runnerwar.Model.PointsUpdate
 import com.example.runnerwar.Repositories.ActivityRepository
+import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.util.Session
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 import java.time.LocalDateTime
@@ -33,18 +35,13 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
     private lateinit var msensorManager: SensorManager
     private lateinit var mSensor: Sensor
 
-
-
-
     init {
         instance = this
         val activityDao = ActivityDataBase.getDataBase(context).activityDao()
-        repository = ActivityRepository(activityDao)
+        repositoryAct = ActivityRepository(activityDao)
 
-
-
-
-
+        val userDao = UserDataBase.getDataBase(context).userDao()
+        repositoryUser = UserRepository(userDao, Session.getIdUsuario())
 
     }
 
@@ -54,7 +51,8 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
         private lateinit var date: String
         private lateinit var activity : Activity
         lateinit var context: Context
-        private  lateinit var  repository : ActivityRepository
+        private  lateinit var  repositoryAct : ActivityRepository
+        private  lateinit var  repositoryUser : UserRepository
         var isRunning = false
 
 
@@ -65,14 +63,14 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
             return activity!!
         }
 
-    }
 
+    }
 
 
     override fun onHandleIntent(intent: Intent?) {
         msensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mSensor =  msensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
-        activity = runBlocking { repository.getActivityLDB(Session.getIdUsuario(), Session.getCurrentDate()) }
+        activity = runBlocking { repositoryAct.getActivityLDB(Session.getIdUsuario(), Session.getCurrentDate()) }
 
         isRunning = true
 
@@ -88,11 +86,15 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
     override fun onSensorChanged(event: SensorEvent?) {
 
         if (event!!.sensor == mSensor){
-            activity!!.steps++
-            runBlocking { repository.updateStepsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity!!.steps) }
-            if (activity!!.steps%20 == 0){
-                activity!!.points = activity!!.steps/20
-                runBlocking { repository.updatePointsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity!!.points) }
+            activity.steps++
+            runBlocking { repositoryAct.updateStepsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity!!.steps) }
+            if (activity.steps%20 == 0){
+                activity.points = activity.steps/20
+                runBlocking { repositoryAct.updatePointsLDB(Session.getIdUsuario(), Session.getCurrentDate(), 1)}
+                runBlocking { repositoryUser.updatePointsLDB(Session.getIdUsuario(),/*activity!!.points*/ 1) }
+                CoroutineScope(Dispatchers.IO).launch {
+                    repositoryUser.updatePoints(PointsUpdate( Session.getIdUsuario(),/*activity!!.points*/1))
+                }
             }
             _response.value = activity
         }
@@ -102,12 +104,5 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
 
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun setDate() {
-        val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.BASIC_ISO_DATE
-        date = current.format(formatter)
-    }
 
 }

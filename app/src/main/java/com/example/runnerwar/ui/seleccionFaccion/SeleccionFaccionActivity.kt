@@ -44,7 +44,7 @@ class SeleccionFaccionActivity : AppCompatActivity() {
 
 
 
-        selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer {
+        /*selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer {
             val statReg = it ?: return@Observer
             if (statReg.result == 200){
                 Toast.makeText(applicationContext, "Welcome to RunnerWar $username", Toast.LENGTH_SHORT).show()
@@ -56,7 +56,30 @@ class SeleccionFaccionActivity : AppCompatActivity() {
                 intent.putExtra("some_error", "Email:  $email  or Username: $username already exists")
                 startActivity(intent)
             }
+        })*/
+
+        selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer {
+            val statReg = it ?: return@Observer
+            if (statReg.result == 200){
+                selFaccViewModel.initServiceContarPasos(application)
+            }
+            else {
+                val intent = Intent(this@SeleccionFaccionActivity, RegistroActivity::class.java)
+                intent.putExtra("some_error", "Email:  $email  or Username: $username already exists")
+                startActivity(intent)
+            }
         })
+
+
+        selFaccViewModel.responseActivity.observe(this@SeleccionFaccionActivity, Observer {
+            val stat= it ?: return@Observer
+            if(stat.result ==200){
+                Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
 
 
         imageButton2.setOnClickListener{

@@ -53,4 +53,10 @@ interface Api {
         @Body activiy: ActivityUpdate
     ) : Call<ActivityResponse>
 
+    @Headers("Content-Type: application/json")
+    @PUT("/points/add")
+    fun updatePoints(
+        @Body pointsUpdate: PointsUpdate
+    ) : Call<LoginResponse>
+
 }

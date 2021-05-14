@@ -21,8 +21,6 @@ class NavViewModel (private var repository: ActivityRepository) : ViewModel(){
 
     private lateinit var date: String
 
-
-
     fun updateActivityData() {
         viewModelScope.launch {
             var act :Activity = repository.getActivityLDB(Session.getIdUsuario(), Session.getCurrentDate())

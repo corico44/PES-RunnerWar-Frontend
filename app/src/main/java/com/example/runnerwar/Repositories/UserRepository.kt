@@ -5,6 +5,7 @@ import com.example.runnerwar.Data.User.UserDao
 import com.example.runnerwar.Model.*
 import com.example.runnerwar.api.RetrofitInstance
 import com.example.runnerwar.util.Session
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.awaitResponse
 
@@ -32,6 +33,14 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
         return RetrofitInstance.api.deleteUser(user).awaitResponse()
     }
 
+    suspend fun updatePoints(lu: PointsUpdate): Response<LoginResponse> {
+        return RetrofitInstance.api.updatePoints(lu).awaitResponse()
+    }
+
+    /*suspend fun updatePoints(lu: PointsUpdate): Response<LoginResponse> {
+        return RetrofitInstance.api.updatePoints(lu).awaitResponse()
+    }*/
+
 
     //Calls to Local Data Base
 
@@ -54,5 +63,9 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
 
     suspend fun deleteAllDataFromLDB(){
         userDao.cleanDataBase()
+    }
+
+    suspend fun updatePointsLDB(idLoggedUser: String,points: Int){
+        userDao.updatePoints(idLoggedUser,points)
     }
 }

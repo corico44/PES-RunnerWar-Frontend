@@ -17,6 +17,7 @@ import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
+import com.example.runnerwar.util.Session
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.registro.*
 class CuentaFragment : Fragment() {
 
     private lateinit var cuentaViewModel: CuentaViewModel
+    private lateinit var loggedUser: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,8 +35,8 @@ class CuentaFragment : Fragment() {
 
     ): View? {
         //Get logged User id
-        var loggedUser : String? = activity?.intent?.extras?.getString("email")
 
+        loggedUser = Session.getIdUsuario()
         //Ini Cuenta viewModel
         val userDao = UserDataBase.getDataBase(activity?.application!!).userDao()
         val repository = UserRepository(userDao, loggedUser.toString())
@@ -49,7 +51,7 @@ class CuentaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var loggedUser : String? = activity?.intent?.extras?.getString("email")
+        //var loggedUser : String? = Session.getIdUsuario()
 
         boton_edit.setOnClickListener {
             if (reg_userName.isEnabled) {
@@ -69,7 +71,6 @@ class CuentaFragment : Fragment() {
                 reg_faction.setText(user.faction)
                 reg_points.setText(user.points.toString())
             }
-
         })
 
 

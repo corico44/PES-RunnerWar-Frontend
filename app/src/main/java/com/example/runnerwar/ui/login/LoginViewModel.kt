@@ -92,7 +92,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
             if (actRes!!.codi == 500) { //Activity doesn't exist
                 val activity = Activity(Session.getIdUsuario(), Session.getCurrentDate(), Session.getAccountname(), 0,0 )
-                //repositoryAct.createActivityLDB(activity)  // Create a new activity in Local
+                repositoryAct.createActivityLDB(activity)  // Create a new activity in Local
                 val exists : Response<ActivityResponse> = repositoryAct.newActivity(ActivityForm(activity.accountname, activity.date))
                 if (exists.isSuccessful){
                     actRes = exists.body()
@@ -114,13 +114,15 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                     repositoryAct.createActivityLDB(activity) // Create a new activity
                 } else {
                     repositoryAct.updateStepsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity.steps)
-                    repositoryAct.updatePointsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity.steps / 20)
+                    repositoryAct.updateAllDataPointsLDB(Session.getIdUsuario(), Session.getCurrentDate(), activity.steps / 20)
                 }
             }
             _response_activity.value = Codi(200)
 
         }
     }
+
+
     var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     // A placeholder password validation check
     private fun isUserNameValid(username: String): Boolean {
