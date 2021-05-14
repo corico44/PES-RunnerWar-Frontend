@@ -35,4 +35,12 @@
             android:name="com.example.runnerwar.ui.cuenta.CuentaFragment"
             android:label="@string/title_cuenta"
             tools:layout="@layout/fragment_cuenta"/>
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.runnerwar.ui.buscarCuenta.SearchFragment"
+        android:label="Buscar"
+        tools:layout="@layout/fragment_search"
+        />
+
 </navigation>

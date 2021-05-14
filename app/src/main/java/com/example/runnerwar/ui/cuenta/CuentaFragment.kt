@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
@@ -16,6 +17,7 @@ import com.example.runnerwar.Model.RegisterResponse
 import com.example.runnerwar.Model.UserUpdate
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
+import com.example.runnerwar.ui.buscarCuenta.SearchFragment
 import com.example.runnerwar.ui.registro.RegistroActivity
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
@@ -48,6 +50,7 @@ class CuentaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var actualname: String = "null"
 
         var loggedUser : String? = activity?.intent?.extras?.getString("email")
 
@@ -65,6 +68,7 @@ class CuentaFragment : Fragment() {
         cuentaViewModel.readAllData.observe(this@CuentaFragment, Observer { user ->
             if (user != null){
                 reg_userName.setText(user.accountname)
+                actualname = user.accountname
                 reg_email.setText(user._id)
                 reg_faction.setText(user.faction)
                 reg_points.setText(user.points.toString())
@@ -78,7 +82,14 @@ class CuentaFragment : Fragment() {
             if (response.isSuccessful){
                 val data: RegisterResponse? = response.body()
                 if (data != null) {
-                    Toast.makeText(activity?.applicationContext, "Update successfully", Toast.LENGTH_SHORT).show()
+                    if (data.codi == 200) {
+                        Toast.makeText(activity?.applicationContext, "Update successfully", Toast.LENGTH_SHORT).show()
+                        actualname = data.accountname.toString()
+                    }
+                    else {
+                        Toast.makeText(activity?.applicationContext, "Accountname already used", Toast.LENGTH_SHORT).show()
+                        reg_userName.setText(actualname)
+                    }
                 }
             }
         })
@@ -107,6 +118,12 @@ class CuentaFragment : Fragment() {
         boton_logout.setOnClickListener {
             val intent = Intent(activity?.applicationContext, RegistroActivity::class.java)
             startActivity(intent)
+        }
+
+        boton_search.setOnClickListener{
+            //androidx.appcompat.widget.AppCompatImageButton cannot be cast to android.view.ViewGroup
+            val transaction: FragmentTransaction = fragmentManager?.beginTransaction()!!
+            transaction.replace(R.id.nav_host_fragment,SearchFragment()).commit()
         }
     }
 }
