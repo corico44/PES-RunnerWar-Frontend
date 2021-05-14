@@ -11,7 +11,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.runnerwar.Services.ContarPasosService
 import com.example.runnerwar.ui.login.LoginActivity
 import com.example.runnerwar.ui.mapa.MapaFragment
-import com.example.runnerwar.ui.registro.RegistroActivity
+
+import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.logger.ChatLogLevel
+import io.getstream.chat.android.livedata.ChatDomain
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,10 +22,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val client = ChatClient.Builder(getString(R.string.api_key), this).logLevel(ChatLogLevel.ALL).build()
+        ChatDomain.Builder(client, this).build()
 
-        //val intent = Intent(this@MainActivity, RegistroActivity::class.java)
-
-        intent = Intent(this@MainActivity, LoginActivity::class.java)
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
         intent.putExtra("some_error", " ")
         startActivity(intent)
 

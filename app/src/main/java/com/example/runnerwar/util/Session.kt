@@ -22,6 +22,12 @@ class Session {
     {
 
         private var id_usuario = ""
+        private var username= ""
+
+        fun loginUser(id:String, name:String){
+            id_usuario = id
+            username = name
+        }
         private var accountname =""
         private var sessionDate = ""
 
@@ -41,6 +47,10 @@ class Session {
 
         fun getIdUsuario(): String {
             return id_usuario
+        }
+
+        fun getUsername() : String{
+            return username
         }
 
         fun setIdUsuario(id: String) {

@@ -48,6 +48,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             Session.logIn(user._id, user.accountname)
                         }
+                        Session.loginUser(user._id, user.accountname)
                         repository.addUser(user)
                     }
                 }

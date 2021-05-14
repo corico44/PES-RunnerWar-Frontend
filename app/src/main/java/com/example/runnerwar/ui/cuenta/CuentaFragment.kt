@@ -20,6 +20,7 @@ import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.buscarCuenta.SearchFragment
 import com.example.runnerwar.ui.cambiarFaccion.CambiarFaccionActivity
 import com.example.runnerwar.ui.registro.RegistroActivity
+import io.getstream.chat.android.client.ChatClient
 import com.example.runnerwar.util.Session
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
@@ -30,6 +31,7 @@ class CuentaFragment : Fragment() {
 
     private lateinit var cuentaViewModel: CuentaViewModel
     private lateinit var loggedUser: String
+    private val client = ChatClient.instance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,6 +83,7 @@ class CuentaFragment : Fragment() {
                 reg_faction.setText(user.faction)
                 reg_points.setText(user.points.toString())
             }
+
         })
 
 
@@ -123,6 +126,7 @@ class CuentaFragment : Fragment() {
         }
 
         boton_logout.setOnClickListener {
+            client.disconnect()
             val intent = Intent(activity?.applicationContext, RegistroActivity::class.java)
             startActivity(intent)
         }

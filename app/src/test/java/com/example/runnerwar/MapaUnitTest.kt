@@ -68,10 +68,11 @@ class MapaUnitTest {
         listLugaresInteres.add(ParcTeleferic)
 
         /*resultArray = resultLugaresInteres.getParks()
+        //resultArray = resultLugaresInteres.getParks()
 
         var i = 0
         var size : Array<String>
-        for(loc in resultArray){
+        /*for(loc in resultArray){
             size = listLugaresInteres[i].longitude.toString().split('.').toTypedArray()
             assertEquals(6, size[1].length)
             ++i
@@ -103,6 +104,7 @@ class MapaUnitTest {
         listLugaresInteres.add(ParcTeleferic)
 
         /*resultArray = resultLugaresInteres.getParks()
+       /* resultArray = resultLugaresInteres.getParks()
 
         var i = 0
         var size : Array<String>

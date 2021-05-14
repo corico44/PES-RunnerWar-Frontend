@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.runnerwar"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -80,4 +80,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     implementation platform('com.google.firebase:firebase-bom:27.1.0')
+    // Stream Chat
+    implementation "io.getstream:stream-chat-android-ui-components:4.8.0"
+
 }

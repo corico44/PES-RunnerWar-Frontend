@@ -19,12 +19,18 @@ import com.example.runnerwar.Repositories.ActivityRepository
 import com.example.runnerwar.Services.ContarPasosService
 import com.example.runnerwar.ui.seleccionFaccion.SeleccionFaccionViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.logger.ChatLogLevel
+import io.getstream.chat.android.livedata.ChatDomain
 import com.handy.opinion.utils.LocationHelper
 import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.coroutines.runBlocking
 
 class NavActivity : AppCompatActivity() {
+
+
+
 
 
     private lateinit var navViewModel: NavViewModel
