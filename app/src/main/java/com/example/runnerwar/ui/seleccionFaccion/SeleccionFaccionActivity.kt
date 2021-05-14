@@ -59,7 +59,7 @@ class SeleccionFaccionActivity : AppCompatActivity() {
 
         selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer {
             val statReg = it ?: return@Observer
-            if (statReg.result == 200){
+            if (statReg.codi == 200){
                 selFaccViewModel.initServiceContarPasos(application)
             }
             else {
@@ -72,7 +72,7 @@ class SeleccionFaccionActivity : AppCompatActivity() {
 
         selFaccViewModel.responseActivity.observe(this@SeleccionFaccionActivity, Observer {
             val stat= it ?: return@Observer
-            if(stat.result ==200){
+            if(stat.codi ==200){
                 Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@SeleccionFaccionActivity, NavActivity::class.java)
                 startActivity(intent)

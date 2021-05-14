@@ -46,6 +46,7 @@ interface Api {
     fun updatePoints(
         @Body pointsUpdate: PointsUpdate
     ) : Call<LoginResponse>
+
     @Headers("Content-Type: application/json")
     @POST("/add_friend")
     fun addFriend(
@@ -106,10 +107,5 @@ interface Api {
         @Body activiy: ActivityUpdate
     ) : Call<ActivityResponse>
 
-    @Headers("Content-Type: application/json")
-    @PUT("/points/add")
-    fun updatePoints(
-        @Body pointsUpdate: PointsUpdate
-    ) : Call<LoginResponse>
 
 }

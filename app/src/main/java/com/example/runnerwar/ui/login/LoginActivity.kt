@@ -97,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.responseCreate.observe(this@LoginActivity, Observer {
             val statReg = it ?: return@Observer
-            if (statReg.result == 200){
+            if (statReg.codi == 200){
                 loginViewModel.initServiceContarPasos(application)
             }
             else {
@@ -107,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         loginViewModel.responseActivity.observe(this@LoginActivity, Observer {
-            val stat= it ?: return@Observer
+            val statReg = it ?: return@Observer
             if (statReg.codi == 200){
                 Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@LoginActivity, NavActivity::class.java)
