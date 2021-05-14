@@ -22,7 +22,7 @@ class LugarInteresRepository(private val userDao: UserDao){
     }
 
 
-    suspend fun updatePoints(points: Int) {
+    suspend fun updatePointsLocal(points: Int) {
         userDao.updatePoints(Session.getIdUsuario(), points)
     }
 

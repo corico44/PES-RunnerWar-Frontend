@@ -21,6 +21,7 @@ import com.example.runnerwar.Model.LugarInteresResponse
 import com.example.runnerwar.Model.PointsUpdate
 import com.example.runnerwar.NavActivity
 import com.example.runnerwar.Repositories.LugarInteresRepository
+import com.example.runnerwar.util.CheckLugarInteres
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
@@ -49,7 +50,6 @@ class MapaFragment : Fragment(),
     internal lateinit var mLastLocation: Location
     private var lugaresInteres: List<LugarInteresResponse>? = null
     private var myList: MutableList<Circle> = mutableListOf<Circle>()
-    private var estaDentro: MutableList<Boolean> = mutableListOf<Boolean>()
     private var email: String? = null
 
 
@@ -123,8 +123,11 @@ class MapaFragment : Fragment(),
                 myList.add(circle)
             }
         }
-        for(i in myList.indices){
-            estaDentro.add(false)
+        if(!CheckLugarInteres.firstTime) {
+            CheckLugarInteres.firstTime = true
+            for (i in myList.indices) {
+                CheckLugarInteres.estaDentro.add(false)
+            }
         }
     }
 
@@ -144,18 +147,14 @@ class MapaFragment : Fragment(),
 
 
             if (distance[0] <= circles[i]!!.radius) {
-                if(!estaDentro[i]) {
+                if(!CheckLugarInteres.estaDentro[i]) {
                     var lu : PointsUpdate? = email?.let { PointsUpdate(it, 100) }
                     if (lu != null) {
                         mapaViewModel.updatePoints(lu)
                     }
                     Toast.makeText(activity!!, "Estas dentro de un lugar de interes", Toast.LENGTH_SHORT).show()
-                    estaDentro[i] = true
+                    CheckLugarInteres.estaDentro[i] = true
                 }
-            }
-
-            else {
-                estaDentro[i] = false
             }
         }
 
