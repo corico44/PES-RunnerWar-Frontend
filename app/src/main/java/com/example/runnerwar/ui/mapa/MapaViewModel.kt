@@ -39,7 +39,7 @@ class MapaViewModel(private val repository: LugarInteresRepository) : ViewModel(
             val res: Response<LoginResponse> = repository.updatePoints(lu)
 
             if(res.isSuccessful){
-                //repository.updatePointsLocal(lu.points)
+                repository.updatePointsLocal(lu.points)
             }
         }
     }

@@ -22,6 +22,7 @@ import com.example.runnerwar.Model.PointsUpdate
 import com.example.runnerwar.NavActivity
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.example.runnerwar.util.CheckLugarInteres
+import com.example.runnerwar.util.Session
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
@@ -148,7 +149,7 @@ class MapaFragment : Fragment(),
 
             if (distance[0] <= circles[i]!!.radius) {
                 if(!CheckLugarInteres.estaDentro[i]) {
-                    var lu : PointsUpdate? = email?.let { PointsUpdate(it, 100) }
+                    var lu : PointsUpdate? = PointsUpdate(Session.getIdUsuario(), 100)
                     if (lu != null) {
                         mapaViewModel.updatePoints(lu)
                     }
