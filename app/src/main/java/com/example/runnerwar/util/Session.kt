@@ -23,7 +23,7 @@ class Session {
 
         private var id_usuario = ""
         private var accountname =""
-        private lateinit var sessionDate : String
+        private var sessionDate = ""
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun logIn(id:String, username : String){
@@ -41,6 +41,10 @@ class Session {
 
         fun getIdUsuario(): String {
             return id_usuario
+        }
+
+        fun setIdUsuario(id: String) {
+            id_usuario = id
         }
 
         fun getAccountname(): String {

@@ -33,7 +33,7 @@ import java.time.format.DateTimeFormatter
 class ContarPasosService : IntentService("ContarPasosService"), SensorEventListener{
 
     private lateinit var msensorManager: SensorManager
-    private lateinit var mSensor: Sensor
+    private var mSensor: Sensor? = null
 
     init {
         instance = this
@@ -69,7 +69,9 @@ class ContarPasosService : IntentService("ContarPasosService"), SensorEventListe
 
     override fun onHandleIntent(intent: Intent?) {
         msensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        mSensor =  msensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+        if(msensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER) != null){
+            mSensor =  msensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+        }
         activity = runBlocking { repositoryAct.getActivityLDB(Session.getIdUsuario(), Session.getCurrentDate()) }
 
         isRunning = true
