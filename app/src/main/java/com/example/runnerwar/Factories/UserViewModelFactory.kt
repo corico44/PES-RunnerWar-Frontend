@@ -3,6 +3,8 @@ package com.example.runnerwar.Factories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.runnerwar.Repositories.UserRepository
+import com.example.runnerwar.ui.buscarCuenta.SearchViewModel
+import com.example.runnerwar.ui.cambiarFaccion.CambiarFaccionViewModel
 import com.example.runnerwar.ui.cuenta.CuentaViewModel
 import com.example.runnerwar.ui.login.LoginViewModel
 import com.example.runnerwar.ui.registro.RegistroViewModel
