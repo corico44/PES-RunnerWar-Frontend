@@ -45,10 +45,8 @@ import android.os.Build
 import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.example.runnerwar.Services.ContarPasosService
-import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.common.api.GoogleApiClient
 import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_mapa.*
 
