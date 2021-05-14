@@ -1,5 +1,6 @@
 package com.example.runnerwar
 
+import com.example.runnerwar.Model.ActivityResponse
 import com.example.runnerwar.Model.LoginResponse
 import com.example.runnerwar.Model.LoginUser
 import com.example.runnerwar.Model.User
@@ -82,5 +83,15 @@ class LoginApiUnitTest {
             val res: LoginResponse? = response.body()
             assertEquals(res!!.codi, 500)
         }
+    }
+
+    @Test
+    fun get_activity(){
+        var loginUser: LoginUser = LoginUser("PauRu99", "20210122")
+        //val response : Response<ActivityResponse> = runBlocking {  api.getActivity("PauRu99", "20210122").awaitResponse()}
+        /*if(response.isSuccessful){
+            val res: ActivityResponse? = response.body()
+            assertEquals(res!!.codi, 500)
+        }*/
     }
 }

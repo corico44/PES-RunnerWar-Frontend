@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.R
+import com.example.runnerwar.Services.ContarPasosService
 
 class ChatFragment : Fragment() {
 
@@ -23,6 +24,7 @@ class ChatFragment : Fragment() {
             ViewModelProviders.of(this).get(ChatViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_chat, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
+
         chatViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })

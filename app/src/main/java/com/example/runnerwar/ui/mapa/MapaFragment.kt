@@ -35,6 +35,24 @@ import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import android.R
+import android.content.Context
+import android.content.Context.LOCATION_SERVICE
+import android.location.LocationManager
+import androidx.core.content.ContextCompat.getSystemService
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import android.hardware.SensorManager
+import android.os.Build
+import android.os.Looper
+import androidx.core.content.ContextCompat
+import com.example.runnerwar.Services.ContarPasosService
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.common.api.GoogleApiClient
+import kotlinx.android.synthetic.main.activity_nav.*
+import kotlinx.android.synthetic.main.fragment_mapa.*
 
 
 
@@ -117,6 +135,13 @@ class MapaFragment : Fragment(),
         }
         val mapFragment = childFragmentManager.findFragmentById(com.example.runnerwar.R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
+
+
+        ContarPasosService.dataActivity.observe(this, Observer { response ->
+            pointsView.text = response.points.toString()
+            stepsView.text = response.steps.toString()
+        })
+
     }
 
     fun añadirLugaresInteresMapa() {

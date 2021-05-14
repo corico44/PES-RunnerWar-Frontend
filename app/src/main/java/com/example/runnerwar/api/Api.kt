@@ -18,6 +18,7 @@ interface Api {
         @Body loginUser: LoginUser
     ) : Call<LoginResponse>
 
+
     @Headers("Content-Type: application/json")
     @PUT("/update_accountname")
     fun updateUser(
@@ -85,5 +86,30 @@ interface Api {
             @Body mail: MailForm
     ) : Call<Codi>
 
+    @Headers("Content-Type: application/json")
+    @POST("/create/activity")
+    fun createActivity(
+        @Body activiy: ActivityForm
+    ) : Call<ActivityResponse>
+
+
+    @Headers("Content-Type: application/json")
+    @GET("/consult/activity")
+    fun getActivity(
+        @Query("accountname") accountname : String, @Query("date") date: String
+    ) : Call<ActivityResponse>?
+
+
+    @Headers("Content-Type: application/json")
+    @PUT("/update/activity")
+    fun updateActivity(
+        @Body activiy: ActivityUpdate
+    ) : Call<ActivityResponse>
+
+    @Headers("Content-Type: application/json")
+    @PUT("/points/add")
+    fun updatePoints(
+        @Body pointsUpdate: PointsUpdate
+    ) : Call<LoginResponse>
 
 }

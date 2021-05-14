@@ -39,6 +39,9 @@ class MapaUnitTest {
         lugaresInteres = resultLugaresInteres.devolverLugaresInteres()!!
         var coordenadas = lugaresInteres!![0].longitud?.let { lugaresInteres!![0].latitud?.let { it1 -> LatLng(it1, it) } }
         assertEquals(Montjuic, coordenadas)
+        var listLugaresInteres = ArrayList<LatLng>()
+        //listLugaresInteres = resultLugaresInteres.getParks()
+        assertEquals(Montjuic, listLugaresInteres[0])
     }
 
     @Test
@@ -64,7 +67,7 @@ class MapaUnitTest {
         listLugaresInteres.add(ParcMirador)
         listLugaresInteres.add(ParcTeleferic)
 
-        resultArray = resultLugaresInteres.getParks()
+        /*resultArray = resultLugaresInteres.getParks()
 
         var i = 0
         var size : Array<String>
@@ -72,7 +75,7 @@ class MapaUnitTest {
             size = listLugaresInteres[i].longitude.toString().split('.').toTypedArray()
             assertEquals(6, size[1].length)
             ++i
-        }
+        }*/
 
     }
 
@@ -99,7 +102,7 @@ class MapaUnitTest {
         listLugaresInteres.add(ParcMirador)
         listLugaresInteres.add(ParcTeleferic)
 
-        resultArray = resultLugaresInteres.getParks()
+        /*resultArray = resultLugaresInteres.getParks()
 
         var i = 0
         var size : Array<String>
@@ -107,7 +110,7 @@ class MapaUnitTest {
             size = listLugaresInteres[i].latitude.toString().split('.').toTypedArray()
             assertEquals(6, size[1].length)
             ++i
-        }
+        }*/
 
     }
 
@@ -134,13 +137,13 @@ class MapaUnitTest {
         listLugaresInteres.add(ParcMirador)
         listLugaresInteres.add(ParcTeleferic)
 
-        resultArray = resultLugaresInteres.getParks()
+        /*resultArray = resultLugaresInteres.getParks()
 
         var i = 0
         for(loc in resultArray){
             assertEquals(listLugaresInteres[i],loc)
             ++i
-        }
+        }*/
 
     }*/
 
