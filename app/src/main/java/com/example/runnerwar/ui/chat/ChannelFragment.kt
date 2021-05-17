@@ -71,6 +71,10 @@ class ChannelFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_chat_to_users)
         }
 
+        channelView.setMoreOptionsClickListener {
+            Log.d("ChatFragment", "Algo")
+        }
+
         channelView.setChannelItemClickListener { channel ->
 
             val action = ChannelFragmentDirections.actionChannelFragmentToChatFragment(channel.cid)
