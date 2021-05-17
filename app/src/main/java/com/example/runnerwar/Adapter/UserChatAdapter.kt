@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.user_row_layout.view.*
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.runnerwar.ui.chat.ChatFragment
+import com.example.runnerwar.ui.chat.UsersFragment
+import com.example.runnerwar.ui.chat.UsersFragmentDirections
 
 
 class UserChatAdapter  : RecyclerView.Adapter<UserChatAdapter.ViewHolder>(){
@@ -28,7 +30,7 @@ class UserChatAdapter  : RecyclerView.Adapter<UserChatAdapter.ViewHolder>(){
     private val client = ChatClient.instance()
     private var userList = emptyList<User>()
 
-    class ViewHolder( var itemView: View ) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder( var itemView: View  ) : RecyclerView.ViewHolder(itemView) {
         val itemUsername: TextView = itemView.findViewById(R.id.username_textView)
         val itemLastActive: TextView = itemView.findViewById(R.id.lastActive_textView)
         val itemPicture : AvatarView = itemView.findViewById(R.id.avatar_imageView)
@@ -37,10 +39,8 @@ class UserChatAdapter  : RecyclerView.Adapter<UserChatAdapter.ViewHolder>(){
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         val v : View = LayoutInflater.from(parent.context).inflate(R.layout.user_row_layout, parent, false)
         return ViewHolder(v)
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -71,7 +71,6 @@ class UserChatAdapter  : RecyclerView.Adapter<UserChatAdapter.ViewHolder>(){
     private fun createNewChannel(selectedUser: String, holder: ViewHolder) {
         client.createChannel(
             channelType = "messaging",
-
             members = listOf(client.getCurrentUser()!!.id, selectedUser)
         ).enqueue { result ->
             if (result.isSuccess) {
@@ -83,9 +82,8 @@ class UserChatAdapter  : RecyclerView.Adapter<UserChatAdapter.ViewHolder>(){
     }
 
    private fun navigateToChatFragment(holder: ViewHolder, cid: String) {
-
-       val bundle = bundleOf("cid" to cid)
-        holder.itemView.findNavController().navigate(R.id.navigation_chat, bundle)
+       val action = UsersFragmentDirections.actionUsersFragmentToChatFragment(cid)
+       holder.itemView.findNavController().navigate(action)
    }
 
 
