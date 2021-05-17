@@ -16,12 +16,12 @@ class MapaUnitTest {
 
     var resultLugaresInteres = MapaFragment()
     private var Montjuic = LatLng(41.370951, 2.151949)
-    private var ParcSantJordi = LatLng(41.364311,2.151776)
+    private var ParcSantJordi = LatLng(41.364311, 2.151776)
     private var ParcEspanyaIndustrial = LatLng(41.377597, 2.141002)
     private var ParcJoanMiro = LatLng(41.377658, 2.149281)
     private var ParcCiutadela = LatLng(41.387481, 2.186332)
     private var ParcCervantes = LatLng(41.383781, 2.106111)
-    private var ParcPedralbes = LatLng(41.387606,2.117924)
+    private var ParcPedralbes = LatLng(41.387606, 2.117924)
     private var ParcOreneta = LatLng(41.398791, 2.110879)
     private var ParcTuro = LatLng(41.395034, 2.140478)
     private var ParcPuxet = LatLng(41.407385, 2.142331)
@@ -32,7 +32,6 @@ class MapaUnitTest {
     private var ParcTuroPeira = LatLng(41.432969, 2.164697)
     private var ParcMirador = LatLng(41.368094, 2.167112)
     private var ParcTeleferic = LatLng(41.371971, 2.172406)
-    private var lugaresInteres: List<LugarInteresResponse>? = null
 
    /* @Test
     fun first_place_is_correct() {
@@ -67,16 +66,16 @@ class MapaUnitTest {
         listLugaresInteres.add(ParcMirador)
         listLugaresInteres.add(ParcTeleferic)
 
-        /*resultArray = resultLugaresInteres.getParks()
-        //resultArray = resultLugaresInteres.getParks()
+        resultArray = resultLugaresInteres.getParks()
+        resultArray = resultLugaresInteres.getParks()
 
         var i = 0
         var size : Array<String>
-        /*for(loc in resultArray){
+        for(loc in resultArray){
             size = listLugaresInteres[i].longitude.toString().split('.').toTypedArray()
             assertEquals(6, size[1].length)
             ++i
-        }*/
+        }
 
     }
 
@@ -103,8 +102,8 @@ class MapaUnitTest {
         listLugaresInteres.add(ParcMirador)
         listLugaresInteres.add(ParcTeleferic)
 
-        /*resultArray = resultLugaresInteres.getParks()
-       /* resultArray = resultLugaresInteres.getParks()
+       resultArray = resultLugaresInteres.getParks()
+       resultArray = resultLugaresInteres.getParks()
 
         var i = 0
         var size : Array<String>
@@ -112,7 +111,7 @@ class MapaUnitTest {
             size = listLugaresInteres[i].latitude.toString().split('.').toTypedArray()
             assertEquals(6, size[1].length)
             ++i
-        }*/
+        }
 
     }
 
@@ -139,7 +138,7 @@ class MapaUnitTest {
         listLugaresInteres.add(ParcMirador)
         listLugaresInteres.add(ParcTeleferic)
 
-        /*resultArray = resultLugaresInteres.getParks()
+        resultArray = resultLugaresInteres.getParks()
 
         var i = 0
         for(loc in resultArray){
@@ -147,6 +146,4 @@ class MapaUnitTest {
             ++i
         }*/
 
-    }*/
-
-}
+    }

@@ -3,6 +3,9 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorButtonBlue">#4C73A7</color>
+    <color name="colorButtonGray">#D7D6D6</color>
+    <color name="colorButtonWhite">@color/white</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
