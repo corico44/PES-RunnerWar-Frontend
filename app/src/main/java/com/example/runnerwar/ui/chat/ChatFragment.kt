@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.runnerwar.R
 import com.example.runnerwar.Services.ContarPasosService
 import com.getstream.sdk.chat.viewmodel.MessageInputViewModel
@@ -22,16 +23,9 @@ import kotlinx.android.synthetic.main.fragment_chat.view.*
 
 class ChatFragment : Fragment() {
 
-    private var channelId: String? = null
+    private val args: ChatFragmentArgs by navArgs()
 
     private lateinit var root : View
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            channelId = it.getString("cid")
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +46,8 @@ class ChatFragment : Fragment() {
     }
 
     private fun setupMessage() {
-        val factory = MessageListViewModelFactory(cid = channelId!!)
+        val algo = args.channelId
+        val factory = MessageListViewModelFactory(cid = args.channelId)
 
         val messageListHeaderViewModel: MessageListHeaderViewModel by viewModels { factory }
         val messageListViewModel: MessageListViewModel by viewModels { factory }
