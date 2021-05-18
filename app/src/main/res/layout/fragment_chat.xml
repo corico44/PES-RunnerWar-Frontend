@@ -14,18 +14,20 @@
             android:alpha="1" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="350dp"
             app:layout_constraintEnd_toEndOf="parent"/>
+
     <io.getstream.chat.android.ui.message.list.MessageListView
-            android:id="@+id/messageList"
-            android:layout_width="0dp"
-            android:layout_height="673dp"
-            android:background="#6300BCD4"
-            app:streamUiMessageBackgroundColorMine="#FFFFFF"
-            app:streamUiMessageBackgroundColorTheirs="#4C73A7"
-            app:streamUiMessageTextColorMine="#000000"
-            app:streamUiMessageTextColorTheirs="#FFFFFF"
-            app:layout_constraintTop_toBottomOf="@+id/messagesHeaderView" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/messageInputView" app:layout_constraintStart_toStartOf="parent">
-    </io.getstream.chat.android.ui.message.list.MessageListView>
+        android:id="@+id/messageList"
+        android:layout_width="425dp"
+        android:layout_height="608dp"
+        android:background="#6300BCD4"
+        app:layout_constraintBottom_toTopOf="@+id/messageInputView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messagesHeaderView"
+        app:streamUiMessageBackgroundColorMine="#FFFFFF"
+        app:streamUiMessageBackgroundColorTheirs="#4C73A7"
+        app:streamUiMessageTextColorMine="#000000"
+        app:streamUiMessageTextColorTheirs="#FFFFFF"></io.getstream.chat.android.ui.message.list.MessageListView>
     <io.getstream.chat.android.ui.message.input.MessageInputView
             android:id="@+id/messageInputView"
             android:layout_width="0dp"
