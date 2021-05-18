@@ -12,7 +12,6 @@ class LugarInteresRepository(private val userDao: UserDao){
     //Calls to API
     suspend fun getLugaresInteres(): Response<List<LugarInteresResponse>> {
         // Call to API to add new user
-        println("ESTOY EN EL REPOSITORIO")
         return RetrofitInstance.api.getLugaresInteres().awaitResponse()
     }
 

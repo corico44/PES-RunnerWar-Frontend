@@ -35,8 +35,10 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import android.R
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
+import android.content.DialogInterface
 import android.location.LocationManager
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -49,12 +51,6 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_mapa.*
-
-
-
-
-
-
 
 
 class MapaFragment : Fragment(),
@@ -117,7 +113,7 @@ class MapaFragment : Fragment(),
                 // Here you got user location :)
                 mLastLocation = location
                 //addToMap(mLastLocation)
-                if(!myList.isEmpty()){
+                if(!myList.isEmpty() && mLastLocation != null && myList != null){
                     estaDentro(mLastLocation,myList)
                 }
             }
@@ -199,28 +195,58 @@ class MapaFragment : Fragment(),
 
     fun estaDentro(location: Location, circles: MutableList<Circle>) {
         for(i in circles.indices){
-            val distance = FloatArray(2)
-            val currentLatitude = location.latitude
-            val currentLongitude = location.longitude
-            val circleLatitude = circles[i].center.latitude
-            val circleLongitude = circles[i].center.longitude
+            if(location != null && circles != null){
+                val distance = FloatArray(2)
+                val currentLatitude = location.latitude
+                val currentLongitude = location.longitude
+                val circleLatitude = circles[i].center.latitude
+                val circleLongitude = circles[i].center.longitude
 
-            Location.distanceBetween(
-                currentLatitude, currentLongitude,
-                circleLatitude, circleLongitude, distance
-            )
+                Location.distanceBetween(
+                    currentLatitude, currentLongitude,
+                    circleLatitude, circleLongitude, distance
+                )
 
-
-            if (distance[0] <= circles[i]!!.radius) {
-                if(!CheckLugarInteres.estaDentro[i]) {
-                    var lu : PointsUpdate? = PointsUpdate(Session.getIdUsuario(), 100)
-                    if (lu != null) {
-                        mapaViewModel.updatePoints(lu)
+                if (distance[0] <= circles[i]!!.radius) {
+                    if(CheckLugarInteres.estaDentro != null && !CheckLugarInteres.estaDentro[i]) {
+                        if(Session.getIdUsuario() != null){
+                            var lu : PointsUpdate? = PointsUpdate(Session.getIdUsuario(), 100)
+                            if (lu != null) {
+                                if(mapaViewModel != null) {
+                                    mapaViewModel.updatePoints(lu)
+                                    openPopUpDailyLogin()
+                                }
+                                //openPopUpDailyLogin()
+                            }
+                        }
+                        CheckLugarInteres.estaDentro[i] = true
                     }
-                    Toast.makeText(activity!!, "Estas dentro de un lugar de interes", Toast.LENGTH_SHORT).show()
-                    CheckLugarInteres.estaDentro[i] = true
                 }
             }
+        }
+    }
+
+    fun openPopUpDailyLogin(){
+
+        if(activity != null) {
+            val dialogBuilder = AlertDialog.Builder(activity!!)
+            // set message of alert dialog
+            dialogBuilder.setMessage("You are in a place of interest")
+                // if the dialog is cancelable
+                .setCancelable(false)
+                .setMessage("Congratulations you earned:")
+                .setMessage("+100 points")
+                // negative button text and action
+                .setNegativeButton("Okey", DialogInterface.OnClickListener {
+                        dialog, id -> dialog.cancel()
+                })
+
+            // create dialog box
+            val alert = dialogBuilder.create()
+            // set title for alert dialog box
+            alert.setTitle("PLACE OF INTEREST REWARD!")
+            // show alert dialog
+            alert.show()
         }
 
     }

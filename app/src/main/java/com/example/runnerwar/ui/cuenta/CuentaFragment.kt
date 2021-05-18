@@ -31,7 +31,7 @@ class CuentaFragment : Fragment() {
 
     private lateinit var cuentaViewModel: CuentaViewModel
     private lateinit var loggedUser: String
-    private val client = ChatClient.instance()
+    //private val client = ChatClient.instance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -117,16 +117,16 @@ class CuentaFragment : Fragment() {
             reg_userName.setEnabled(false)
             disk_save.setVisibility(View.INVISIBLE)
             val userUp = UserUpdate(reg_userName.text.toString(), reg_email.text.toString())
-            cuentaViewModel.updateUser(userUp)
+            if(userUp != null) cuentaViewModel.updateUser(userUp)
         }
 
         boton_eliminar.setOnClickListener{
             val user = DeleteUser(loggedUser.toString())
-            cuentaViewModel.deleteUser(user)
+            if(user != null) cuentaViewModel.deleteUser(user)
         }
 
         boton_logout.setOnClickListener {
-            client.disconnect()
+            //client.disconnect()
             val intent = Intent(activity?.applicationContext, RegistroActivity::class.java)
             startActivity(intent)
         }
