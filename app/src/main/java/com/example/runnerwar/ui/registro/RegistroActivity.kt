@@ -226,8 +226,9 @@ class RegistroActivity : AppCompatActivity() {
                         intent.putExtra("username", user.displayName.toString())
                         intent.putExtra("email", user.email.toString())
                         intent.putExtra("password", "google")
+                        startActivity(intent)
                     }
-                    startActivity(intent)
+
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("fail", "signInWithCredential:failure", task.exception)

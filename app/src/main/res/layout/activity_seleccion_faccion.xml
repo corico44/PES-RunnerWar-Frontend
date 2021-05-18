@@ -55,14 +55,20 @@
             app:layout_constraintHorizontal_bias="0.471"
             app:layout_constraintVertical_bias="0.335" android:textColor="@android:color/black"
             android:textSize="18sp" app:layout_constraintBottom_toBottomOf="@+id/imageView8"/>
+
     <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@drawable/rectangle_19" android:id="@+id/imageButton4"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton2" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="azul"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton5" android:background="#FFFFFF"/>
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:contentDescription="azul"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        app:srcCompat="@drawable/rectangle_19" />
+
     <TextView
             android:fontFamily="@font/font_arcade_classic"
             android:layout_width="260dp"
@@ -111,15 +117,20 @@
             app:layout_constraintTop_toBottomOf="@+id/imageButton5"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton6" app:layout_constraintHorizontal_bias="0.472"
             app:layout_constraintVertical_bias="0.758"/>
+
     <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@drawable/rectangle_20" android:id="@+id/imageButton2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
-            app:layout_constraintBottom_toTopOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.036"
-            android:layout_marginTop="90dp" android:visibility="visible" android:contentDescription="amarillo"
-            app:layout_constraintHorizontal_bias="0.495" android:background="#FFFFFF"/>
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:contentDescription="amarillo"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@drawable/rectangle_20" />
     <TextView
             android:text="CHOOSE A TEAM!"
             android:fontFamily="@font/font_arcade_classic"

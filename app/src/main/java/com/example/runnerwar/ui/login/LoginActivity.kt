@@ -152,8 +152,11 @@ class LoginActivity : AppCompatActivity() {
         signInButton.setOnClickListener{
             var user = auth.currentUser
             var password = loginViewModel.hashString("google","SHA-256")
-            var lu : LoginUser = LoginUser(user.email.toString(), password)
-            loginViewModel.logIn(lu)
+            if(user != null){
+                var lu : LoginUser = LoginUser(user.email.toString(), password)
+                loginViewModel.logIn(lu)
+            }
+
         }
 
     }

@@ -22,6 +22,12 @@ import com.example.runnerwar.ui.cambiarFaccion.CambiarFaccionActivity
 import com.example.runnerwar.ui.registro.RegistroActivity
 import io.getstream.chat.android.client.ChatClient
 import com.example.runnerwar.util.Session
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
@@ -31,6 +37,8 @@ class CuentaFragment : Fragment() {
 
     private lateinit var cuentaViewModel: CuentaViewModel
     private lateinit var loggedUser: String
+    private lateinit var auth: FirebaseAuth
+    lateinit var mGoogleSignInClient: GoogleSignInClient
     //private val client = ChatClient.instance()
 
     override fun onCreateView(
@@ -48,6 +56,14 @@ class CuentaFragment : Fragment() {
         val viewModelFactory = UserViewModelFactory(repository,2)
         cuentaViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(CuentaViewModel::class.java)
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
+        auth = Firebase.auth
 
         val root = inflater.inflate(R.layout.fragment_cuenta, container, false)
         return root
@@ -127,6 +143,8 @@ class CuentaFragment : Fragment() {
 
         boton_logout.setOnClickListener {
             //client.disconnect()
+            mGoogleSignInClient.signOut()
+
             val intent = Intent(activity?.applicationContext, RegistroActivity::class.java)
             startActivity(intent)
         }
