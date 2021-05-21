@@ -6,24 +6,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.runnerwar.R
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
 import com.example.runnerwar.Model.Codi
-import com.example.runnerwar.Model.DeleteUser
 import com.example.runnerwar.Model.MailForm
-import com.example.runnerwar.Model.RegisterResponse
-import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.util.Session
+import kotlinx.android.synthetic.main.fragment_muro.*
+
 
 class MuroFragment : Fragment() {
 
     private lateinit var muroViewModel: MuroViewModel
+    private val itemsList: List<Items> = ArrayList()
+    private var listView: ListView? = null
+    private var adapter: CustomListAdapter? = null
+
     override fun onStart() {
 
         super.onStart()
@@ -54,6 +58,13 @@ class MuroFragment : Fragment() {
                 openPopUpDailyLogin()
             }
         })
+
+
+        listView = list_score
+        adapter = activity?.applicationContext?.let { CustomListAdapter(it, itemsList) }
+        listView?.setAdapter(adapter)
+
+
         return root
     }
 
