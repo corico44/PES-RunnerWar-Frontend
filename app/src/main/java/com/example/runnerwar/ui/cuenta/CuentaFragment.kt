@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -20,7 +21,7 @@ import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.buscarCuenta.SearchFragment
 import com.example.runnerwar.ui.cambiarFaccion.CambiarFaccionActivity
 import com.example.runnerwar.ui.registro.RegistroActivity
-import io.getstream.chat.android.client.ChatClient
+import com.example.runnerwar.util.Language
 import com.example.runnerwar.util.Session
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -32,6 +33,7 @@ import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
 import kotlinx.android.synthetic.main.registro.*
+
 
 class CuentaFragment : Fragment() {
 
@@ -65,6 +67,7 @@ class CuentaFragment : Fragment() {
         mGoogleSignInClient = GoogleSignIn.getClient(activity!!, gso)
         auth = Firebase.auth
 
+
         val root = inflater.inflate(R.layout.fragment_cuenta, container, false)
         return root
     }
@@ -72,6 +75,16 @@ class CuentaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var actualname: String = "null"
+
+        val cambiar_faccion: Button =  getView()?.findViewById(R.id.cambiarFaccion) as Button
+
+
+        if(Language.idioma.equals("castellano")){
+            cambiar_faccion.setText("Cambiar faccion")
+        }
+        else if(Language.idioma.equals("ingles")){
+            cambiar_faccion.setText("Change faction")
+        }
 
         //var loggedUser : String? = Session.getIdUsuario()
 

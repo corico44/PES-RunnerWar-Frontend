@@ -134,10 +134,9 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.433"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_signup"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.397" />
 
     <TextView
         android:id="@+id/textView10"
@@ -181,7 +180,7 @@
         app:layout_constraintHorizontal_bias="0.932"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signup_button"
-        app:layout_constraintVertical_bias="0.617" />
+        app:layout_constraintVertical_bias="0.509" />
 
     <TextView
         android:id="@+id/error"
@@ -209,5 +208,28 @@
         app:layout_constraintVertical_bias="0.746"
 
         />
+
+    <ImageButton
+        android:id="@+id/ingles"
+        android:layout_width="49dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="136dp"
+        app:layout_constraintBottom_toTopOf="@+id/signup_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_signup"
+        app:srcCompat="@drawable/english" />
+
+    <ImageButton
+        android:id="@+id/castellano"
+        android:layout_width="57dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="132dp"
+        app:layout_constraintBottom_toTopOf="@+id/signup_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintStart_toEndOf="@+id/imageButton7"
+        app:layout_constraintTop_toBottomOf="@+id/password_signup"
+        app:layout_constraintVertical_bias="0.509"
+        app:srcCompat="@drawable/castellano" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

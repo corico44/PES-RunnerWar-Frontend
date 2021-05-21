@@ -175,23 +175,29 @@
             app:layout_constraintTop_toBottomOf="@+id/disk_save"
             app:layout_constraintBottom_toTopOf="@+id/reg_userName" app:layout_constraintHorizontal_bias="0.21"
             app:layout_constraintVertical_bias="0.909"/>
-    <Button
-            android:text="Cambiar faccion"
-            android:layout_width="123dp"
-            android:layout_height="55dp" android:id="@+id/cambiarFaccion"
-            app:layout_constraintTop_toTopOf="@+id/boton_eliminar"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintVertical_bias="0.514"/>
 
-    <ImageButton
+    <Button
+        android:id="@+id/cambiarFaccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cambiar faccion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_points"
+        app:layout_constraintVertical_bias="0.357" />
+
+    <Button
         android:id="@+id/boton_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="336dp"
-        android:layout_marginTop="240dp"
-        android:src="@android:drawable/ic_menu_search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cielo" />
+        android:text="Buscar usuarios"
+        app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.282"
+        app:layout_constraintStart_toEndOf="@+id/cambiarFaccion"
+        app:layout_constraintTop_toBottomOf="@+id/reg_points"
+        app:layout_constraintVertical_bias="0.38" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

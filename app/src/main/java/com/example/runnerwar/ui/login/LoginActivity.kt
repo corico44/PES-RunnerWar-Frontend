@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
@@ -32,6 +29,7 @@ import com.google.android.gms.common.SignInButton
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
+import com.example.runnerwar.util.Language
 import com.example.runnerwar.util.Session
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -72,6 +70,8 @@ class LoginActivity : AppCompatActivity() {
         val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
         val login = findViewById<Button>(R.id.signup_button)
         val error = findViewById<TextView>(R.id.error)
+        val ingles = findViewById<ImageButton>(R.id.ingles)
+        val castellano = findViewById<ImageButton>(R.id.castellano)
 
         login.isEnabled = true
         login.isClickable = true
@@ -101,7 +101,15 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.initServiceContarPasos(application)
             }
             else {
-                error.text = "Email or password incorrect"
+                if(Language.idioma.equals("castellano")){
+                    error.text = "Email o contraseña incorrecta"
+                }
+                else if(Language.idioma.equals("ingles")){
+                    error.text = "Email or password incorrect"
+                }
+                else{
+                    error.text = "Email o contraseña incorrecta"
+                }
             }
         })
 
@@ -109,13 +117,30 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.responseActivity.observe(this@LoginActivity, Observer {
             val statReg = it ?: return@Observer
             if (statReg.codi == 200){
-                Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this@LoginActivity, NavActivity::class.java)
-                startActivity(intent)
+                if(Language.idioma.equals("castellano")){
+                    Toast.makeText(applicationContext, "Bienvenido a RunnerWar", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@LoginActivity, NavActivity::class.java)
+                    startActivity(intent)
+                }
+                else if(Language.idioma.equals("ingles")){
+                    Toast.makeText(applicationContext, "Welcome to RunnerWar", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@LoginActivity, NavActivity::class.java)
+                    startActivity(intent)
+                }
+                else {
+                    error.text = "Idioma no seleccionado"
+                }
             }
             else {
-
-                error.text = "Email or password incorrect"
+                if(Language.idioma.equals("castellano")){
+                    error.text = "Email o contraseña incorrecta"
+                }
+                else if(Language.idioma.equals("ingles")){
+                    error.text = "Email or password incorrect"
+                }
+                else{
+                    error.text = "Email o contraseña incorrecta"
+                }
             }
         })
 
@@ -140,6 +165,7 @@ class LoginActivity : AppCompatActivity() {
         CreateAccButto.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegistroActivity::class.java)
             startActivity(intent)
+
         }
         signup_button.setOnClickListener {
             var password = loginViewModel.hashString(password.text.toString(),"SHA-256")
@@ -152,11 +178,23 @@ class LoginActivity : AppCompatActivity() {
         signInButton.setOnClickListener{
             var user = auth.currentUser
             var password = loginViewModel.hashString("google","SHA-256")
-            if(user != null){
-                var lu : LoginUser = LoginUser(user.email.toString(), password)
-                loginViewModel.logIn(lu)
+            if(!Language.idioma.equals("none")){
+                if(user != null){
+                    var lu : LoginUser = LoginUser(user.email.toString(), password)
+                    loginViewModel.logIn(lu)
+                }
+
+            }
+            else {
+                error.text = "Idioma no seleccionado"
             }
 
+        }
+        ingles.setOnClickListener {
+            Language.idioma = "ingles"
+        }
+        castellano.setOnClickListener {
+            Language.idioma = "castellano"
         }
 
     }

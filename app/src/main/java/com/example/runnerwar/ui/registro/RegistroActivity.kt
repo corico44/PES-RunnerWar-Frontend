@@ -25,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.android.gms.common.api.ApiException
@@ -36,12 +37,15 @@ import com.google.firebase.ktx.Firebase
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.common.SignInButton
+import org.intellij.lang.annotations.Language
+import org.w3c.dom.Text
 
 
 class RegistroActivity : AppCompatActivity() {
 
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var message_eror: TextView
 
     private lateinit var  registroViewModel: RegistroViewModel
 
@@ -93,10 +97,13 @@ class RegistroActivity : AppCompatActivity() {
         val signup = findViewById<Button>(R.id.signup_button)
         val error = findViewById<TextView>(R.id.error)
         val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
+        val ingles = findViewById<ImageButton>(R.id.ingles)
+        val castellano = findViewById<ImageButton>(R.id.castellano)
         //signInButton.setSize(signInButton.SIZE_STANDARD);
         val some_error = intent.extras?.getString("some_error")
 
         error.text = some_error
+        message_eror = error
 
         signup.isEnabled = false
         signup.isClickable=false
@@ -107,6 +114,12 @@ class RegistroActivity : AppCompatActivity() {
             signIn()
         }
 
+        ingles.setOnClickListener {
+            com.example.runnerwar.util.Language.idioma = "ingles"
+        }
+        castellano.setOnClickListener {
+            com.example.runnerwar.util.Language.idioma = "castellano"
+        }
 
 
         registroViewModel.registroFormState.observe(this@RegistroActivity, Observer{
@@ -162,11 +175,16 @@ class RegistroActivity : AppCompatActivity() {
 
         signup.setOnClickListener{
             //registroViewModel.signUp(UserForm( username.text.toString(), email.text.toString(),password.text.toString(), "rojo") )
-            val intent = Intent(this@RegistroActivity, SeleccionFaccionActivity::class.java)
-            intent.putExtra("username", username.text.toString())
-            intent.putExtra("email", email.text.toString())
-            intent.putExtra("password", password.text.toString())
-            startActivity(intent)
+            if(!com.example.runnerwar.util.Language.idioma.equals("none")){
+                val intent = Intent(this@RegistroActivity, SeleccionFaccionActivity::class.java)
+                intent.putExtra("username", username.text.toString())
+                intent.putExtra("email", email.text.toString())
+                intent.putExtra("password", password.text.toString())
+                startActivity(intent)
+            }
+            else {
+                error.text = "Idioma no seleccionado"
+            }
         }
 
     }
@@ -177,12 +195,18 @@ class RegistroActivity : AppCompatActivity() {
             Log.w("4", "hola")
             // Signed in successfully, show authenticated UI.
             val intent = Intent(this@RegistroActivity, SeleccionFaccionActivity::class.java)
-            if (account != null) {
-                intent.putExtra("username", account.displayName.toString())
-                intent.putExtra("email", account.email.toString())
-                intent.putExtra("password", account.hashCode().toString())
+            if(!com.example.runnerwar.util.Language.idioma.equals("none")){
+                if (account != null) {
+                    intent.putExtra("username", account.displayName.toString())
+                    intent.putExtra("email", account.email.toString())
+                    intent.putExtra("password", account.hashCode().toString())
+                    startActivity(intent)
+                }
             }
-            startActivity(intent)
+            else {
+                message_eror.text = "Idioma no seleccionado"
+            }
+
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -222,12 +246,18 @@ class RegistroActivity : AppCompatActivity() {
                     Log.d("success", "signInWithCredential:success")
                     val user = auth.currentUser
                     val intent = Intent(this@RegistroActivity, SeleccionFaccionActivity::class.java)
-                    if (user != null) {
-                        intent.putExtra("username", user.displayName.toString())
-                        intent.putExtra("email", user.email.toString())
-                        intent.putExtra("password", "google")
-                        startActivity(intent)
+                    if(!com.example.runnerwar.util.Language.idioma.equals("none")){
+                        if (user != null) {
+                            intent.putExtra("username", user.displayName.toString())
+                            intent.putExtra("email", user.email.toString())
+                            intent.putExtra("password", "google")
+                            startActivity(intent)
+                        }
                     }
+                    else {
+                        message_eror.text = "Idioma no seleccionado"
+                    }
+
 
                 } else {
                     // If sign in fails, display a message to the user.
