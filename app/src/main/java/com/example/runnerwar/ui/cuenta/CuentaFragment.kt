@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -77,13 +78,23 @@ class CuentaFragment : Fragment() {
         var actualname: String = "null"
 
         val cambiar_faccion: Button =  getView()?.findViewById(R.id.cambiarFaccion) as Button
+        val search_boton: Button =  getView()?.findViewById(R.id.boton_search) as Button
+        val titulo_faccion: TextView =  getView()?.findViewById(R.id.editTextTextPersonName4) as TextView
+        val titulo_puntos: TextView =  getView()?.findViewById(R.id.editTextTextPersonName5) as TextView
 
 
         if(Language.idioma.equals("castellano")){
             cambiar_faccion.setText("Cambiar faccion")
+            search_boton.setText("Buscar usuario")
+            titulo_faccion.setText("Faccion")
+            titulo_puntos.setText("Puntos")
         }
+
         else if(Language.idioma.equals("ingles")){
             cambiar_faccion.setText("Change faction")
+            search_boton.setText("Search user")
+            titulo_faccion.setText("Faction")
+            titulo_puntos.setText("Points")
         }
 
         //var loggedUser : String? = Session.getIdUsuario()

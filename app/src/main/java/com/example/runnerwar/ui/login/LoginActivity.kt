@@ -1,41 +1,31 @@
 package com.example.runnerwar.ui.login
 
+
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
 import com.example.runnerwar.Model.LoginUser
 import com.example.runnerwar.NavActivity
-
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.common.SignInButton
-
-
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
 import com.example.runnerwar.util.Language
-import com.example.runnerwar.util.Session
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.login.*
-
 
 
 class LoginActivity : AppCompatActivity() {
@@ -66,13 +56,17 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         val email = findViewById<EditText>(R.id.cuenta_email)
+        val titulo_login = findViewById<TextView>(R.id.editTextTextPersonName)
+        val titulo_password = findViewById<TextView>(R.id.textView10)
         val password = findViewById<EditText>(R.id.password_signup)
         val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
+        val texto_boton_login = signInButton.getChildAt(0) as TextView
         val login = findViewById<Button>(R.id.signup_button)
         val error = findViewById<TextView>(R.id.error)
         val ingles = findViewById<ImageButton>(R.id.ingles)
         val castellano = findViewById<ImageButton>(R.id.castellano)
 
+        texto_boton_login.setText("Log in")
         login.isEnabled = true
         login.isClickable = true
 
@@ -192,9 +186,19 @@ class LoginActivity : AppCompatActivity() {
         }
         ingles.setOnClickListener {
             Language.idioma = "ingles"
+            titulo_login.setText("LOG IN")
+            titulo_password.setText("Password")
+            CreateAccButto.setText("Newbie? Create account")
+            signup_button.setText("PROCEED")
+            texto_boton_login.setText("Log in")
         }
         castellano.setOnClickListener {
             Language.idioma = "castellano"
+            titulo_login.setText("ACCESO")
+            titulo_password.setText("Contraseña")
+            CreateAccButto.setText("¿Eres nuevo? Crear cuenta")
+            signup_button.setText("PROCEDER")
+            texto_boton_login.setText("Iniciar sesión")
         }
 
     }

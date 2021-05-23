@@ -96,12 +96,17 @@ class RegistroActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.reg_password)
         val signup = findViewById<Button>(R.id.signup_button)
         val error = findViewById<TextView>(R.id.error)
+        val titulo_signup = findViewById<TextView>(R.id.editTextTextPersonName)
+        val titulo_username = findViewById<TextView>(R.id.textView8)
+        val titulo_password = findViewById<TextView>(R.id.textView10)
         val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
+        val texto_boton_login = signInButton.getChildAt(0) as TextView
         val ingles = findViewById<ImageButton>(R.id.ingles)
         val castellano = findViewById<ImageButton>(R.id.castellano)
         //signInButton.setSize(signInButton.SIZE_STANDARD);
         val some_error = intent.extras?.getString("some_error")
 
+        texto_boton_login.setText("Sign up")
         error.text = some_error
         message_eror = error
 
@@ -116,9 +121,21 @@ class RegistroActivity : AppCompatActivity() {
 
         ingles.setOnClickListener {
             com.example.runnerwar.util.Language.idioma = "ingles"
+            titulo_signup.setText("SIGN UP")
+            titulo_username.setText("Username")
+            titulo_password.setText("Password")
+            signup.setText("PROCEED")
+            ex_us_login.setText("EXISTING USER? LOG IN")
+            texto_boton_login.setText("Sign up")
         }
         castellano.setOnClickListener {
             com.example.runnerwar.util.Language.idioma = "castellano"
+            titulo_signup.setText("REGISTRO")
+            titulo_username.setText("Nombre de usuario")
+            titulo_password.setText("Contraseña")
+            signup.setText("PROCEDER")
+            ex_us_login.setText("USUARIO EXISTENTE? INICIAR SESIÓN")
+            texto_boton_login.setText("Registrarse")
         }
 
 

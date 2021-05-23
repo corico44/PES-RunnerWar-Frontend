@@ -16,7 +16,6 @@ import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.LugaresViewModelFactory
 import com.example.runnerwar.Model.LugarInteresResponse
 import com.example.runnerwar.Model.PointsUpdate
-import com.example.runnerwar.NavActivity
 import com.example.runnerwar.Model.ZonaDeConfrontacion
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.example.runnerwar.util.CheckLugarInteres
@@ -34,22 +33,17 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import android.R
 import android.app.AlertDialog
-import android.content.Context
-import android.content.Context.LOCATION_SERVICE
 import android.content.DialogInterface
-import android.location.LocationManager
-import androidx.core.content.ContextCompat.getSystemService
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import android.hardware.SensorManager
 import android.os.Build
 import android.os.Looper
+import android.widget.Button
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.example.runnerwar.R
 import com.example.runnerwar.Services.ContarPasosService
-import com.google.android.gms.location.*
+import com.example.runnerwar.util.Language
 import com.google.android.gms.maps.model.Marker
-import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_mapa.*
 
 
@@ -107,6 +101,23 @@ class MapaFragment : Fragment(),
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val titulo_actividad: TextView =  getView()?.findViewById(R.id.titleDailyActivity) as TextView
+        val titulo_puntos: TextView =  getView()?.findViewById(R.id.titlePoints) as TextView
+        val titulo_pasos: TextView =  getView()?.findViewById(R.id.titleSteps) as TextView
+
+
+        if(Language.idioma.equals("castellano")){
+            titulo_actividad.setText("ACTIVIDAD DIARIA")
+            titulo_puntos.setText("PUNTOS")
+            titulo_pasos.setText("PASOS")
+        }
+
+        else if(Language.idioma.equals("ingles")){
+            titulo_actividad.setText("DAILY ACTIVITY")
+            titulo_puntos.setText("POINTS")
+            titulo_pasos.setText("STEPS")
+        }
+
         super.onViewCreated(view,savedInstanceState)
         LocationHelper().startListeningUserLocation(activity!!, object : LocationHelper.MyLocationListener {
             override fun onLocationChanged(location: Location) {
@@ -181,13 +192,6 @@ class MapaFragment : Fragment(),
                     .strokeWidth(5.0f)
                 mMap?.addPolygon(polygonOptions)
 
-               /* val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
-                val descripcion = "Coordenadas: (" + item.latitud + "),(" + item.longitud + ")"
-                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(descripcion) })
-                var circleOptions = CircleOptions()
-                circleOptions = circleOptions?.center(position)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
-                    ?.strokeWidth(2f)!!
-                mMap?.addCircle(circleOptions)*/
             }
         }
     }
@@ -214,9 +218,8 @@ class MapaFragment : Fragment(),
                             if (lu != null) {
                                 if(mapaViewModel != null) {
                                     mapaViewModel.updatePoints(lu)
-                                    openPopUpDailyLogin()
+                                    openPopUpPlaceInteres()
                                 }
-                                //openPopUpDailyLogin()
                             }
                         }
                         CheckLugarInteres.estaDentro[i] = true
@@ -226,7 +229,7 @@ class MapaFragment : Fragment(),
         }
     }
 
-    fun openPopUpDailyLogin(){
+    fun openPopUpPlaceInteres(){
 
         if(activity != null) {
             val dialogBuilder = AlertDialog.Builder(activity!!)
