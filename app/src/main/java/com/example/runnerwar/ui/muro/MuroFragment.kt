@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.SimpleAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.runnerwar.R
@@ -26,30 +27,38 @@ import kotlinx.android.synthetic.main.fragment_muro.*
 class MuroFragment : Fragment() {
 
     private lateinit var muroViewModel: MuroViewModel
-    private var itemsList: List<Items> = ArrayList()
     private var listView: ListView? = null
-    private var adapter: CustomListAdapter? = null
 
     override fun onStart() {
 
         super.onStart()
             //openPopUpDailyLogin()
             // use arrayadapter and define an array
-            val arrayAdapter: ArrayAdapter<*>
-            val users = arrayOf(
-                "Virat Kohli  |   1", "Rohit Sharma  |   2", "Steve Smith  |   4",
-                "Kane Williamson  |   5", "Ross Taylor  |   6","Ross Taylor  |   7","Ross Taylor  |   6","Ross Taylor  |   6",
-                "Ross Taylor  |   6","Ross Taylor  |   6","Ross Taylor  |   6","Ross Taylor  |   6","Ross Taylor  |   6",
-                "Ross Taylor  |   6","Ross Taylor  |   6","Ross Taylor  |   6","Ross Taylor  |   6","Ross Taylor  |   6"
-            )
+            val list = SCHEDULE as ListView
 
-            // access the listView from xml file
-            var mListView = list
-            arrayAdapter = ArrayAdapter(
-                activity?.applicationContext!!,
-                android.R.layout.simple_list_item_1, users)
-            mListView.adapter = arrayAdapter
-            Log.d("1 ", "pasa adapter notify")
+            val mylist = ArrayList<HashMap<String, String?>>()
+            var map = HashMap<String, String?>()
+            map["train"] = "101"
+            map["from"] = "6:30 AM"
+            map["to"] = "7:40 AM"
+            mylist.add(map)
+            map = HashMap()
+            map["train"] = "103(x)"
+            map["from"] = "6:35 AM"
+            map["to"] = "7:45 AM"
+            mylist.add(map)
+            var mSchedule = SimpleAdapter(
+                activity?.applicationContext,
+                mylist,
+                R.layout.row,
+                arrayOf("train", "from", "to"),
+                intArrayOf(
+                    R.id.TRAIN_CELL,
+                    R.id.FROM_CELL,
+                    R.id.TO_CELL
+                )
+            )
+            list.adapter = mSchedule
             println("EL CORREO ES: " + Session.getIdUsuario().toString())
             val mail = MailForm(Session.getIdUsuario().toString())
             muroViewModel.dailyLogin(mail)
