@@ -25,7 +25,7 @@ import com.example.runnerwar.Model.PointsUpdate
 import com.example.runnerwar.Model.ZonaDeConfrontacion
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.example.runnerwar.Services.ContarPasosService
-import com.example.runnerwar.util.CheckLugarInteres
+import com.example.runnerwar.util.CheckEstaDentro
 import com.example.runnerwar.util.Session
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -38,7 +38,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.PolyUtil
 import com.handy.opinion.utils.LocationHelper
-import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_mapa.*
 
 
@@ -62,6 +61,7 @@ class MapaFragment : Fragment(),
     private var myList: MutableList<Circle> = mutableListOf<Circle>()
     private var estaDentro: MutableList<Boolean> = mutableListOf<Boolean>()
     private var email: String? = null
+    private var currentZonaConfrontacion: String? = null
     private var zonasConfrontacion: MutableList<ZonaDeConfrontacion>? = null
 
 
@@ -84,7 +84,7 @@ class MapaFragment : Fragment(),
 
 
         mapaViewModel.responseZC.observe(activity!! , Observer {
-            zonasConfrontacion= it as MutableList<ZonaDeConfrontacion>?
+            zonasConfrontacion = it as MutableList<ZonaDeConfrontacion>?
             var p1 = arrayOf(41.486502, 2.033466)
             var p2 = arrayOf(41.486465, 2.033635)
             var p3 = arrayOf(41.487851, 2.033675)
@@ -113,7 +113,8 @@ class MapaFragment : Fragment(),
                 mLastLocation = location
                 //addToMap(mLastLocation)
                 if(!myList.isEmpty() && mLastLocation != null && myList != null){
-                    estaDentro(mLastLocation,myList)
+                    estaDentroLugarInteres(mLastLocation,myList)
+                    currentZonaConfrontacion = estaDentroZonaConfrontacion(mLastLocation)
                 }
             }
         })
@@ -148,7 +149,7 @@ class MapaFragment : Fragment(),
                 }
                 ++i
             }
-            var loc = LatLng(41.379961, 2.134193)
+            var loc = LatLng(41.488530, 2.033574)
             mMap?.addMarker(loc?.let { MarkerOptions().position(it)})
             var circleOptions = CircleOptions()
             circleOptions = circleOptions?.center(loc)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
@@ -158,10 +159,10 @@ class MapaFragment : Fragment(),
                 myList.add(circle)
             }
         }
-        if(!CheckLugarInteres.firstTime) {
-            CheckLugarInteres.firstTime = true
+        if(!CheckEstaDentro.firstTimeLugarInteres) {
+            CheckEstaDentro.firstTimeLugarInteres = true
             for (i in myList.indices) {
-                CheckLugarInteres.estaDentro.add(false)
+                CheckEstaDentro.estaDentroLugarInteres.add(false)
             }
         }
     }
@@ -185,8 +186,8 @@ class MapaFragment : Fragment(),
         }
     }
 
-    private fun estaDentroZonaConfrontacion(clickada: LatLng) {
-        if(zonasConfrontacion != null){
+    private fun estaDentroZonaConfrontacion(currentLocation: Location): String? {
+        if(zonasConfrontacion != null && currentLocation != null){
             for(item in zonasConfrontacion!!){
 
                 val pts: MutableList<LatLng> = ArrayList()
@@ -195,51 +196,59 @@ class MapaFragment : Fragment(),
                 pts.add(LatLng(item.punto3[0], item.punto3[1]))
                 pts.add(LatLng(item.punto4[0], item.punto4[1]))
 
-                val contains: Boolean = PolyUtil.containsLocation(clickada.latitude, clickada.longitude, pts, true)
-                if(contains) {
-                    val text = "Esta dentro de " + item._id
-                    Log.w("1", text)
-                    Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
+                if(currentLocation.latitude != null && currentLocation.longitude != null){
+                    val contains: Boolean = PolyUtil.containsLocation(currentLocation.latitude, currentLocation.longitude, pts, true)
+                    /*if(contains != null && contains) {
+                        val text = "Esta dentro"
+                        Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
+                        //CheckEstaDentro.estaDentroZonaConfrontacion = true
+                        if(item != null && item._id != null){
+                            val text = "Esta dentro de " + item._id
+                            Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
+                        }
+                    }*/
                 }
 
             }
         }
-
-
+        return null
     }
 
 
-    fun estaDentro(location: Location, circles: MutableList<Circle>) {
-        for(i in circles.indices){
-            if(location != null && circles != null){
-                val distance = FloatArray(2)
-                val currentLatitude = location.latitude
-                val currentLongitude = location.longitude
-                val circleLatitude = circles[i].center.latitude
-                val circleLongitude = circles[i].center.longitude
+    fun estaDentroLugarInteres(location: Location, circles: MutableList<Circle>) {
+        if(circles != null){
+            for(i in circles.indices){
+                if(location != null){
+                    val distance = FloatArray(2)
+                    val currentLatitude = location.latitude
+                    val currentLongitude = location.longitude
+                    val circleLatitude = circles[i].center.latitude
+                    val circleLongitude = circles[i].center.longitude
 
-                Location.distanceBetween(
-                    currentLatitude, currentLongitude,
-                    circleLatitude, circleLongitude, distance
-                )
+                    Location.distanceBetween(
+                        currentLatitude, currentLongitude,
+                        circleLatitude, circleLongitude, distance
+                    )
 
-                if (distance[0] <= circles[i]!!.radius) {
-                    if(CheckLugarInteres.estaDentro != null && !CheckLugarInteres.estaDentro[i]) {
-                        if(Session.getIdUsuario() != null){
-                            var lu : PointsUpdate? = PointsUpdate(Session.getIdUsuario(), 100)
-                            if (lu != null) {
-                                if(mapaViewModel != null) {
-                                    mapaViewModel.updatePoints(lu)
-                                    openPopUpDailyLogin()
+                    if (distance[0] <= circles[i]!!.radius) {
+                        if(CheckEstaDentro.estaDentroLugarInteres != null && !CheckEstaDentro.estaDentroLugarInteres[i]) {
+                            if(Session.getIdUsuario() != null){
+                                var lu : PointsUpdate? = PointsUpdate(Session.getIdUsuario(), 100)
+                                if (lu != null) {
+                                    if(mapaViewModel != null) {
+                                        mapaViewModel.updatePoints(lu)
+                                        openPopUpDailyLogin()
+                                    }
+                                    //openPopUpDailyLogin()
                                 }
-                                //openPopUpDailyLogin()
                             }
+                            CheckEstaDentro.estaDentroLugarInteres[i] = true
                         }
-                        CheckLugarInteres.estaDentro[i] = true
                     }
                 }
             }
         }
+
     }
 
     fun openPopUpDailyLogin(){
@@ -289,12 +298,14 @@ class MapaFragment : Fragment(),
         mapaViewModel.getZonasDeConfrontacion()
 
         mMap!!.setOnMapClickListener(OnMapClickListener { point ->
-            val lat = point.latitude
-            val lng = point.longitude
+            if(currentZonaConfrontacion != null){
+                val text = "Podras votar en la zona"
+                Log.w("1", text)
+                Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
+            }
             //val text = "He clikao " + lat + " "+ lng
             //Log.w("1", text)
             //Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
-            estaDentroZonaConfrontacion(point)
         })
 
    }
