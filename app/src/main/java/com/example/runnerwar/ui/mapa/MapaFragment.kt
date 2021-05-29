@@ -105,7 +105,6 @@ class MapaFragment : Fragment(),
         val titulo_puntos: TextView =  getView()?.findViewById(R.id.titlePoints) as TextView
         val titulo_pasos: TextView =  getView()?.findViewById(R.id.titleSteps) as TextView
 
-
         if(Language.idioma.equals("castellano")){
             titulo_actividad.setText("ACTIVIDAD DIARIA")
             titulo_puntos.setText("PUNTOS")
@@ -234,15 +233,28 @@ class MapaFragment : Fragment(),
         if(activity != null) {
             val dialogBuilder = AlertDialog.Builder(activity!!)
             // set message of alert dialog
-            dialogBuilder.setMessage("You are in a place of interest")
-                // if the dialog is cancelable
-                .setCancelable(false)
-                .setMessage("Congratulations you earned:")
-                .setMessage("+100 points")
-                // negative button text and action
-                .setNegativeButton("Okey", DialogInterface.OnClickListener {
-                        dialog, id -> dialog.cancel()
-                })
+            if(Language.idioma.equals("castellano")){
+                dialogBuilder.setMessage("Estás en un lugar de interés")
+                    // if the dialog is cancelable
+                    .setCancelable(false)
+                    .setMessage("Felicidades, has ganado:")
+                    .setMessage("+100 puntos")
+                    // negative button text and action
+                    .setNegativeButton("De acuerdo", DialogInterface.OnClickListener { dialog, id ->
+                        dialog.cancel()
+                    })
+            }
+            if(Language.idioma.equals("ingles")) {
+                dialogBuilder.setMessage("You are in a place of interest")
+                    // if the dialog is cancelable
+                    .setCancelable(false)
+                    .setMessage("Congratulations, you earned:")
+                    .setMessage("+100 points")
+                    // negative button text and action
+                    .setNegativeButton("Okey", DialogInterface.OnClickListener { dialog, id ->
+                        dialog.cancel()
+                    })
+            }
 
             // create dialog box
             val alert = dialogBuilder.create()

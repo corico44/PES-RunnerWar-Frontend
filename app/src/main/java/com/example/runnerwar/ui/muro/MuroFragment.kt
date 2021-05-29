@@ -19,6 +19,7 @@ import com.example.runnerwar.Model.MailForm
 import com.example.runnerwar.Model.RegisterResponse
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
+import com.example.runnerwar.util.Language
 import com.example.runnerwar.util.Session
 
 class MuroFragment : Fragment() {
@@ -65,22 +66,39 @@ class MuroFragment : Fragment() {
 
     fun openPopUpDailyLogin(){
         val dialogBuilder = AlertDialog.Builder(activity)
+        var titulo = ""
 
         // set message of alert dialog
-        dialogBuilder.setMessage("This is your daily login award!")
-            // if the dialog is cancelable
-            .setCancelable(false)
-            .setMessage("Congratulations you earned:")
-            .setMessage("+20 points")
-            // negative button text and action
-            .setNegativeButton("Okey", DialogInterface.OnClickListener {
-                    dialog, id -> dialog.cancel()
-            })
+        if(Language.idioma.equals("castellano")){
+            dialogBuilder.setMessage("¡Este es su premio de inicio de sesión diario!")
+                // if the dialog is cancelable
+                .setCancelable(false)
+                .setMessage("Felicidades, has ganado:")
+                .setMessage("+20 puntos")
+                // negative button text and action
+                .setNegativeButton("De acuerdo", DialogInterface.OnClickListener {
+                        dialog, id -> dialog.cancel()
+                })
+            titulo = "¡PREMIO DE INICIO DE SESIÓN DIARIO!"
+        }
+        if(Language.idioma.equals("ingles")){
+            dialogBuilder.setMessage("This is your daily login award!")
+                // if the dialog is cancelable
+                .setCancelable(false)
+                .setMessage("Congratulations, you earned:")
+                .setMessage("+20 points")
+                // negative button text and action
+                .setNegativeButton("Okey", DialogInterface.OnClickListener {
+                        dialog, id -> dialog.cancel()
+                })
+            titulo = "DAILY LOGIN AWARD!"
+        }
+
 
         // create dialog box
         val alert = dialogBuilder.create()
         // set title for alert dialog box
-        alert.setTitle("DAILY LOGIN AWARD!")
+        alert.setTitle(titulo)
         // show alert dialog
         alert.show()
     }
