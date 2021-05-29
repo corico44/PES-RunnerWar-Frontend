@@ -198,15 +198,17 @@ class MapaFragment : Fragment(),
 
                 if(currentLocation.latitude != null && currentLocation.longitude != null){
                     val contains: Boolean = PolyUtil.containsLocation(currentLocation.latitude, currentLocation.longitude, pts, true)
-                    /*if(contains != null && contains) {
+                    if(contains != null && contains) {
                         val text = "Esta dentro"
-                        Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
                         //CheckEstaDentro.estaDentroZonaConfrontacion = true
-                        if(item != null && item._id != null){
-                            val text = "Esta dentro de " + item._id
-                            Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
-                        }
-                    }*/
+                        /*if(item != null && item._id != null){
+                            val text_algo = "Esta dentro de " + item._id
+                            //Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
+                        }*/
+                        Log.w("Zona Confrontacion", "Estoy dentro de la zona de confrontacion")
+                        return item._id
+                    }
                 }
 
             }
