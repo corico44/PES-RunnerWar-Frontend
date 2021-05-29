@@ -62,7 +62,7 @@ class MapaFragment : Fragment(),
     private var myList: MutableList<Circle> = mutableListOf<Circle>()
     private var estaDentro: MutableList<Boolean> = mutableListOf<Boolean>()
     private var email: String? = null
-    private var zonasConfrontacion: List<ZonaDeConfrontacion>? = null
+    private var zonasConfrontacion: MutableList<ZonaDeConfrontacion>? = null
 
 
     override fun onCreateView(
@@ -84,7 +84,17 @@ class MapaFragment : Fragment(),
 
 
         mapaViewModel.responseZC.observe(activity!! , Observer {
-            zonasConfrontacion = it
+            zonasConfrontacion= it as MutableList<ZonaDeConfrontacion>?
+            var p1 = arrayOf(41.486502, 2.033466)
+            var p2 = arrayOf(41.486465, 2.033635)
+            var p3 = arrayOf(41.487851, 2.033675)
+            var p4 = arrayOf(41.488387, 2.032955)
+
+            var newZona = ZonaDeConfrontacion(
+                "Rubi",
+                p1, p2, p3, p4, 0, "", "", 0, 0, 0, 0
+            )
+            zonasConfrontacion?.add(newZona)
             añadirZonasDeConfrontacionMapa()
         })
 
@@ -159,7 +169,9 @@ class MapaFragment : Fragment(),
     private fun añadirZonasDeConfrontacionMapa() {
         if(zonasConfrontacion != null){
             for(item in zonasConfrontacion!!){
-
+                if (item._id.equals("Rubi")){
+                    Log.w("Zona Confrontacion", "Mostar zona de confrontacion")
+                }
                 val polygonOptions = PolygonOptions().add(
                     LatLng(item.punto1[0], item.punto1[1]),
                     LatLng(item.punto2[0], item.punto2[1]),
