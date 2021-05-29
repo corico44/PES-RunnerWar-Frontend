@@ -97,8 +97,6 @@ class CuentaFragment : Fragment() {
             titulo_puntos.setText("Points")
         }
 
-        //var loggedUser : String? = Session.getIdUsuario()
-
         boton_edit.setOnClickListener {
             if (reg_userName.isEnabled) {
                 reg_userName.setEnabled(false)
@@ -117,6 +115,7 @@ class CuentaFragment : Fragment() {
 
         cuentaViewModel.readAllData.observe(this@CuentaFragment, Observer { user ->
             if (user != null){
+                reg_userCoins.setText(user.coins.toString())
                 reg_userName.setText(user.accountname)
                 actualname = user.accountname
                 reg_email.setText(user._id)
