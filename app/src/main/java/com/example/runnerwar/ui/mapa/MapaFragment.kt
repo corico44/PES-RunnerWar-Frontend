@@ -1,14 +1,20 @@
 package com.example.runnerwar.ui.mapa
 
 import android.Manifest
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,45 +22,24 @@ import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.LugaresViewModelFactory
 import com.example.runnerwar.Model.LugarInteresResponse
 import com.example.runnerwar.Model.PointsUpdate
-import com.example.runnerwar.NavActivity
 import com.example.runnerwar.Model.ZonaDeConfrontacion
 import com.example.runnerwar.Repositories.LugarInteresRepository
+import com.example.runnerwar.Services.ContarPasosService
 import com.example.runnerwar.util.CheckLugarInteres
 import com.example.runnerwar.util.Session
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.PolyUtil
 import com.handy.opinion.utils.LocationHelper
-import com.google.android.gms.maps.CameraUpdateFactory
-
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import android.R
-import android.app.AlertDialog
-import android.content.Context
-import android.content.Context.LOCATION_SERVICE
-import android.content.DialogInterface
-import android.location.LocationManager
-import androidx.core.content.ContextCompat.getSystemService
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import android.hardware.SensorManager
-import android.os.Build
-import android.os.Looper
-import androidx.core.content.ContextCompat
-import com.example.runnerwar.Services.ContarPasosService
-import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_mapa.*
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener
-
-
-
 
 
 class MapaFragment : Fragment(),
@@ -184,16 +169,31 @@ class MapaFragment : Fragment(),
                     .fillColor(0x303C4144)
                     .strokeWidth(5.0f)
                 mMap?.addPolygon(polygonOptions)
-
-               /* val position = item.latitud?.let { item.longitud?.let { it1 -> LatLng(it, it1) } }
-                val descripcion = "Coordenadas: (" + item.latitud + "),(" + item.longitud + ")"
-                mMap?.addMarker(position?.let { MarkerOptions().position(it).title(item._id).snippet(descripcion) })
-                var circleOptions = CircleOptions()
-                circleOptions = circleOptions?.center(position)?.radius(200.0)?.strokeColor(Color.BLUE)?.fillColor(0x3062BCFF)
-                    ?.strokeWidth(2f)!!
-                mMap?.addCircle(circleOptions)*/
             }
         }
+    }
+
+    private fun estaDentroZonaConfrontacion(clickada: LatLng) {
+        if(zonasConfrontacion != null){
+            for(item in zonasConfrontacion!!){
+
+                val pts: MutableList<LatLng> = ArrayList()
+                pts.add(LatLng(item.punto1[0], item.punto1[1]))
+                pts.add(LatLng(item.punto2[0], item.punto2[1]))
+                pts.add(LatLng(item.punto3[0], item.punto3[1]))
+                pts.add(LatLng(item.punto4[0], item.punto4[1]))
+
+                val contains: Boolean = PolyUtil.containsLocation(clickada.latitude, clickada.longitude, pts, true)
+                if(contains) {
+                    val text = "Esta dentro de " + item._id
+                    Log.w("1", text)
+                    Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+
+
     }
 
 
@@ -276,11 +276,13 @@ class MapaFragment : Fragment(),
         mapaViewModel.getLugaresInteres()
         mapaViewModel.getZonasDeConfrontacion()
 
-        mMap!!.setOnMapClickListener(OnMapClickListener { point -> // TODO Auto-generated method stub
+        mMap!!.setOnMapClickListener(OnMapClickListener { point ->
             val lat = point.latitude
             val lng = point.longitude
-            print("He clikao $lat , $lng")
-            Toast.makeText(activity?.application!!,"He clikao $lat , $lng", Toast.LENGTH_SHORT).show()
+            //val text = "He clikao " + lat + " "+ lng
+            //Log.w("1", text)
+            //Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
+            estaDentroZonaConfrontacion(point)
         })
 
    }
