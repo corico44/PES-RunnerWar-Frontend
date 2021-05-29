@@ -51,6 +51,10 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_nav.*
 import kotlinx.android.synthetic.main.fragment_mapa.*
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener
+
+
+
 
 
 class MapaFragment : Fragment(),
@@ -271,6 +275,14 @@ class MapaFragment : Fragment(),
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(41.39250648830166, 2.160515736802735),13f))
         mapaViewModel.getLugaresInteres()
         mapaViewModel.getZonasDeConfrontacion()
+
+        mMap!!.setOnMapClickListener(OnMapClickListener { point -> // TODO Auto-generated method stub
+            val lat = point.latitude
+            val lng = point.longitude
+            print("He clikao $lat , $lng")
+            Toast.makeText(activity?.application!!,"He clikao $lat , $lng", Toast.LENGTH_SHORT).show()
+        })
+
    }
 
 
@@ -305,5 +317,7 @@ class MapaFragment : Fragment(),
     override fun onConnectionSuspended(p0: Int) {
         Toast.makeText(activity?.application!!,"connection suspended", Toast.LENGTH_SHORT).show()
     }
+
+
 
 }
