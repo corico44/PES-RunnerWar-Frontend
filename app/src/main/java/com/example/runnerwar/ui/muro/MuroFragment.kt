@@ -40,22 +40,19 @@ class MuroFragment : Fragment() {
             var map = HashMap<String, String?>()
             map["train"] = "101"
             map["from"] = "6:30 AM"
-            map["to"] = "7:40 AM"
             mylist.add(map)
             map = HashMap()
             map["train"] = "103(x)"
             map["from"] = "6:35 AM"
-            map["to"] = "7:45 AM"
             mylist.add(map)
             var mSchedule = SimpleAdapter(
                 activity?.applicationContext,
                 mylist,
                 R.layout.row,
-                arrayOf("train", "from", "to"),
+                arrayOf("train", "from"),
                 intArrayOf(
                     R.id.TRAIN_CELL,
                     R.id.FROM_CELL,
-                    R.id.TO_CELL
                 )
             )
             list.adapter = mSchedule
