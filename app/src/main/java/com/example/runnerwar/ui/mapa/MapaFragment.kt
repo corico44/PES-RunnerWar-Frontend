@@ -151,11 +151,17 @@ class MapaFragment : Fragment(),
         mapaViewModel.responseZCClicked.observe(viewLifecycleOwner, Observer { zona ->
             setInfoZonaDeConfrontacion(zona)
             infoZonaConfrontacion.visibility = View.VISIBLE
+            if(currentZonaConfrontacion != null){
+                addPoints.visibility = View.VISIBLE
+            }
+            else{
+                addPoints.visibility = View.INVISIBLE
+            }
         })
 
 
         mapaViewModel.responseGetUser.observe(viewLifecycleOwner, { user->
-            showCustomDialog(user)
+            if(user != null) showCustomDialog(user)
         })
 
         mapaViewModel.responseDonate.observe(viewLifecycleOwner, {
@@ -241,12 +247,6 @@ class MapaFragment : Fragment(),
                     val contains: Boolean = PolyUtil.containsLocation(currentLocation.latitude, currentLocation.longitude, pts, true)
                     if(contains != null && contains) {
                         val text = "Esta dentro"
-                        //Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
-                        //CheckEstaDentro.estaDentroZonaConfrontacion = true
-                        /*if(item != null && item._id != null){
-                            val text_algo = "Esta dentro de " + item._id
-                            //Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
-                        }*/
                         Log.w("Zona Confrontacion", "Estoy dentro de la zona de confrontacion")
                         return item._id
                     }
@@ -352,14 +352,6 @@ class MapaFragment : Fragment(),
                 zonaClicked = null
                 infoZonaConfrontacion.visibility = View.INVISIBLE
             }
-            /*if(currentZonaConfrontacion != null){
-                val text = "Podras votar en la zona"
-                Log.w("1", text)
-                Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
-            }
-            val text = "He clikao " + point.latitude + " "+ point.longitude
-            Log.w("1", text)
-            Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()*/
         })
 
    }
