@@ -18,21 +18,15 @@ import com.example.runnerwar.Factories.UserViewModelFactory
 import com.example.runnerwar.Model.LoginUser
 import com.example.runnerwar.NavActivity
 
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.common.SignInButton
 
 
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.registro.RegistroActivity
-import com.example.runnerwar.util.Session
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -70,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
         val email = findViewById<EditText>(R.id.cuenta_email)
         val password = findViewById<EditText>(R.id.password_signup)
         val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
-        val login = findViewById<Button>(R.id.signup_button)
+        val login = findViewById<Button>(R.id.addPoints)
         val error = findViewById<TextView>(R.id.error)
 
         login.isEnabled = true
@@ -141,7 +135,7 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this@LoginActivity, RegistroActivity::class.java)
             startActivity(intent)
         }
-        signup_button.setOnClickListener {
+        addPoints.setOnClickListener {
             var password = loginViewModel.hashString(password.text.toString(),"SHA-256")
             var lu : LoginUser = LoginUser(email.text.toString(), password.toString())
             Log.d("Enc_pas ", password)

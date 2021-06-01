@@ -18,6 +18,9 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
     private var _responseZC = MutableLiveData<List<ZonaDeConfrontacion>>()
     var responseZC: LiveData<List<ZonaDeConfrontacion>> = _responseZC
 
+    private var _responseZCClicked = MutableLiveData<ZonaDeConfrontacion>()
+    var responseZCClicked: LiveData<ZonaDeConfrontacion> = _responseZCClicked
+
    fun getLugaresInteres() {
         viewModelScope.launch {
             val res: Response<List<LugarInteresResponse>> = repositoryLI.getLugaresInteres()
@@ -41,6 +44,20 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
 
                 if (zc != null) {
                     _responseZC.value = zc
+                }
+            }
+        }
+    }
+
+    fun getZonaDeConfrontacion(name :String){
+        viewModelScope.launch {
+            val res: Response<ZonaDeConfrontacion> = repositoryZC.getZonaDeConfrontacion(name)
+
+            if (res.isSuccessful){
+                val zc : ZonaDeConfrontacion? = res.body()
+
+                if (zc != null) {
+                    _responseZCClicked.value = zc!!
                 }
             }
         }

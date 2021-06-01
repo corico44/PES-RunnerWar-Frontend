@@ -2,6 +2,7 @@ package com.example.runnerwar.ui.mapa
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -13,6 +14,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -27,6 +31,11 @@ import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.example.runnerwar.Services.ContarPasosService
 import com.example.runnerwar.util.CheckEstaDentro
 import com.example.runnerwar.util.Session
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
@@ -38,6 +47,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.PolyUtil
 import com.handy.opinion.utils.LocationHelper
+import kotlinx.android.synthetic.main.custom_dialog.*
 import kotlinx.android.synthetic.main.fragment_mapa.*
 
 
@@ -83,6 +93,8 @@ class MapaFragment : Fragment(),
         })
 
 
+
+
         mapaViewModel.responseZC.observe(activity!! , Observer {
             zonasConfrontacion = it as MutableList<ZonaDeConfrontacion>?
             var p1 = arrayOf(41.486502, 2.033466)
@@ -118,6 +130,8 @@ class MapaFragment : Fragment(),
                 }
             }
         })
+
+        infoZonaConfrontacion.visibility = View.INVISIBLE
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(activity!!)
         var mGoogleApiClient: GoogleApiClient? = null
         if (mGoogleApiClient != null) {
@@ -132,7 +146,20 @@ class MapaFragment : Fragment(),
             stepsView.text = response.steps.toString()
         })
 
+
+        mapaViewModel.responseZCClicked.observe(viewLifecycleOwner, Observer { zona ->
+            setInfoZonaDeConfrontacion(zona)
+            infoZonaConfrontacion.visibility = View.VISIBLE
+        })
+
+
+        addPoints.setOnClickListener {
+            showCustomDialog()
+        }
+
     }
+
+
 
     fun añadirLugaresInteresMapa() {
         var i = 0
@@ -300,14 +327,23 @@ class MapaFragment : Fragment(),
         mapaViewModel.getZonasDeConfrontacion()
 
         mMap!!.setOnMapClickListener(OnMapClickListener { point ->
-            if(currentZonaConfrontacion != null){
+
+            var res: String? = clickedInsideZonaConfrontacion(point)
+
+            if (res!= null){
+                mapaViewModel.getZonaDeConfrontacion(res)
+            }
+            else {
+                infoZonaConfrontacion.visibility = View.INVISIBLE
+            }
+            /*if(currentZonaConfrontacion != null){
                 val text = "Podras votar en la zona"
                 Log.w("1", text)
                 Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
             }
-            //val text = "He clikao " + lat + " "+ lng
-            //Log.w("1", text)
-            //Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()
+            val text = "He clikao " + point.latitude + " "+ point.longitude
+            Log.w("1", text)
+            Toast.makeText(activity?.application!!,text, Toast.LENGTH_SHORT).show()*/
         })
 
    }
@@ -345,6 +381,112 @@ class MapaFragment : Fragment(),
         Toast.makeText(activity?.application!!,"connection suspended", Toast.LENGTH_SHORT).show()
     }
 
+    fun setInfoZonaDeConfrontacion(newData: ZonaDeConfrontacion){
+        nameZonaConfrontacion.text = newData._id
+        nameDominantFaction.text = newData.dominant_team
 
+        pointsYellow.text = newData.yellow_ocupation.toString()
+        pointsRed.text = newData.red_ocupation.toString()
+        pointsGreen.text = newData.green_ocupation.toString()
+        pointsBlue.text = newData.blue_ocupation.toString()
+
+        if (newData.dominant_team == "red"){
+            nameDominantFaction.setTextColor(Color.parseColor("#FA0202"))
+        }
+        else if (newData.dominant_team == "yellow"){
+            nameDominantFaction.setTextColor(Color.parseColor("#FABE02"))
+        }
+        else if (newData.dominant_team== "green"){
+            nameDominantFaction.setTextColor(Color.parseColor("#3B9611"))
+        }
+        else { //Blue faction
+            nameDominantFaction.setTextColor(Color.parseColor("#0EBAB5"))
+        }
+
+        Log.w("zona de confrontacion" , newData.red_ocupation.toFloat().toString())
+        setDataPieChart(newData)
+    }
+
+
+    fun setDataPieChart(newData: ZonaDeConfrontacion){
+
+        //Set the values
+        val oc = newData.red_ocupation.toFloat()
+        var entries : ArrayList<PieEntry> = ArrayList<PieEntry>()
+        entries.add(PieEntry(newData.yellow_ocupation.toFloat(), "Yellow Faction"))
+        entries.add(PieEntry(newData.red_ocupation.toFloat(), "Red Faction"))
+        entries.add(PieEntry(newData.blue_ocupation.toFloat(), "Blue Faction"))
+        entries.add(PieEntry(newData.green_ocupation.toFloat(), "Green Faction"))
+
+
+        var dataSet : PieDataSet = PieDataSet(entries, "Factions")
+
+        //Set the colors, First color -> First entry
+        var colors : ArrayList<Int> = ArrayList<Int>()
+        colors.add(Color.parseColor("#FABE02"))
+        colors.add(Color.parseColor("#FA0202"))
+        colors.add(Color.parseColor("#0EBAB5"))
+        colors.add(Color.parseColor("#3B9611"))
+
+
+        dataSet.colors = colors
+        var data : PieData = PieData(dataSet)
+
+        //Format of the pie chart
+        data.setDrawValues(true)
+        data.setValueFormatter(PercentFormatter(pieChart))
+        data.setValueTextSize(0f)
+        data.setValueTextColor(Color.BLACK)
+        pieChart.data = data
+        pieChart.invalidate()
+        pieChart.setDrawEntryLabels(false)
+        pieChart.isDrawHoleEnabled = true
+        pieChart.setUsePercentValues(true)
+        pieChart.setEntryLabelTextSize(12f)
+        pieChart.description.isEnabled = false
+        pieChart.legend.isEnabled = false
+
+        //Animation
+        pieChart.animateY(1400, Easing.EaseInOutQuad)
+    }
+
+    fun clickedInsideZonaConfrontacion(location: LatLng) : String? {
+        for(item in zonasConfrontacion!!) {
+
+            val pts: MutableList<LatLng> = ArrayList()
+            pts.add(LatLng(item.punto1[0], item.punto1[1]))
+            pts.add(LatLng(item.punto2[0], item.punto2[1]))
+            pts.add(LatLng(item.punto3[0], item.punto3[1]))
+            pts.add(LatLng(item.punto4[0], item.punto4[1]))
+
+            if (PolyUtil.containsLocation(location.latitude, location.longitude, pts, true)){
+                return item._id
+            }
+        }
+
+        return null
+    }
+
+
+    private fun showCustomDialog() {
+        var dialog: Dialog = Dialog(activity!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(com.example.runnerwar.R.layout.custom_dialog)
+
+        var points : EditText = dialog.inputPoints
+        var donateButton : Button = dialog.confirm
+        var cancelButton : Button = dialog.cancel
+
+        donateButton.setOnClickListener {
+            Log.w("ZONA-CONFRONTACION", "He confimado transaccion")
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.cancel()
+        }
+
+        dialog.show()
+    }
 
 }

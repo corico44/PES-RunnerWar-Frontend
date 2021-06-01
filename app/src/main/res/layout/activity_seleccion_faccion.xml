@@ -49,7 +49,7 @@
             android:text="TEAM RED"
             android:layout_width="wrap_content"
             android:fontFamily="@font/font_arcade_classic"
-            android:layout_height="wrap_content" android:id="@+id/textView2"
+            android:layout_height="wrap_content" android:id="@+id/nameZonaConfrontacion"
             app:layout_constraintStart_toStartOf="@+id/imageView8" app:layout_constraintEnd_toEndOf="@+id/imageView8"
             app:layout_constraintTop_toTopOf="@+id/imageView8"
             app:layout_constraintHorizontal_bias="0.471"

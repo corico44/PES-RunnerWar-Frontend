@@ -24,17 +24,12 @@ import kotlinx.android.synthetic.main.registro.*
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import android.util.Log
-import android.view.View
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.android.gms.tasks.Task
-import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.common.SignInButton
 
 
@@ -90,7 +85,7 @@ class RegistroActivity : AppCompatActivity() {
         val username = findViewById<EditText>(R.id.reg_userName)
         val email = findViewById<EditText>(R.id.reg_email)
         val password = findViewById<EditText>(R.id.reg_password)
-        val signup = findViewById<Button>(R.id.signup_button)
+        val signup = findViewById<Button>(R.id.addPoints)
         val error = findViewById<TextView>(R.id.error)
         val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
         //signInButton.setSize(signInButton.SIZE_STANDARD);

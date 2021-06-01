@@ -77,5 +77,222 @@
             app:layout_constraintTop_toTopOf="@+id/boxPointsSteps" android:layout_marginTop="10dp"
             android:textStyle="bold"/>
 
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible">
 
+        <FrameLayout
+            android:id="@+id/infoZonaConfrontacion"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+
+            android:background="@drawable/bg_white"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/nameZonaConfrontacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_arcade_classic"
+                android:text="UPC CAMPUS NORD"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                tools:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arcade_classic"
+                android:text="Dominant faction"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginTop="50dp"/>
+
+            <TextView
+                android:id="@+id/nameDominantFaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/arcade_classic"
+                android:text="RED"
+                android:textAlignment="center"
+                android:textColor="#FD0000"
+                android:textSize="18sp" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp">
+
+                <FrameLayout
+                    android:id="@+id/faction_Yellow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:id="@+id/imageView11"
+                        android:layout_width="99dp"
+                        android:layout_height="90dp"
+                        android:src="@drawable/ic_baseline_fiber_manual_record_24" />
+
+                    <TextView
+                        android:id="@+id/pointsYellow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:fontFamily="@font/font_arcade_classic"
+                        android:text="100 pts"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/holo_orange_light"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:typeface="normal"
+                        app:layout_constraintTop_toTopOf="@+id/imageView11"
+                        tools:ignore="RtlCompat"
+                        tools:visibility="visible" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/faction_Red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="120dp">
+
+                    <ImageView
+                        android:id="@+id/imageView12"
+                        android:layout_width="99dp"
+                        android:layout_height="90dp"
+                        android:src="@drawable/ic_red_faction" />
+
+                    <TextView
+                        android:id="@+id/pointsRed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:fontFamily="@font/font_arcade_classic"
+                        android:text="100 pts"
+                        android:textAlignment="center"
+                        android:textColor="@color/stream_ui_accent_red"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="@+id/imageView11"
+                        tools:ignore="RtlCompat"
+                        tools:visibility="visible" />
+                </FrameLayout>
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp">
+
+                <FrameLayout
+                    android:id="@+id/faction_Green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+
+                    <TextView
+                        android:id="@+id/pointsGreen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:fontFamily="@font/font_arcade_classic"
+                        android:text="100 pts"
+                        android:textAlignment="center"
+                        android:textColor="#1E8F16"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:typeface="normal"
+                        app:layout_constraintTop_toTopOf="@+id/imageView11"
+                        tools:ignore="RtlCompat"
+                        tools:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/imageView13"
+                        android:layout_width="99dp"
+                        android:layout_height="90dp"
+                        android:src="@drawable/ic_faction_green" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/faction_Blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="120dp">
+
+
+                    <ImageView
+                        android:id="@+id/imageView14"
+                        android:layout_width="99dp"
+                        android:layout_height="90dp"
+                        android:src="@drawable/ic_faction_blue" />
+
+                    <TextView
+                        android:id="@+id/pointsBlue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:fontFamily="@font/font_arcade_classic"
+                        android:text="100 pts"
+                        android:textAlignment="center"
+                        android:textColor="?android:attr/textColorLink"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="@+id/imageView11"
+                        tools:ignore="RtlCompat"
+                        tools:visibility="visible" />
+                </FrameLayout>
+            </FrameLayout>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp" />
+
+            <Button
+                android:id="@+id/addPoints"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="80dp"
+                android:background="@drawable/button_round_corners_blue"
+                android:fontFamily="@font/arcade_classic"
+                android:radius="50dp"
+                android:text="ADD  POINTS"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:visibility="visible"
+                tools:ignore="HardcodedText,PrivateResource" />
+
+
+        </FrameLayout>
+
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

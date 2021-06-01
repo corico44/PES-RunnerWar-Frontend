@@ -90,4 +90,8 @@ dependencies {
     // Stream Chat
     implementation "io.getstream:stream-chat-android-ui-components:4.8.0"
 
+
+    //Pie Chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }
