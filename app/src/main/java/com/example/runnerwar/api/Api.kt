@@ -63,7 +63,15 @@ interface Api {
     @GET("/consult/zona_confrontacion")
     fun getZonaDeConfrontacion(
         @Query("nombre") nombreZona: String
-    ) : Call<ZonaDeConfrontacion>
+    ) : Call<ZonaConfrontacionInfo>
+
+    @Headers("Content-Type: application/json")
+    @PUT("/donate")
+    fun donatePointsToZC(
+        @Body dp: DonatePoints
+    ) : Call<Codi>
+
+    //Friends
     @Headers("Content-Type: application/json")
     @POST("/delete_friend")
     fun deleteFriend(

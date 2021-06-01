@@ -1,5 +1,7 @@
 package com.example.runnerwar.ui.mapa
 
+import android.se.omapi.Session
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,10 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.runnerwar.Model.*
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.example.runnerwar.Repositories.ZonasDeConfrontacionRepository
+import io.getstream.chat.android.client.models.User
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class MapaViewModel(private val repositoryLI: LugarInteresRepository, private val repositoryZC : ZonasDeConfrontacionRepository) : ViewModel() {
+
+
 
     private var _response= MutableLiveData<List<LugarInteresResponse>>()
     var responseCreate: LiveData<List<LugarInteresResponse>> = _response
@@ -18,8 +23,14 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
     private var _responseZC = MutableLiveData<List<ZonaDeConfrontacion>>()
     var responseZC: LiveData<List<ZonaDeConfrontacion>> = _responseZC
 
-    private var _responseZCClicked = MutableLiveData<ZonaDeConfrontacion>()
-    var responseZCClicked: LiveData<ZonaDeConfrontacion> = _responseZCClicked
+    private var _responseZCClicked = MutableLiveData<ZonaConfrontacionInfo>()
+    var responseZCClicked: LiveData<ZonaConfrontacionInfo> = _responseZCClicked
+
+    private var _responseGetUser = MutableLiveData<com.example.runnerwar.Model.User>()
+    var responseGetUser: LiveData<com.example.runnerwar.Model.User> = _responseGetUser
+
+    private var _responseDonate = MutableLiveData<Codi>()
+    var responseDonate: LiveData<Codi> = _responseDonate
 
    fun getLugaresInteres() {
         viewModelScope.launch {
@@ -51,16 +62,29 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
 
     fun getZonaDeConfrontacion(name :String){
         viewModelScope.launch {
-            val res: Response<ZonaDeConfrontacion> = repositoryZC.getZonaDeConfrontacion(name)
+            val res: Response<ZonaConfrontacionInfo> = repositoryZC.getZonaDeConfrontacion(name)
 
             if (res.isSuccessful){
-                val zc : ZonaDeConfrontacion? = res.body()
+                val zc : ZonaConfrontacionInfo? = res.body()
 
                 if (zc != null) {
                     _responseZCClicked.value = zc!!
                 }
             }
         }
+    }
+
+    fun getUserForDonatePoints()  {
+        viewModelScope.launch {
+            Log.w("MOSTRAR-DIALOGO", com.example.runnerwar.util.Session.getIdUsuario())
+            //var user : com.example.runnerwar.Model.User = repositoryLI.getUserInfo()
+            //Log.w("MOSTRAR-DIALOGO", com.example.runnerwar.util.Session.getIdUsuario())
+            _responseGetUser.value = repositoryLI.getUserInfo()
+            //Log.w("MOSTRAR-DIALOGO", "He entrado aqui")*/
+        }
+
+
+
     }
 
 
@@ -73,4 +97,18 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
             }
         }
     }
+
+    fun donatePoints(points : DonatePoints){
+        viewModelScope.launch {
+            val res: Response<Codi> = repositoryZC.donatePoints(points)
+
+            if(res.isSuccessful){
+                repositoryLI.updatePointsLocal(-points.points)
+                _responseDonate.value = res.body()
+            }
+        }
+    }
+
+
+
 }

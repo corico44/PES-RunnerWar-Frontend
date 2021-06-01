@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -24,9 +25,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.LugaresViewModelFactory
-import com.example.runnerwar.Model.LugarInteresResponse
-import com.example.runnerwar.Model.PointsUpdate
-import com.example.runnerwar.Model.ZonaDeConfrontacion
+import com.example.runnerwar.Model.*
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.example.runnerwar.Services.ContarPasosService
 import com.example.runnerwar.util.CheckEstaDentro
@@ -73,6 +72,8 @@ class MapaFragment : Fragment(),
     private var email: String? = null
     private var currentZonaConfrontacion: String? = null
     private var zonasConfrontacion: MutableList<ZonaDeConfrontacion>? = null
+
+    private var zonaClicked : String? = null
 
 
     override fun onCreateView(
@@ -153,8 +154,21 @@ class MapaFragment : Fragment(),
         })
 
 
+        mapaViewModel.responseGetUser.observe(viewLifecycleOwner, { user->
+            showCustomDialog(user)
+        })
+
+        mapaViewModel.responseDonate.observe(viewLifecycleOwner, {
+            if (it.codi == 200) {
+                if(zonaClicked !=null){
+                    mapaViewModel.getZonaDeConfrontacion(zonaClicked!!)
+                }
+            }
+        })
+
+
         addPoints.setOnClickListener {
-            showCustomDialog()
+            mapaViewModel.getUserForDonatePoints()
         }
 
     }
@@ -331,9 +345,11 @@ class MapaFragment : Fragment(),
             var res: String? = clickedInsideZonaConfrontacion(point)
 
             if (res!= null){
+                zonaClicked = res
                 mapaViewModel.getZonaDeConfrontacion(res)
             }
             else {
+                zonaClicked = null
                 infoZonaConfrontacion.visibility = View.INVISIBLE
             }
             /*if(currentZonaConfrontacion != null){
@@ -381,14 +397,14 @@ class MapaFragment : Fragment(),
         Toast.makeText(activity?.application!!,"connection suspended", Toast.LENGTH_SHORT).show()
     }
 
-    fun setInfoZonaDeConfrontacion(newData: ZonaDeConfrontacion){
+    fun setInfoZonaDeConfrontacion(newData: ZonaConfrontacionInfo){
         nameZonaConfrontacion.text = newData._id
         nameDominantFaction.text = newData.dominant_team
 
-        pointsYellow.text = newData.yellow_ocupation.toString()
-        pointsRed.text = newData.red_ocupation.toString()
-        pointsGreen.text = newData.green_ocupation.toString()
-        pointsBlue.text = newData.blue_ocupation.toString()
+        pointsYellow.text = newData.yellow_occupation.toString()
+        pointsRed.text = newData.red_occupation.toString()
+        pointsGreen.text = newData.green_occupation.toString()
+        pointsBlue.text = newData.blue_occupation.toString()
 
         if (newData.dominant_team == "red"){
             nameDominantFaction.setTextColor(Color.parseColor("#FA0202"))
@@ -403,20 +419,20 @@ class MapaFragment : Fragment(),
             nameDominantFaction.setTextColor(Color.parseColor("#0EBAB5"))
         }
 
-        Log.w("zona de confrontacion" , newData.red_ocupation.toFloat().toString())
+
         setDataPieChart(newData)
     }
 
 
-    fun setDataPieChart(newData: ZonaDeConfrontacion){
+    fun setDataPieChart(newData: ZonaConfrontacionInfo){
 
         //Set the values
-        val oc = newData.red_ocupation.toFloat()
+        val oc = newData
         var entries : ArrayList<PieEntry> = ArrayList<PieEntry>()
-        entries.add(PieEntry(newData.yellow_ocupation.toFloat(), "Yellow Faction"))
-        entries.add(PieEntry(newData.red_ocupation.toFloat(), "Red Faction"))
-        entries.add(PieEntry(newData.blue_ocupation.toFloat(), "Blue Faction"))
-        entries.add(PieEntry(newData.green_ocupation.toFloat(), "Green Faction"))
+        entries.add(PieEntry(newData.yellow_occupation.toFloat(), "Yellow Faction"))
+        entries.add(PieEntry(newData.red_occupation.toFloat(), "Red Faction"))
+        entries.add(PieEntry(newData.blue_occupation.toFloat(), "Blue Faction"))
+        entries.add(PieEntry(newData.green_occupation.toFloat(), "Green Faction"))
 
 
         var dataSet : PieDataSet = PieDataSet(entries, "Factions")
@@ -468,18 +484,32 @@ class MapaFragment : Fragment(),
     }
 
 
-    private fun showCustomDialog() {
+    private fun showCustomDialog(user: User) {
         var dialog: Dialog = Dialog(activity!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(com.example.runnerwar.R.layout.custom_dialog)
 
         var points : EditText = dialog.inputPoints
+        var textDialog : TextView = dialog.textDonatePoints
+        var errorText :TextView = dialog.errorText
         var donateButton : Button = dialog.confirm
         var cancelButton : Button = dialog.cancel
 
+        textDialog.text =  "You currently have: ${user.points} pts. Please, enter the points you want to donate"
+
         donateButton.setOnClickListener {
-            Log.w("ZONA-CONFRONTACION", "He confimado transaccion")
+            if (points.text.toString() == ""){
+                errorText.text = "Enter a value"
+            }
+            else if (points.text.toString().toInt() > user.points){
+                errorText.text ="You can't afford these points"
+            }
+            else {
+                var donate : DonatePoints = DonatePoints(Session.getIdUsuario(),points.text.toString().toInt(), zonaClicked!! )
+                dialog.dismiss()
+                mapaViewModel.donatePoints(donate)
+            }
         }
 
         cancelButton.setOnClickListener {

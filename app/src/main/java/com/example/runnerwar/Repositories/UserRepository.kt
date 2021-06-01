@@ -76,7 +76,7 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
         userDao.addUser(user)
     }
 
-    fun getUserLogged() : User{
+    suspend fun getUserLogged() : User{
         return userDao.getUserLogged(Session.getIdUsuario())
     }
 
