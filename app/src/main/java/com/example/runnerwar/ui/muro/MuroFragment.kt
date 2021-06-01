@@ -116,12 +116,15 @@ class MuroFragment : Fragment() {
         val list = SCHEDULE as ListView
         val mylist = ArrayList<HashMap<String, String?>>()
         var map = HashMap<String, String?>()
+        var contador = 1
 
         for (elem in listUsers!!){
+            map["numcell"] = contador.toString()
             map["train"] = elem.accountname
             map["from"] = elem.coins.toString()
             mylist.add(map)
             map = HashMap()
+            contador++
         }
 
 
@@ -129,8 +132,9 @@ class MuroFragment : Fragment() {
             activity?.applicationContext,
             mylist,
             R.layout.row,
-            arrayOf("train", "from"),
+            arrayOf("numcell","train", "from"),
             intArrayOf(
+                R.id.NUM_CELL,
                 R.id.TRAIN_CELL,
                 R.id.FROM_CELL,
             )
