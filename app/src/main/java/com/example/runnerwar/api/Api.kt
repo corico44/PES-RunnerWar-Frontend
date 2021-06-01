@@ -108,4 +108,8 @@ interface Api {
     ) : Call<ActivityResponse>
 
 
+    @Headers("Content-Type: application/json")
+    @GET("/users")
+    fun getUsers(
+    ) : Call<List<UserLeaderboards>>
 }

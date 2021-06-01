@@ -17,8 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
-import com.example.runnerwar.Model.Codi
-import com.example.runnerwar.Model.MailForm
+import com.example.runnerwar.Model.*
 import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.util.Session
 import kotlinx.android.synthetic.main.fragment_muro.*
@@ -28,34 +27,23 @@ class MuroFragment : Fragment() {
 
     private lateinit var muroViewModel: MuroViewModel
     private var listView: ListView? = null
+    private var listUsers : List<UserLeaderboards>? = null
 
     override fun onStart() {
-
         super.onStart()
-            //openPopUpDailyLogin()
+        //openPopUpDailyLogin()
             // use arrayadapter and define an array
-            val list = SCHEDULE as ListView
 
-            val mylist = ArrayList<HashMap<String, String?>>()
-            var map = HashMap<String, String?>()
-            map["train"] = "101"
-            map["from"] = "6:30 AM"
-            mylist.add(map)
-            map = HashMap()
-            map["train"] = "103(x)"
-            map["from"] = "6:35 AM"
-            mylist.add(map)
-            var mSchedule = SimpleAdapter(
-                activity?.applicationContext,
-                mylist,
-                R.layout.row,
-                arrayOf("train", "from"),
-                intArrayOf(
-                    R.id.TRAIN_CELL,
-                    R.id.FROM_CELL,
-                )
-            )
-            list.adapter = mSchedule
+
+            muroViewModel.leaderboardsUsers()
+
+            muroViewModel.responseUsers.observe(this@MuroFragment, Observer {
+                listUsers = it
+                /*MostraValors()*/
+                AfegirValors()
+             })
+
+
             println("EL CORREO ES: " + Session.getIdUsuario().toString())
             val mail = MailForm(Session.getIdUsuario().toString())
             muroViewModel.dailyLogin(mail)
@@ -77,6 +65,7 @@ class MuroFragment : Fragment() {
         val textView: TextView = root.findViewById(R.id.text_home)
 
         muroViewModel.responseDaily.observe(viewLifecycleOwner, Observer {
+
             var successCode = Codi(200)
             if(it == successCode){
                 openPopUpDailyLogin()
@@ -90,6 +79,7 @@ class MuroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         muroViewModel.responseDaily.observe(viewLifecycleOwner, Observer { response ->
         })
+
     }
 
     fun openPopUpDailyLogin(){
@@ -112,5 +102,40 @@ class MuroFragment : Fragment() {
         alert.setTitle("DAILY LOGIN AWARD!")
         // show alert dialog
         alert.show()
+    }
+
+    /*fun MostraValors(){
+        for (elem in listUsers!!){
+            Log.d("Username", elem.accountname)
+            Log.d("Points", elem.points.toString())
+            Log.d("Coins", elem.coins.toString())
+        }
+    }*/
+    fun AfegirValors(){
+
+        val list = SCHEDULE as ListView
+        val mylist = ArrayList<HashMap<String, String?>>()
+        var map = HashMap<String, String?>()
+
+        for (elem in listUsers!!){
+            map["train"] = elem.accountname
+            map["from"] = elem.coins.toString()
+            mylist.add(map)
+            map = HashMap()
+        }
+
+
+        var mSchedule = SimpleAdapter(
+            activity?.applicationContext,
+            mylist,
+            R.layout.row,
+            arrayOf("train", "from"),
+            intArrayOf(
+                R.id.TRAIN_CELL,
+                R.id.FROM_CELL,
+            )
+        )
+        list.adapter = mSchedule
+
     }
 }
