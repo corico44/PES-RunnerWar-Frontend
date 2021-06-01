@@ -30,7 +30,7 @@ class LugarInteresRepository(private val userDao: UserDao){
 
 
     suspend fun getUserInfo(): com.example.runnerwar.Model.User {
-        return userDao.getUserLogged("pau.josep.ruiz@estudiantat.upc.edu")
+        return userDao.getUserLogged(Session.getIdUsuario())
     }
 
 

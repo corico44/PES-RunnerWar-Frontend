@@ -69,6 +69,7 @@ class MapaFragment : Fragment(),
     private var lugaresInteres: List<LugarInteresResponse>? = null
     private var myList: MutableList<Circle> = mutableListOf<Circle>()
     private var estaDentro: MutableList<Boolean> = mutableListOf<Boolean>()
+    private var polygons: MutableList<Pair <String, Polygon>> = mutableListOf<Pair <String, Polygon>>()
     private var email: String? = null
     private var currentZonaConfrontacion: String? = null
     private var zonasConfrontacion: MutableList<ZonaDeConfrontacion>? = null
@@ -151,26 +152,26 @@ class MapaFragment : Fragment(),
         mapaViewModel.responseZCClicked.observe(viewLifecycleOwner, Observer { zona ->
             setInfoZonaDeConfrontacion(zona)
             infoZonaConfrontacion.visibility = View.VISIBLE
-            if(currentZonaConfrontacion != null){
+            /*if(currentZonaConfrontacion != null){
                 addPoints.visibility = View.VISIBLE
             }
             else{
                 addPoints.visibility = View.INVISIBLE
-            }
+            }*/
         })
 
 
-        mapaViewModel.responseGetUser.observe(viewLifecycleOwner, { user->
-            if(user != null) showCustomDialog(user)
-        })
+        mapaViewModel.responseGetUser.observe(viewLifecycleOwner) { user ->
+            showCustomDialog(user)
+        }
 
-        mapaViewModel.responseDonate.observe(viewLifecycleOwner, {
+        mapaViewModel.responseDonate.observe(viewLifecycleOwner) {
             if (it.codi == 200) {
-                if(zonaClicked !=null){
+                if (zonaClicked != null) {
                     mapaViewModel.getZonaDeConfrontacion(zonaClicked!!)
                 }
             }
-        })
+        }
 
 
         addPoints.setOnClickListener {
@@ -228,8 +229,39 @@ class MapaFragment : Fragment(),
                 ).strokeColor(Color.GRAY)
                     .fillColor(0x303C4144)
                     .strokeWidth(5.0f)
-                mMap?.addPolygon(polygonOptions)
+                val poly = mMap?.addPolygon(polygonOptions)
+                polygons.add(Pair(item._id,poly) as Pair<String, Polygon>)
+                if (item.dominant_team == "red"){
+                    nameDominantFaction.setTextColor(Color.parseColor("#FA0202"))
+                    if (poly != null) {
+                        poly.strokeColor = Color.parseColor("#FA0202")
+                        poly.fillColor = 0x30FA0202
+                    }
+
+                }
+                else if (item.dominant_team == "yellow"){
+                    nameDominantFaction.setTextColor(Color.parseColor("#FABE02"))
+                    if (poly != null) {
+                        poly.strokeColor = Color.parseColor("#FABE02")
+                        poly.fillColor = 0x30FABE02
+                    }
+                }
+                else if (item.dominant_team== "green"){
+                    nameDominantFaction.setTextColor(Color.parseColor("#3B9611"))
+                    if (poly != null) {
+                        poly.strokeColor = Color.parseColor("#3B9611")
+                        poly.fillColor = 0x303B9611
+                    }
+                }
+                else { //Blue faction
+                    nameDominantFaction.setTextColor(Color.parseColor("#0EBAB5"))
+                    if (poly != null) {
+                        poly.strokeColor = Color.parseColor("#0EBAB5")
+                        poly.fillColor = 0x300EBAB5
+                    }
+                }
             }
+
         }
     }
 
@@ -398,19 +430,30 @@ class MapaFragment : Fragment(),
         pointsGreen.text = newData.green_occupation.toString()
         pointsBlue.text = newData.blue_occupation.toString()
 
-        if (newData.dominant_team == "red"){
-            nameDominantFaction.setTextColor(Color.parseColor("#FA0202"))
+        for(pl in polygons){
+            if(pl.first.equals(newData._id)){
+                if (newData.dominant_team == "red"){
+                    nameDominantFaction.setTextColor(Color.parseColor("#FA0202"))
+                    pl.second.strokeColor = Color.parseColor("#FA0202")
+                    pl.second.fillColor = 0x30FA0202
+                }
+                else if (newData.dominant_team == "yellow"){
+                    nameDominantFaction.setTextColor(Color.parseColor("#FABE02"))
+                    pl.second.strokeColor = Color.parseColor("#FABE02")
+                    pl.second.fillColor = 0x30FABE02
+                }
+                else if (newData.dominant_team== "green"){
+                    nameDominantFaction.setTextColor(Color.parseColor("#3B9611"))
+                    pl.second.strokeColor = Color.parseColor("#3B9611")
+                    pl.second.fillColor = 0x303B9611
+                }
+                else { //Blue faction
+                    nameDominantFaction.setTextColor(Color.parseColor("#0EBAB5"))
+                    pl.second.strokeColor = Color.parseColor("#0EBAB5")
+                    pl.second.fillColor = 0x300EBAB5
+                }
+            }
         }
-        else if (newData.dominant_team == "yellow"){
-            nameDominantFaction.setTextColor(Color.parseColor("#FABE02"))
-        }
-        else if (newData.dominant_team== "green"){
-            nameDominantFaction.setTextColor(Color.parseColor("#3B9611"))
-        }
-        else { //Blue faction
-            nameDominantFaction.setTextColor(Color.parseColor("#0EBAB5"))
-        }
-
 
         setDataPieChart(newData)
     }
