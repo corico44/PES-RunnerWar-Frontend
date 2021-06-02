@@ -8,14 +8,18 @@
         tools:context=".ui.chat.ChannelFragment" android:background="@color/colorPrimary">
 
     <ImageView
-            android:layout_width="958dp"
-            android:layout_height="570dp" app:srcCompat="@drawable/sky" android:id="@+id/cielo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/app_name"
-            app:layout_constraintHorizontal_bias="0.761"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/rectanguloBlanco" app:layout_constraintVertical_bias="0.677"/>
+        android:id="@+id/cielo"
+        android:layout_width="958dp"
+        android:layout_height="570dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toTopOf="@+id/rectanguloBlanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.756"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.675"
+        app:srcCompat="@drawable/sky" />
+
     <ImageView
             android:src="@drawable/pj_cuenta"
             android:layout_width="wrap_content"
@@ -74,22 +78,31 @@
             app:layout_constraintVertical_bias="0.104"
             android:enabled="false" app:layout_constraintHorizontal_bias="0.436"
             app:layout_constraintTop_toBottomOf="@+id/barraSeparatoria"/>
+
     <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="43dp" android:id="@+id/boton_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.733" app:layout_constraintVertical_bias="0.933"
-            app:layout_constraintStart_toStartOf="parent" android:src="@drawable/boton_edit"
-            app:layout_constraintBottom_toTopOf="@+id/reg_userName"
-            app:layout_constraintTop_toBottomOf="@+id/disk_save"/>
+        android:id="@+id/boton_edit"
+        android:layout_width="27dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/boton_edit"
+        app:layout_constraintBottom_toTopOf="@+id/reg_userName"
+        app:layout_constraintStart_toEndOf="@+id/disk_save"
+        app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
+        app:layout_constraintVertical_bias="0.941" />
+
     <ImageButton
-            android:layout_width="33dp"
-            android:layout_height="44dp" android:id="@+id/boton_eliminar"
-            app:layout_constraintEnd_toEndOf="@+id/rectanguloBlanco"
-            app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco" android:src="@drawable/boton_eliminar"
-            app:layout_constraintStart_toEndOf="@+id/boton_edit"
-            app:layout_constraintBottom_toTopOf="@+id/reg_userName" app:layout_constraintHorizontal_bias="0.372"/>
+        android:id="@+id/boton_eliminar"
+        android:layout_width="29dp"
+        android:layout_height="29dp"
+        android:background="@drawable/boton_eliminar"
+        app:layout_constraintBottom_toTopOf="@+id/reg_userName"
+        app:layout_constraintEnd_toEndOf="@+id/rectanguloBlanco"
+        app:layout_constraintHorizontal_bias="0.393"
+        app:layout_constraintStart_toEndOf="@+id/boton_edit"
+        app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
+        app:layout_constraintVertical_bias="0.566" />
+
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,13 +118,17 @@
             android:enabled="false" app:layout_constraintHorizontal_bias="0.436"/>
 
     <ImageButton
-            android:src="@drawable/floppy_disk__1_"
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/disk_save"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.432" app:layout_constraintVertical_bias="0.43"/>
+        android:id="@+id/disk_save"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="140dp"
+        android:background="@drawable/floppy_disk__1_"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/reg_userName"
+        app:layout_constraintStart_toEndOf="@+id/boton_logout"
+        app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
+        app:layout_constraintVertical_bias="0.593" />
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -167,31 +184,40 @@
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reg_userName"
             app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName3"/>
-    <ImageButton
-            android:src="@drawable/boton_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/boton_logout"
-            app:layout_constraintEnd_toStartOf="@+id/boton_edit" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/disk_save"
-            app:layout_constraintBottom_toTopOf="@+id/reg_userName" app:layout_constraintHorizontal_bias="0.21"
-            app:layout_constraintVertical_bias="0.909"/>
-    <Button
-            android:text="Cambiar faccion"
-            android:layout_width="123dp"
-            android:layout_height="55dp" android:id="@+id/cambiarFaccion"
-            app:layout_constraintTop_toTopOf="@+id/boton_eliminar"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintVertical_bias="0.514"/>
 
     <ImageButton
+        android:id="@+id/boton_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:background="@drawable/boton_logout"
+        app:layout_constraintBottom_toBottomOf="@+id/disk_save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/cambiarFaccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cambiar faccion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_points"
+        app:layout_constraintVertical_bias="0.357" />
+
+    <Button
         android:id="@+id/boton_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="336dp"
-        android:layout_marginTop="240dp"
-        android:src="@android:drawable/ic_menu_search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cielo" />
+        android:text="Buscar usuarios"
+        app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.282"
+        app:layout_constraintStart_toEndOf="@+id/cambiarFaccion"
+        app:layout_constraintTop_toBottomOf="@+id/reg_points"
+        app:layout_constraintVertical_bias="0.38" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

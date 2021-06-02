@@ -118,6 +118,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/runnerwar/ui/buscarCuenta/SearchFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/runnerwar/ui/calendario/CalendarioFragment.kt">
           <value>
             <set />
@@ -244,6 +249,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/example/runnerwar/util/Idioma.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/runnerwar/util/Language.kt">
           <value>
             <set />
           </value>
