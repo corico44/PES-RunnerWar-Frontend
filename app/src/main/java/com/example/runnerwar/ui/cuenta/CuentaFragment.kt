@@ -118,7 +118,23 @@ class CuentaFragment : Fragment() {
                 reg_userName.setText(user.accountname)
                 actualname = user.accountname
                 reg_email.setText(user._id)
-                reg_faction.setText(user.faction)
+                if(Language.idioma.equals("castellano")){
+                    if(user.faction.equals("blue")){
+                        reg_faction.setText("azul")
+                    }
+                    else if(user.faction.equals("red")){
+                        reg_faction.setText("rojo")
+                    }
+                    else if(user.faction.equals("yellow")){
+                        reg_faction.setText("amarillo")
+                    }
+                    else if(user.faction.equals("green")){
+                        reg_faction.setText("verde")
+                    }
+                }
+                else{
+                    reg_faction.setText(user.faction)
+                }
                 reg_points.setText(user.points.toString())
             }
 

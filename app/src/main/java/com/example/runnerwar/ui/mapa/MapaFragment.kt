@@ -58,6 +58,7 @@ import com.example.runnerwar.Services.ContarPasosService
 import com.example.runnerwar.util.Language
 import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.custom_dialog.*
+import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_mapa.*
 
 
@@ -107,21 +108,8 @@ class MapaFragment : Fragment(),
             añadirLugaresInteresMapa()
         })
 
-
-
-
         mapaViewModel.responseZC.observe(activity!! , Observer {
             zonasConfrontacion = it as MutableList<ZonaDeConfrontacion>?
-            var p1 = arrayOf(41.486502, 2.033466)
-            var p2 = arrayOf(41.486465, 2.033635)
-            var p3 = arrayOf(41.487851, 2.033675)
-            var p4 = arrayOf(41.488387, 2.032955)
-
-            var newZona = ZonaDeConfrontacion(
-                "Rubi",
-                p1, p2, p3, p4, 0, "", "", 0, 0, 0, 0
-            )
-            zonasConfrontacion?.add(newZona)
             añadirZonasDeConfrontacionMapa()
         })
 
@@ -131,11 +119,11 @@ class MapaFragment : Fragment(),
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val titulo_actividad: TextView =  getView()?.findViewById(R.id.titleDailyActivity) as TextView
         val titulo_puntos: TextView =  getView()?.findViewById(R.id.titlePoints) as TextView
         val titulo_pasos: TextView =  getView()?.findViewById(R.id.titleSteps) as TextView
+
 
         if(Language.idioma.equals("castellano")){
             titulo_actividad.setText("ACTIVIDAD DIARIA")
@@ -181,12 +169,12 @@ class MapaFragment : Fragment(),
         mapaViewModel.responseZCClicked.observe(viewLifecycleOwner, Observer { zona ->
             setInfoZonaDeConfrontacion(zona)
             infoZonaConfrontacion.visibility = View.VISIBLE
-            if(currentZonaConfrontacion != null){
+            /*if(currentZonaConfrontacion != null){
                 addPoints.visibility = View.VISIBLE
             }
             else{
                 addPoints.visibility = View.INVISIBLE
-            }
+            }*/
         })
 
 
@@ -201,7 +189,6 @@ class MapaFragment : Fragment(),
                 }
             }
         }
-
 
         addPoints.setOnClickListener {
             mapaViewModel.getUserForDonatePoints()
@@ -343,7 +330,6 @@ class MapaFragment : Fragment(),
                                         mapaViewModel.updatePoints(lu)
                                         openPopUpDailyLogin()
                                     }
-                                    //openPopUpDailyLogin()
                                 }
                             }
                             CheckEstaDentro.estaDentroLugarInteres[i] = true
@@ -465,7 +451,31 @@ class MapaFragment : Fragment(),
 
     fun setInfoZonaDeConfrontacion(newData: ZonaConfrontacionInfo){
         nameZonaConfrontacion.text = newData._id
-        nameDominantFaction.text = newData.dominant_team
+        val titulo_dominant = getView()?.findViewById(R.id.textView12) as TextView
+
+
+        if(Language.idioma.equals("castellano")){
+            addPoints.setText("AÑADIR PUNTOS")
+            if(newData.dominant_team.equals("blue")){
+                nameDominantFaction.text = "AZUL"
+            }
+            else if(newData.dominant_team.equals("red")){
+                nameDominantFaction.text = "ROJO"
+            }
+            else if(newData.dominant_team.equals("yellow")){
+                nameDominantFaction.text = "AMARILLO"
+            }
+            else if(newData.dominant_team.equals("green")){
+                nameDominantFaction.text = "VERDE"
+            }
+            titulo_dominant.setText("FACCION   DOMINANTE")
+        }
+
+        else if(Language.idioma.equals("ingles")){
+            addPoints.setText("ADD POINTS")
+            nameDominantFaction.text = newData.dominant_team
+            titulo_dominant.setText("DOMINANT   FACTION")
+        }
 
         pointsYellow.text = newData.yellow_occupation.toString()
         pointsRed.text = newData.red_occupation.toString()
@@ -567,20 +577,44 @@ class MapaFragment : Fragment(),
         dialog.setCancelable(true)
         dialog.setContentView(com.example.runnerwar.R.layout.custom_dialog)
 
+
         var points : EditText = dialog.inputPoints
+        var title : TextView = dialog.title
         var textDialog : TextView = dialog.textDonatePoints
         var errorText :TextView = dialog.errorText
         var donateButton : Button = dialog.confirm
         var cancelButton : Button = dialog.cancel
 
-        textDialog.text =  "You currently have: ${user.points} pts. Please, enter the points you want to donate"
+
+        if(Language.idioma.equals("castellano")){
+            textDialog.text =  "Actualmente tienes: ${user.points} pts. Por favor, añade los puntos que quieres donar."
+            title.setText("DONAR PUNTOS")
+            cancelButton.setText("CANCELAR")
+            donateButton.setText("DONAR")
+        }
+        else if(Language.idioma.equals("ingles")){
+            textDialog.text =  "You currently have: ${user.points} pts. Please, enter the points you want to donate."
+            title.setText("DONATE POINTS")
+            cancelButton.setText("CANCEL")
+            donateButton.setText("DONATE")
+        }
 
         donateButton.setOnClickListener {
             if (points.text.toString() == ""){
-                errorText.text = "Enter a value"
+                if(Language.idioma.equals("castellano")){
+                    errorText.text = "Introduce un valor"
+                }
+                else if(Language.idioma.equals("ingles")){
+                    errorText.text = "Enter a value"
+                }
             }
             else if (points.text.toString().toInt() > user.points){
-                errorText.text ="You can't afford these points"
+                if(Language.idioma.equals("castellano")){
+                    errorText.text ="No puedes permitirte estos puntos"
+                }
+                else if(Language.idioma.equals("ingles")){
+                    errorText.text ="You can't afford these points"
+                }
             }
             else {
                 var donate : DonatePoints = DonatePoints(Session.getIdUsuario(),points.text.toString().toInt(), zonaClicked!! )

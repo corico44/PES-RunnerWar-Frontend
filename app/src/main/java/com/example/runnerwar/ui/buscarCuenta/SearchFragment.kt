@@ -17,6 +17,7 @@ import com.example.runnerwar.Model.Friendship
 import com.example.runnerwar.Model.SearchUser
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
+import com.example.runnerwar.util.Language
 import com.example.runnerwar.util.Session
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -47,7 +48,16 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         SearchUser.setEnabled(true)
         var friends: Friendship = Friendship("null", "null")
-        //val titulo_pasos: TextView =  getView()?.findViewById(R.id.titleSteps) as TextView
+
+        if(Language.idioma.equals("castellano")){
+            boton_searchuser.setText("Buscar")
+            SearchUser.setHint("Nombre cuenta")
+        }
+
+        else if(Language.idioma.equals("ingles")){
+            boton_searchuser.setText("Search")
+            SearchUser.setHint("Account name")
+        }
 
         boton_add_friend.setVisibility(View.INVISIBLE)
         boton_delete_friend.setVisibility(View.INVISIBLE)

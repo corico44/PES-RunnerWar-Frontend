@@ -24,7 +24,6 @@
             android:ems="10"
             android:enabled="false"
             android:gravity="center"
-            android:hint="Accountname"
             android:inputType="textEmailAddress"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
