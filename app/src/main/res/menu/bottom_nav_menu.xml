@@ -4,7 +4,7 @@
     <item
             android:id="@+id/navigation_muro"
             android:icon="@drawable/ic_home"
-            android:title="@string/title_muro" android:enabled="false"/>
+            android:title="@string/title_muro"/>
 
     <item
             android:id="@+id/navigation_calendario"

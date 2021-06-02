@@ -92,12 +92,13 @@ class ChannelFragment : Fragment() {
     private fun setUpUser() {
         if (client.getCurrentUser() == null){
             var name = Session.getUsername()
+            name = name.replace("\\s".toRegex(), "")
             userChat = User(id= name,
                 extraData = mutableMapOf(
                     "name" to name,
                     "image" to "https://bit.ly/2TIt8NR"
                 ))
-            val token = client.devToken(Session.getUsername())
+            val token = client.devToken(name)
             client.connectUser(userChat, token).enqueue(){result ->
                 if( result.isSuccess){
                     Log.d("ChatFragment", "Success Connecting the User")

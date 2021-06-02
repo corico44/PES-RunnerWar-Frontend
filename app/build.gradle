@@ -19,10 +19,25 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    lintOptions {
+
+        checkReleaseBuilds false
+
+    }
+    signingConfigs {
+
+        release {
+
+            storeFile file('keystore')
+            storePassword "pwd"
+            keyAlias "alias"
+            keyPassword "pwd"
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
