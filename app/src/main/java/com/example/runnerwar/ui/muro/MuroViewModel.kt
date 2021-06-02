@@ -18,8 +18,10 @@ class MuroViewModel (private val repository: UserRepository) : ViewModel() {
 
     private val _response_daily= MutableLiveData<Codi>()
     private val _response_users= MutableLiveData<List<UserLeaderboards>>()
+    private val _response_factions= MutableLiveData<ListFactions>()
     val responseDaily: LiveData<Codi> = _response_daily
     val responseUsers: LiveData<List<UserLeaderboards>> = _response_users
+    val responseFactions: LiveData<ListFactions> = _response_factions
 
 
     fun dailyLogin(mail : MailForm){
@@ -37,7 +39,7 @@ class MuroViewModel (private val repository: UserRepository) : ViewModel() {
 
 
                 if (userRes != null) {
-                    _response_daily.value = userRes
+                    _response_daily.value = userRes!!
                 }
             }
         }
@@ -51,7 +53,21 @@ class MuroViewModel (private val repository: UserRepository) : ViewModel() {
                 val userRes : List<UserLeaderboards>? = res.body()
 
                 if (userRes != null) {
-                    _response_users.value = userRes
+                    _response_users.value = userRes!!
+                }
+            }
+
+        }
+    }
+    fun leaderboardsFactions() {
+        viewModelScope.launch {
+            val res: Response<ListFactions> = repository.getfactions()
+
+            if (res.isSuccessful){
+                val userRes : ListFactions? = res.body()
+
+                if (userRes != null) {
+                    _response_factions.value = userRes!!
                 }
             }
 

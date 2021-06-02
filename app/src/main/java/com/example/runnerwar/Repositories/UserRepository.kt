@@ -59,6 +59,10 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
         return RetrofitInstance.api.getUsers().awaitResponse()
     }
 
+    suspend fun getfactions() : Response<ListFactions>{
+        return RetrofitInstance.api.getFactions().awaitResponse()
+    }
+
     suspend fun addFriend(user: Friendship) : Response<Codi>{
         return RetrofitInstance.api.addFriend(user).awaitResponse()
     }

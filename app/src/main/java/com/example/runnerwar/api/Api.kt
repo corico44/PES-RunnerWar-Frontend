@@ -112,4 +112,9 @@ interface Api {
     @GET("/users")
     fun getUsers(
     ) : Call<List<UserLeaderboards>>
+
+    @Headers("Content-Type: application/json")
+    @GET("/leaderboard/factions")
+    fun getFactions(
+    ) : Call<ListFactions>
 }

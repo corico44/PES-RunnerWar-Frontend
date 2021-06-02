@@ -32,22 +32,33 @@ class MuroFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         //openPopUpDailyLogin()
-            // use arrayadapter and define an array
+        // use arrayadapter and define an array
 
 
-            muroViewModel.leaderboardsUsers()
+        muroViewModel.leaderboardsUsers()
+        muroViewModel.leaderboardsFactions()
 
-            muroViewModel.responseUsers.observe(this@MuroFragment, Observer {
-                listUsers = it
-                /*MostraValors()*/
-                AfegirValors()
-             })
+        muroViewModel.responseUsers.observe(this@MuroFragment, Observer {
+            listUsers = it
+            /*MostraValors()*/
+            AfegirValors()
+        })
+        muroViewModel.responseFactions.observe(this@MuroFragment, Observer {
+            var blue = it.blue
+            var green = it.green
+            var red = it.red
+            var yellow= it.yellow
+            MostraTeams(blue,green,red,yellow)
+        })
 
 
-            println("EL CORREO ES: " + Session.getIdUsuario().toString())
-            val mail = MailForm(Session.getIdUsuario().toString())
-            muroViewModel.dailyLogin(mail)
+        println("EL CORREO ES: " + Session.getIdUsuario().toString())
+        val mail = MailForm(Session.getIdUsuario().toString())
+        muroViewModel.dailyLogin(mail)
     }
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -141,5 +152,76 @@ class MuroFragment : Fragment() {
         )
         list.adapter = mSchedule
 
+    }
+    private fun MostraTeams(blue:Int, green:Int, red:Int, yellow:Int) {
+        val list = SCHEDULE as ListView
+        val mylist = ArrayList<HashMap<String, String?>>()
+        var map = HashMap<String, String?>()
+        var contador = 1
+
+        val map2 = mapOf(Pair("blue", blue), Pair("red", red), Pair("yellow", yellow),Pair("green",green))
+        val result = map2.toList().sortedBy{(_,value) -> value}
+
+         map["numcell"] = contador.toString()
+         map["train"] = result[3].first
+         map["from"] = result[3].second.toString()
+         mylist.add(map)
+         map = HashMap()
+         contador++
+        map["numcell"] = contador.toString()
+        map["train"] = result[2].first
+        map["from"] = result[2].second.toString()
+        mylist.add(map)
+        map = HashMap()
+        contador++
+        map["numcell"] = contador.toString()
+        map["train"] = result[1].first
+        map["from"] = result[1].second.toString()
+        mylist.add(map)
+        map = HashMap()
+        contador++
+        map["numcell"] = contador.toString()
+        map["train"] = result[0].first
+        map["from"] = result[0].second.toString()
+        mylist.add(map)
+        map = HashMap()
+        contador++
+
+     //}*/
+
+        /*map["numcell"] = blue.toString()
+        map["train"] = "Blue"
+        mylist.add(map)
+        map = HashMap()
+        map["numcell"] = red.toString()
+        map["train"] = "Red"
+        mylist.add(map)
+        map = HashMap()
+        map["numcell"] = green.toString()
+        map["train"] = "Green"
+        mylist.add(map)
+        map = HashMap()
+        map["numcell"] = yellow.toString()
+        map["train"] = "Yellow"
+        map = HashMap()*/
+
+
+        var mSchedule = SimpleAdapter(
+            activity?.applicationContext,
+            mylist,
+            R.layout.row2,
+            arrayOf("numcell","train", "from"),
+            intArrayOf(
+                R.id.NUM_CELL,
+                R.id.TRAIN_CELL,
+                R.id.FROM_CELL,
+            )
+        )
+        list.adapter = mSchedule
+
+        Log.d("blue", blue.toString())
+        Log.d("green", green.toString())
+        Log.d("red", red.toString())
+        Log.d("yellow", yellow.toString())
     }
 }
