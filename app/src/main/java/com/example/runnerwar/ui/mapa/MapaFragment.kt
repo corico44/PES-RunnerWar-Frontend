@@ -24,7 +24,6 @@ import com.example.runnerwar.Model.ZonaDeConfrontacion
 import com.example.runnerwar.Model.*
 import com.example.runnerwar.Repositories.LugarInteresRepository
 import com.example.runnerwar.Repositories.UserRepository
-import com.example.runnerwar.Services.ContarPasosService
 import com.example.runnerwar.util.CheckEstaDentro
 import com.example.runnerwar.util.Session
 import com.github.mikephil.charting.animation.Easing

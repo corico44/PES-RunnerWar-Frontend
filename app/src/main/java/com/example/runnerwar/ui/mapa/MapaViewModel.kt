@@ -105,7 +105,7 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
                 val coins = Coins(com.example.runnerwar.util.Session.getIdUsuario(), coinsToAdd)
                 res = repositoryU.addCoins(coins)
                 if(res.isSuccessful){
-                    repositoryU.addCoinsLDB(-coinsToAdd)
+                    repositoryU.addCoinsLDB(coinsToAdd)
                     repositoryLI.updatePointsLocal(-points.points)
                     _responseDonate.value = res.body()
                 }
