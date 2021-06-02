@@ -14,8 +14,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addUser(user: User)
 
-    @Query("SELECT * FROM user_data WHERE _id = :idLoggedUser LIMIT 1")
-    fun getUserLogged( idLoggedUser: String ): User
+    @Query("SELECT * FROM user_data WHERE _id = :idLoggedUser")
+    suspend fun getUserLogged( idLoggedUser: String ): User
 
     @Query("SELECT * FROM user_data WHERE _id = :idLoggedUser LIMIT 1")
     fun readDataLoggedUser( idLoggedUser: String ): LiveData<User>

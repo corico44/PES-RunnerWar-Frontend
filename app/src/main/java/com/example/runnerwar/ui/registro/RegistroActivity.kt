@@ -30,12 +30,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.android.gms.tasks.Task
-import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.common.SignInButton
 import org.intellij.lang.annotations.Language
 import org.w3c.dom.Text
