@@ -47,7 +47,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         SearchUser.setEnabled(true)
         var friends: Friendship = Friendship("null", "null")
-        val titulo_pasos: TextView =  getView()?.findViewById(R.id.titleSteps) as TextView
+        //val titulo_pasos: TextView =  getView()?.findViewById(R.id.titleSteps) as TextView
 
         boton_add_friend.setVisibility(View.INVISIBLE)
         boton_delete_friend.setVisibility(View.INVISIBLE)
