@@ -22,5 +22,4 @@ class ZonasDeConfrontacionRepository {
     suspend fun donatePoints( points: DonatePoints) : Response<Codi>{
         return RetrofitInstance.api.donatePointsToZC(points).awaitResponse()
     }
-
 }

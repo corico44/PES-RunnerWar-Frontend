@@ -20,7 +20,6 @@ import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.ui.buscarCuenta.SearchFragment
 import com.example.runnerwar.ui.cambiarFaccion.CambiarFaccionActivity
 import com.example.runnerwar.ui.registro.RegistroActivity
-import io.getstream.chat.android.client.ChatClient
 import com.example.runnerwar.util.Session
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -31,7 +30,6 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
-import kotlinx.android.synthetic.main.registro.*
 
 class CuentaFragment : Fragment() {
 
