@@ -38,11 +38,11 @@ class MuroFragment : Fragment() {
         muroViewModel.leaderboardsUsers()
         muroViewModel.leaderboardsFactions()
 
-        muroViewModel.responseUsers.observe(this@MuroFragment, Observer {
-            listUsers = it
+        //muroViewModel.responseUsers.observe(this@MuroFragment, Observer {
+            //listUsers = it
             /*MostraValors()*/
-            AfegirValors()
-        })
+            //AfegirValors()
+        //})
         muroViewModel.responseFactions.observe(this@MuroFragment, Observer {
             var blue = it.blue
             var green = it.green

@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
         val userDao = UserDataBase.getDataBase(application).userDao()
         val repository = UserRepository(userDao,"null")
-        val viewModelFactory = UserViewModelFactory(repository, 100)
+        val viewModelFactory = UserViewModelFactory(repository, 6)
 
         loginViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(LoginViewModel::class.java)

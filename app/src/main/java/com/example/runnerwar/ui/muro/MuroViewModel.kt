@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.runnerwar.Model.*
+import com.example.runnerwar.Model.UserLeaderboards
 import com.example.runnerwar.Repositories.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
