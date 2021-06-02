@@ -8,15 +8,12 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.os.Build
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.runnerwar.Data.DailyActivity.ActivityDataBase
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Model.Activity
-import com.example.runnerwar.Model.LoginResponse
 import com.example.runnerwar.Model.PointsUpdate
 import com.example.runnerwar.Repositories.ActivityRepository
 import com.example.runnerwar.Repositories.UserRepository
@@ -25,9 +22,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import retrofit2.Response
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 class ContarPasosService : IntentService("ContarPasosService"), SensorEventListener{

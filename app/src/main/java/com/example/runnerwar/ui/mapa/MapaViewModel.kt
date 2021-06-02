@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.runnerwar.Model.*
 import com.example.runnerwar.Repositories.LugarInteresRepository
+import com.example.runnerwar.Repositories.UserRepository
 import com.example.runnerwar.Repositories.ZonasDeConfrontacionRepository
 import io.getstream.chat.android.client.models.User
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.math.BigInteger
 
-class MapaViewModel(private val repositoryLI: LugarInteresRepository, private val repositoryZC : ZonasDeConfrontacionRepository) : ViewModel() {
+class MapaViewModel(private val repositoryLI: LugarInteresRepository, private val repositoryZC : ZonasDeConfrontacionRepository, private val repositoryU: UserRepository) : ViewModel() {
 
 
 
@@ -46,33 +48,29 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
         }
     }
 
-    fun getZonasDeConfrontacion(){
-        viewModelScope.launch {
-            val res: Response<List<ZonaDeConfrontacion>> = repositoryZC.getZonasDeConfrontacion()
-
+   fun getZonasDeConfrontacion(){
+       viewModelScope.launch {
+           val res: Response<List<ZonaDeConfrontacion>> = repositoryZC.getZonasDeConfrontacion()
             if (res.isSuccessful){
-                val zc : List<ZonaDeConfrontacion>? = res.body()
-
+               val zc : List<ZonaDeConfrontacion>? = res.body()
                 if (zc != null) {
-                    _responseZC.value = zc
-                }
-            }
-        }
-    }
+                   _responseZC.value = zc
+               }
+           }
+       }
+   }
 
-    fun getZonaDeConfrontacion(name :String){
-        viewModelScope.launch {
-            val res: Response<ZonaConfrontacionInfo> = repositoryZC.getZonaDeConfrontacion(name)
-
+   fun getZonaDeConfrontacion(name :String){
+       viewModelScope.launch {
+           val res: Response<ZonaConfrontacionInfo> = repositoryZC.getZonaDeConfrontacion(name)
             if (res.isSuccessful){
-                val zc : ZonaConfrontacionInfo? = res.body()
-
+               val zc : ZonaConfrontacionInfo? = res.body()
                 if (zc != null) {
-                    _responseZCClicked.value = zc!!
-                }
-            }
-        }
-    }
+                   _responseZCClicked.value = zc!!
+               }
+           }
+       }
+   }
 
     fun getUserForDonatePoints()  {
         viewModelScope.launch {
@@ -100,15 +98,18 @@ class MapaViewModel(private val repositoryLI: LugarInteresRepository, private va
 
     fun donatePoints(points : DonatePoints){
         viewModelScope.launch {
-            val res: Response<Codi> = repositoryZC.donatePoints(points)
+            var res: Response<Codi> = repositoryZC.donatePoints(points)
 
             if(res.isSuccessful){
-                repositoryLI.updatePointsLocal(-points.points)
-                _responseDonate.value = res.body()
+                val coinsToAdd = points.points/10
+                val coins = Coins(com.example.runnerwar.util.Session.getIdUsuario(), coinsToAdd)
+                res = repositoryU.addCoins(coins)
+                if(res.isSuccessful){
+                    repositoryU.addCoinsLDB(-coinsToAdd)
+                    repositoryLI.updatePointsLocal(-points.points)
+                    _responseDonate.value = res.body()
+                }
             }
         }
     }
-
-
-
 }

@@ -67,6 +67,10 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
         return RetrofitInstance.api.searchFriend(user).awaitResponse()
     }
 
+    suspend fun addCoins( coins: Coins) : Response<Codi>{
+        return RetrofitInstance.api.addCoins(coins).awaitResponse()
+    }
+
 
 
     //Calls to Local Data Base
@@ -102,5 +106,9 @@ class UserRepository(private val userDao: UserDao, var loggedUser: String){
 
     suspend fun updatePoints(points: Int) {
         userDao.updatePoints(Session.getIdUsuario(), points)
+    }
+
+    suspend fun addCoinsLDB(coins: Int) {
+        userDao.addCoins(Session.getIdUsuario(), coins)
     }
 }

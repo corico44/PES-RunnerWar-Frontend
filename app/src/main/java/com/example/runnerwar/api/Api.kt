@@ -115,5 +115,11 @@ interface Api {
         @Body activiy: ActivityUpdate
     ) : Call<ActivityResponse>
 
+    @Headers("Content-Type: application/json")
+    @PUT("/coins/add")
+    fun addCoins(
+        @Body coins: Coins
+    ) : Call<Codi>
+
 
 }

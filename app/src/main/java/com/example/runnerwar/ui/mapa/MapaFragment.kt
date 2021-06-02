@@ -23,6 +23,8 @@ import com.example.runnerwar.Model.PointsUpdate
 import com.example.runnerwar.Model.ZonaDeConfrontacion
 import com.example.runnerwar.Model.*
 import com.example.runnerwar.Repositories.LugarInteresRepository
+import com.example.runnerwar.Repositories.UserRepository
+import com.example.runnerwar.Services.ContarPasosService
 import com.example.runnerwar.util.CheckEstaDentro
 import com.example.runnerwar.util.Session
 import com.github.mikephil.charting.animation.Easing
@@ -92,9 +94,11 @@ class MapaFragment : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val loggedUser = Session.getIdUsuario()
         val userDao = UserDataBase.getDataBase(activity?.application!!).userDao()
         val repository = LugarInteresRepository(userDao)
-        val viewModelFactory = LugaresViewModelFactory(repository, 1)
+        val repositoryU = UserRepository(userDao, loggedUser)
+        val viewModelFactory = LugaresViewModelFactory(repository, repositoryU, 1)
 
         mapaViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(MapaViewModel::class.java)

@@ -34,7 +34,6 @@ import io.getstream.chat.android.client.ChatClient
 import kotlinx.android.synthetic.main.fragment_cuenta.*
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_email
 import kotlinx.android.synthetic.main.fragment_cuenta.reg_userName
-import kotlinx.android.synthetic.main.registro.*
 
 
 class CuentaFragment : Fragment() {
