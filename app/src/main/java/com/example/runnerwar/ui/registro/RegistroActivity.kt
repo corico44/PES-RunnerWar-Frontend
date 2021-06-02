@@ -62,7 +62,7 @@ class RegistroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken("1054517802738-1ra88vp8rnhfg8qk23i4sklios7i1m6d.apps.googleusercontent.com")
             .requestEmail()
             .build()
 

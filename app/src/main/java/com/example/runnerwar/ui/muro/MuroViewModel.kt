@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.runnerwar.Model.Codi
-import com.example.runnerwar.Model.MailForm
+import com.example.runnerwar.Model.*
+import com.example.runnerwar.Model.UserLeaderboards
 import com.example.runnerwar.Repositories.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -18,7 +18,11 @@ class MuroViewModel (private val repository: UserRepository) : ViewModel() {
     val text: LiveData<String> = _text
 
     private val _response_daily= MutableLiveData<Codi>()
+    private val _response_users= MutableLiveData<List<UserLeaderboards>>()
+    private val _response_factions= MutableLiveData<ListFactions>()
     val responseDaily: LiveData<Codi> = _response_daily
+    val responseUsers: LiveData<List<UserLeaderboards>> = _response_users
+    val responseFactions: LiveData<ListFactions> = _response_factions
 
 
     fun dailyLogin(mail : MailForm){
@@ -36,9 +40,38 @@ class MuroViewModel (private val repository: UserRepository) : ViewModel() {
 
 
                 if (userRes != null) {
-                    _response_daily.value = userRes
+                    _response_daily.value = userRes!!
                 }
             }
+        }
+    }
+
+    fun leaderboardsUsers() {
+        viewModelScope.launch {
+            val res: Response<List<UserLeaderboards>> = repository.getallusers()
+
+            if (res.isSuccessful){
+                val userRes : List<UserLeaderboards>? = res.body()
+
+                if (userRes != null) {
+                    _response_users.value = userRes!!
+                }
+            }
+
+        }
+    }
+    fun leaderboardsFactions() {
+        viewModelScope.launch {
+            val res: Response<ListFactions> = repository.getfactions()
+
+            if (res.isSuccessful){
+                val userRes : ListFactions? = res.body()
+
+                if (userRes != null) {
+                    _response_factions.value = userRes!!
+                }
+            }
+
         }
     }
 }
