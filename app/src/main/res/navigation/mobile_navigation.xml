@@ -13,10 +13,10 @@
     />
 
     <fragment
-            android:id="@+id/navigation_calendario"
+            android:id="@+id/navigation_user_leaderboard"
             android:name="com.example.runnerwar.ui.calendario.CalendarioFragment"
-            android:label="@string/title_calendario"
-            tools:layout="@layout/fragment_calendario"/>
+            android:label="@string/title_user_leaderboard"
+            tools:layout="@layout/fragment_user_leaderboard"/>
 
     <fragment
             android:id="@+id/navigation_mapa"

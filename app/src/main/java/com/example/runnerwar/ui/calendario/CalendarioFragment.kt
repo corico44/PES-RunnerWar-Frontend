@@ -12,11 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.runnerwar.Data.User.UserDataBase
 import com.example.runnerwar.Factories.UserViewModelFactory
-import com.example.runnerwar.Model.MailForm
 import com.example.runnerwar.Model.UserLeaderboards
 import com.example.runnerwar.R
 import com.example.runnerwar.Repositories.UserRepository
-import com.example.runnerwar.ui.muro.MuroViewModel
 import com.example.runnerwar.util.Session
 import kotlinx.android.synthetic.main.fragment_muro.*
 
@@ -53,7 +51,7 @@ class CalendarioFragment : Fragment() {
         val viewModelFactory = UserViewModelFactory(repository,7)
         calendarioViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(CalendarioViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_calendario, container, false)
+        val root = inflater.inflate(R.layout.fragment_user_leaderboard, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         return root
     }

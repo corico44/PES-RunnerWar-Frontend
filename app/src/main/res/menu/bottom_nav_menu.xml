@@ -3,13 +3,13 @@
 
     <item
             android:id="@+id/navigation_muro"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_team_leaderboard"
             android:title="@string/title_muro"/>
 
     <item
-            android:id="@+id/navigation_calendario"
-            android:icon="@drawable/ic_calendario"
-            android:title="@string/title_calendario"/>
+            android:id="@+id/navigation_user_leaderboard"
+            android:icon="@drawable/ic_user_leaderboard"
+            android:title="@string/title_user_leaderboard"/>
 
     <item
             android:id="@+id/navigation_mapa"
