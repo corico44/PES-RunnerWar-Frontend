@@ -45,16 +45,7 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/rectanguloBlanco"
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.494"/>
-    <TextView
-            android:text="TEAM RED"
-            android:layout_width="wrap_content"
-            android:fontFamily="@font/font_arcade_classic"
-            android:layout_height="wrap_content" android:id="@+id/texto_bandera"
-            app:layout_constraintStart_toStartOf="@+id/imageView8" app:layout_constraintEnd_toEndOf="@+id/imageView8"
-            app:layout_constraintTop_toTopOf="@+id/imageView8"
-            app:layout_constraintHorizontal_bias="0.471"
-            app:layout_constraintVertical_bias="0.335" android:textColor="@android:color/black"
-            android:textSize="18sp" app:layout_constraintBottom_toBottomOf="@+id/imageView8"/>
+
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/rectangle_19" android:id="@+id/imageButton4"
@@ -63,16 +54,18 @@
             android:contentDescription="azul"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintBottom_toTopOf="@+id/imageButton5" android:background="#FFFFFF"/>
+
     <TextView
-            android:fontFamily="@font/font_arcade_classic"
-            android:layout_width="260dp"
-            android:layout_height="63dp" android:id="@+id/texto_azul"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintStart_toStartOf="@+id/imageButton4"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton4" app:layout_constraintHorizontal_bias="0.333"
-            android:text="We   are   all   the   same   but   the   blue faction   fights   until   they   can no longer Join   us   and   fight   with   your brothers   for   a   better   Barcelona!"
-            app:layout_constraintTop_toTopOf="@+id/imageButton4"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton4"/>
+        android:id="@+id/texto_azul"
+        android:layout_width="260dp"
+        android:layout_height="63dp"
+        android:fontFamily="@font/font_arcade_classic"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton4"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton4"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="@+id/imageButton4"
+        app:layout_constraintTop_toTopOf="@+id/imageButton4" />
     <ImageButton
             android:layout_width="wrap_content"
             android:text="Proceed >"
@@ -83,16 +76,18 @@
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintBottom_toTopOf="@+id/imageButton6" android:background="#FFFFFF"
     />
+
     <TextView
-            android:fontFamily="@font/font_arcade_classic"
-            android:layout_width="260dp"
-            android:layout_height="63dp" android:id="@+id/texto_rojo"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintStart_toStartOf="@+id/imageButton5"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton5" app:layout_constraintHorizontal_bias="0.483"
-            android:text="This   is   not   a   game  this   is   a   real confrontation    If   you   wanna   win then   join   us!"
-            app:layout_constraintTop_toTopOf="@+id/imageButton5"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton5"/>
+        android:id="@+id/texto_rojo"
+        android:layout_width="260dp"
+        android:layout_height="63dp"
+        android:fontFamily="@font/font_arcade_classic"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton5"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton5"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="@+id/imageButton5"
+        app:layout_constraintTop_toTopOf="@+id/imageButton5" />
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/rectangle_22" android:id="@+id/imageButton6"
@@ -100,26 +95,34 @@
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0" app:layout_constraintHorizontal_bias="0.488"
             android:contentDescription="verde" android:background="#FFFFFF"/>
+
     <TextView
-            android:fontFamily="@font/font_arcade_classic"
-            android:layout_width="260dp"
-            android:layout_height="63dp" android:id="@+id/texto_verde"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintStart_toStartOf="@+id/imageButton6"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton6"
-            android:text="Together   we   will  dominate   all   of Barcelona   and   all   factions   will know   that   green   is   the   best   Come with  us!"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton5"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton6" app:layout_constraintHorizontal_bias="0.472"
-            app:layout_constraintVertical_bias="0.758"/>
+        android:id="@+id/texto_verde"
+        android:layout_width="260dp"
+        android:layout_height="63dp"
+        android:fontFamily="@font/font_arcade_classic"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton6"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton6"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toStartOf="@+id/imageButton6"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton5"
+        app:layout_constraintVertical_bias="0.758" />
+
     <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@drawable/rectangle_20" android:id="@+id/imageButton2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="@+id/rectanguloBlanco"
-            app:layout_constraintBottom_toTopOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.036"
-            android:layout_marginTop="90dp" android:visibility="visible" android:contentDescription="amarillo"
-            app:layout_constraintHorizontal_bias="0.495" android:background="#FFFFFF"/>
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="27dp"
+        android:background="#FFFFFF"
+        android:contentDescription="amarillo"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo"
+        app:srcCompat="@drawable/rectangle_20" />
     <TextView
             android:text="CHANGE YOUR TEAM!"
             android:fontFamily="@font/font_arcade_classic"
@@ -130,16 +133,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/rectanguloBlanco"
             app:layout_constraintVertical_bias="0.031" android:textSize="36sp"
             android:textColor="@android:color/black" app:layout_constraintHorizontal_bias="0.512"/>
+
     <TextView
-            android:text="WAR AND PEACE CAN GO HAND IN HAND IF U WANT TO FIGHT FOR THE PEACE OF ALL THE YELLOW FACTION AWAITS YOU!"
-            android:fontFamily="@font/font_arcade_classic"
-            android:layout_width="260dp"
-            android:layout_height="63dp" android:id="@+id/texto_amarillo"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintStart_toStartOf="@+id/imageButton2"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton2" app:layout_constraintHorizontal_bias="0.483"
-            app:layout_constraintTop_toTopOf="@+id/imageButton2"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton2"/>
+        android:id="@+id/texto_amarillo"
+        android:layout_width="260dp"
+        android:layout_height="63dp"
+        android:fontFamily="@font/font_arcade_classic"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="@+id/imageButton2" />
     <ImageView
             android:layout_width="109dp"
             android:layout_height="125dp" app:srcCompat="@drawable/pj_pelirroja" android:id="@+id/imageView3"
