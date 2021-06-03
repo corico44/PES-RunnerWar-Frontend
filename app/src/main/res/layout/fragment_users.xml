@@ -4,7 +4,7 @@
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   tools:context=".ui.chat.UsersFragment" android:id="@+id/frameLayout">
+                                                   tools:context="com.runnerwar.ui.chat.UsersFragment" android:id="@+id/frameLayout">
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

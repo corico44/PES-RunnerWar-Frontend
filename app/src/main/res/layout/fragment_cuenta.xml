@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.chat.ChannelFragment" android:background="@color/colorPrimary">
+        tools:context="com.runnerwar.ui.chat.ChannelFragment" android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/cielo"

@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.muro.MuroFragment">
+        tools:context="com.runnerwar.ui.muro.MuroFragment">
     <ImageView
         android:id="@+id/imageView14"
         android:layout_width="492dp"

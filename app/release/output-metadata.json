@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.example.runnerwar",
+  "applicationId": "com.runnerwar",
   "variantName": "release",
   "elements": [
     {
