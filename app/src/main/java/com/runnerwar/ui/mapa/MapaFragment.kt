@@ -170,12 +170,12 @@ class MapaFragment : Fragment(),
         mapaViewModel.responseZCClicked.observe(viewLifecycleOwner, Observer { zona ->
             setInfoZonaDeConfrontacion(zona)
             infoZonaConfrontacion.visibility = View.VISIBLE
-            /*if(currentZonaConfrontacion != null){
+            if(currentZonaConfrontacion != null){
                 addPoints.visibility = View.VISIBLE
             }
             else{
                 addPoints.visibility = View.INVISIBLE
-            }*/
+            }
         })
 
 

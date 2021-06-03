@@ -37,10 +37,10 @@ class SeleccionFaccionActivity : AppCompatActivity() {
         var password = intent.extras?.getString("password")
 
         val titulo = findViewById<TextView>(R.id.titulo)
-        val texto_amarillo = findViewById<TextView>(R.id.texto_amarillo)
-        val texto_rojo = findViewById<TextView>(R.id.texto_rojo)
-        val texto_azul = findViewById<TextView>(R.id.texto_azul)
-        val texto_verde = findViewById<TextView>(R.id.texto_verde)
+        val textoAmarillo = findViewById<TextView>(R.id.texto_amarillo)
+        val textoRojo = findViewById<TextView>(R.id.texto_rojo)
+        val textoAzul = findViewById<TextView>(R.id.texto_azul)
+        val textoVerde = findViewById<TextView>(R.id.texto_verde)
 
         val userDao = UserDataBase.getDataBase(application).userDao()
         val repository = UserRepository(userDao,email.toString())
@@ -50,18 +50,18 @@ class SeleccionFaccionActivity : AppCompatActivity() {
 
 
         if(Language.idioma.equals("castellano")){
-            titulo.setText("ELIGE UN EQUIPO!")
-            texto_amarillo.setText("¡La     guerra     y     la     paz     pueden     ir     de     la     mano     si     quieres     luchar     por     la     paz     de     toda     la     facción     amarilla     que     te     espera!")
-            texto_azul.setText("Todos     somos     iguales     pero     la     faccion     azul     lucha     hasta     que     ya     no     pueden.     ¡Unete     a     nosotros     y     lucha     por     una     Barcelona     mejor!")
-            texto_rojo.setText("Esto     no     es     un     juego,     es     una     confrontacion     real.     ¡Si     quieres     ganar,     unete     a     nosotros!")
-            texto_verde.setText("Juntos     dominaremos     toda     Barcelona     y     todas     las     facciones     sabran     que     el     verde     es     el     mejor.     ¡Ven     con     nosotros!")
+            titulo.text = "ELIGE UN EQUIPO!"
+            textoAmarillo.text = "¡La     guerra     y     la     paz     pueden     ir     de     la     mano     si     quieres     luchar     por     la     paz     de     toda     la     facción     amarilla     que     te     espera!"
+            textoAzul.text = "Todos     somos     iguales     pero     la     faccion     azul     lucha     hasta     que     ya     no     pueden.     ¡Unete     a     nosotros     y     lucha     por     una     Barcelona     mejor!"
+            textoRojo.text = "Esto     no     es     un     juego,     es     una     confrontacion     real.     ¡Si     quieres     ganar,     unete     a     nosotros!"
+            textoVerde.text = "Juntos     dominaremos     toda     Barcelona     y     todas     las     facciones     sabran     que     el     verde     es     el     mejor.     ¡Ven     con     nosotros!"
         }
         else if(Language.idioma.equals("ingles")){
-            titulo.setText("CHOOSE A TEAM!")
-            texto_amarillo.setText("War     and     peace     can     go     hand     in     hand     if     u     want     to     fight     for     the     peace     of     all     the     yellow     faction     awaits     you!")
-            texto_azul.setText("We     are     all     the     same     but     the     blue     faction     fights     until     they     can     no     longer.     Join     us     and     fight     for     a     better     Barcelona!")
-            texto_rojo.setText("This     is     not     a     game,     this     is     a     real     confrontation.     If     you     wanna     win     then     join     us!")
-            texto_verde.setText("Together     we     will     dominate     all     of     Barcelona     and     all     factions     will     know     that     green     is     the     best     one.     Come     with     us!")
+            titulo.text = "CHOOSE A TEAM!"
+            textoAmarillo.text = "War     and     peace     can     go     hand     in     hand     if     u     want     to     fight     for     the     peace     of     all     the     yellow     faction     awaits     you!"
+            textoAzul.text = "We     are     all     the     same     but     the     blue     faction     fights     until     they     can     no     longer.     Join     us     and     fight     for     a     better     Barcelona!"
+            textoRojo.text = "This     is     not     a     game,     this     is     a     real     confrontation.     If     you     wanna     win     then     join     us!"
+            textoVerde.text = "Together     we     will     dominate     all     of     Barcelona     and     all     factions     will     know     that     green     is     the     best     one.     Come     with     us!"
         }
 
         /*selFaccViewModel.responseCreate.observe(this@SeleccionFaccionActivity, Observer {

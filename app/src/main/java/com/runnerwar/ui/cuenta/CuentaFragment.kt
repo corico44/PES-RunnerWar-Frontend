@@ -40,7 +40,6 @@ class CuentaFragment : Fragment() {
     private lateinit var loggedUser: String
     private lateinit var auth: FirebaseAuth
     lateinit var mGoogleSignInClient: GoogleSignInClient
-    private val client = ChatClient.instance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -179,6 +178,7 @@ class CuentaFragment : Fragment() {
         }
 
         boton_logout.setOnClickListener {
+            val client = ChatClient.instance()
             client.disconnect()
             mGoogleSignInClient.signOut()
 

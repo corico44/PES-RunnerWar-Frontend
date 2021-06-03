@@ -6,10 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.runnerwar.ui.muro.MuroFragment">
+
     <ImageView
         android:id="@+id/imageView14"
-        android:layout_width="492dp"
-        android:layout_height="832dp"
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
         android:src="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

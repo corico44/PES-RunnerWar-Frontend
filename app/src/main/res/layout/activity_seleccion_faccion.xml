@@ -138,15 +138,16 @@
             android:textColor="@android:color/black" app:layout_constraintHorizontal_bias="0.512"/>
 
     <TextView
-            android:text="WAR AND PEACE CAN GO HAND IN HAND IF U WANT TO FIGHT FOR THE PEACE OF ALL THE YELLOW FACTION AWAITS YOU!"
-            android:fontFamily="@font/font_arcade_classic"
-            android:layout_width="260dp"
-            android:layout_height="63dp" android:id="@+id/textView5"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintStart_toStartOf="@+id/imageButton2"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton2" app:layout_constraintHorizontal_bias="0.483"
-            app:layout_constraintTop_toTopOf="@+id/imageButton2"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton2"/>
+        android:id="@+id/texto_amarillo"
+        android:layout_width="260dp"
+        android:layout_height="63dp"
+        android:fontFamily="@font/font_arcade_classic"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="@+id/imageButton2" />
     <ImageView
             android:layout_width="109dp"
             android:layout_height="125dp" app:srcCompat="@drawable/pj_pelirroja" android:id="@+id/imageView3"
