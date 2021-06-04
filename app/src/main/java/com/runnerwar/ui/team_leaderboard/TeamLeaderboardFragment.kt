@@ -1,4 +1,4 @@
-package com.runnerwar.ui.muro
+package com.runnerwar.ui.team_leaderboard
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -22,12 +22,12 @@ import com.runnerwar.Repositories.UserRepository
 import com.runnerwar.util.Language
 import com.runnerwar.util.Session
 import com.runnerwar.Model.UserLeaderboards
-import kotlinx.android.synthetic.main.fragment_muro.*
+import kotlinx.android.synthetic.main.fragment_team_leaderboard.*
 
 
-class MuroFragment : Fragment() {
+class TeamLeaderboardFragment : Fragment() {
 
-    private lateinit var muroViewModel: MuroViewModel
+    private lateinit var teamLeaderboardViewModel: TeamLeaderboardViewModel
     private var listView: ListView? = null
     private var listUsers : List<UserLeaderboards>? = null
 
@@ -37,15 +37,15 @@ class MuroFragment : Fragment() {
         // use arrayadapter and define an array
 
 
-        muroViewModel.leaderboardsUsers()
-        muroViewModel.leaderboardsFactions()
+        teamLeaderboardViewModel.leaderboardsUsers()
+        teamLeaderboardViewModel.leaderboardsFactions()
 
-        //muroViewModel.responseUsers.observe(this@MuroFragment, Observer {
+        //teamLeaderboardViewModel.responseUsers.observe(this@TeamLeaderboardFragment, Observer {
             //listUsers = it
             /*MostraValors()*/
             //AfegirValors()
         //})
-        muroViewModel.responseFactions.observe(this@MuroFragment, Observer {
+        teamLeaderboardViewModel.responseFactions.observe(this@TeamLeaderboardFragment, Observer {
             var blue = it.blue
             var green = it.green
             var red = it.red
@@ -56,7 +56,7 @@ class MuroFragment : Fragment() {
 
         println("EL CORREO ES: " + Session.getIdUsuario().toString())
         val mail = MailForm(Session.getIdUsuario().toString())
-        muroViewModel.dailyLogin(mail)
+        teamLeaderboardViewModel.dailyLogin(mail)
     }
 
 
@@ -72,12 +72,22 @@ class MuroFragment : Fragment() {
         val userDao = UserDataBase.getDataBase(activity?.application!!).userDao()
         val repository = UserRepository(userDao, loggedUser.toString())
         val viewModelFactory = UserViewModelFactory(repository,5)
-        muroViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(MuroViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_muro, container, false)
+        teamLeaderboardViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(TeamLeaderboardViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_team_leaderboard, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
+        val titulo: TextView = root.findViewById(R.id.textView12)
+        val columnas: TextView = root.findViewById(R.id.textView14)
+        if(Language.idioma.equals("castellano")){
+            titulo.text = "CLASIFICACION EQUIPOS!"
+            columnas.text = "Posicion            Faccion            Honor"
+        }
+        else if(Language.idioma.equals("ingles")){
+            titulo.text = "TEAM   LEADERBOARD!"
+            columnas.text = "Position            Faction            Honor"
+        }
 
-        muroViewModel.responseDaily.observe(viewLifecycleOwner, Observer {
+        teamLeaderboardViewModel.responseDaily.observe(viewLifecycleOwner, Observer {
 
             var successCode = Codi(200)
             if(it == successCode){
@@ -90,7 +100,7 @@ class MuroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        muroViewModel.responseDaily.observe(viewLifecycleOwner, Observer { response ->
+        teamLeaderboardViewModel.responseDaily.observe(viewLifecycleOwner, Observer { response ->
         })
 
     }

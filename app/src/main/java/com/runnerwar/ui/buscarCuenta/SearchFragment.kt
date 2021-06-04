@@ -83,7 +83,13 @@ class SearchFragment : Fragment() {
                 FactionSUser.text = it.faction
             }
             else
-                Toast.makeText(activity?.applicationContext, "User doesn't exist", Toast.LENGTH_SHORT).show()
+                if(Language.idioma.equals("castellano")){
+                    Toast.makeText(activity?.applicationContext, "El usuario no existe", Toast.LENGTH_SHORT).show()
+
+                }
+                else if(Language.idioma.equals("ingles")){
+                    Toast.makeText(activity?.applicationContext, "User doesn't exist", Toast.LENGTH_SHORT).show()
+                }
         })
 
         searchViewModel.responseSearch.observe(this@SearchFragment, Observer { response ->
@@ -104,7 +110,12 @@ class SearchFragment : Fragment() {
             if (response.isSuccessful){
                 val data: Codi? = response.body()
                 if (data != null) {
-                    Toast.makeText(activity?.applicationContext, "Friend added", Toast.LENGTH_SHORT).show()
+                    if(Language.idioma.equals("castellano")){
+                        Toast.makeText(activity?.applicationContext, "Amigo añadido", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(Language.idioma.equals("ingles")){
+                        Toast.makeText(activity?.applicationContext, "Friend added", Toast.LENGTH_SHORT).show()
+                    }
                     boton_add_friend.setVisibility(View.INVISIBLE)
                     boton_delete_friend.setVisibility(View.VISIBLE)
                 }
@@ -116,7 +127,12 @@ class SearchFragment : Fragment() {
             if (response.isSuccessful){
                 val data: Codi? = response.body()
                 if (data != null) {
-                    Toast.makeText(activity?.applicationContext, "Friend deleted", Toast.LENGTH_SHORT).show()
+                    if(Language.idioma.equals("castellano")){
+                        Toast.makeText(activity?.applicationContext, "Amigo eliminado", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(Language.idioma.equals("ingles")){
+                        Toast.makeText(activity?.applicationContext, "Friend deleted", Toast.LENGTH_SHORT).show()
+                    }
                     boton_add_friend.setVisibility(View.VISIBLE)
                     boton_delete_friend.setVisibility(View.INVISIBLE)
                 }

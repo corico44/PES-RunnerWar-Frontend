@@ -1,4 +1,4 @@
-package com.runnerwar.ui.calendario
+package com.runnerwar.ui.user_leaderboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.runnerwar.Repositories.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class CalendarioViewModel(private val repository: UserRepository) : ViewModel(){
+class UserLeaderboardViewModel(private val repository: UserRepository) : ViewModel(){
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is chat Fragment"

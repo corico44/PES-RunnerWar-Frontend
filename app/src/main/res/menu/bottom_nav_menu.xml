@@ -4,26 +4,26 @@
     <item
             android:id="@+id/navigation_muro"
             android:icon="@drawable/ic_team_leaderboard"
-            android:title="@string/title_muro"/>
+            android:title=""/>
 
     <item
             android:id="@+id/navigation_user_leaderboard"
             android:icon="@drawable/ic_user_leaderboard"
-            android:title="@string/title_user_leaderboard"/>
+            android:title=""/>
 
     <item
             android:id="@+id/navigation_mapa"
             android:icon="@drawable/ic_mapa"
-            android:title="@string/title_mapa"/>
+            android:title="" />
 
     <item
             android:id="@+id/navigation_channel"
             android:icon="@drawable/ic_chat"
-            android:title="@string/title_chat"/>
+            android:title=""/>
 
     <item
             android:id="@+id/navigation_cuenta"
             android:icon="@drawable/ic_cuenta"
-            android:title="@string/title_cuenta"/>
+            android:title=""/>
 
 </menu>

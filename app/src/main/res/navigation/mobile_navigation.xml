@@ -7,14 +7,14 @@
 
     <fragment
             android:id="@+id/navigation_muro"
-            android:name="com.runnerwar.ui.muro.MuroFragment"
+            android:name="com.runnerwar.ui.team_leaderboard.TeamLeaderboardFragment"
             android:label="@string/title_muro"
-            tools:layout="@layout/fragment_muro"
+            tools:layout="@layout/fragment_team_leaderboard"
     />
 
     <fragment
             android:id="@+id/navigation_user_leaderboard"
-            android:name="com.runnerwar.ui.calendario.CalendarioFragment"
+            android:name="com.runnerwar.ui.user_leaderboard.UserLeaderboardFragment"
             android:label="@string/title_user_leaderboard"
             tools:layout="@layout/fragment_user_leaderboard"/>
 

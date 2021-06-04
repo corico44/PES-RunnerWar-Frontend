@@ -1,4 +1,4 @@
-package com.runnerwar.ui.calendario
+package com.runnerwar.ui.user_leaderboard
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,12 +15,13 @@ import com.runnerwar.Factories.UserViewModelFactory
 import com.runnerwar.Model.UserLeaderboards
 import com.runnerwar.R
 import com.runnerwar.Repositories.UserRepository
+import com.runnerwar.util.Language
 import com.runnerwar.util.Session
-import kotlinx.android.synthetic.main.fragment_muro.*
+import kotlinx.android.synthetic.main.fragment_team_leaderboard.*
 
-class CalendarioFragment : Fragment() {
+class UserLeaderboardFragment : Fragment() {
 
-    private lateinit var calendarioViewModel: CalendarioViewModel
+    private lateinit var userLeaderboardViewModel: UserLeaderboardViewModel
     private var listView: ListView? = null
     private var listUsers : List<UserLeaderboards>? = null
 
@@ -30,9 +31,9 @@ class CalendarioFragment : Fragment() {
         // use arrayadapter and define an array
 
 
-        calendarioViewModel.leaderboardsUsers()
+        userLeaderboardViewModel.leaderboardsUsers()
 
-        calendarioViewModel.responseUsers.observe(this@CalendarioFragment, Observer {
+        userLeaderboardViewModel.responseUsers.observe(this@UserLeaderboardFragment, Observer {
             listUsers = it
             /*MostraValors()*/
             AfegirValors()
@@ -49,10 +50,21 @@ class CalendarioFragment : Fragment() {
         val userDao = UserDataBase.getDataBase(activity?.application!!).userDao()
         val repository = UserRepository(userDao, Session.getIdUsuario())
         val viewModelFactory = UserViewModelFactory(repository,7)
-        calendarioViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(CalendarioViewModel::class.java)
+        userLeaderboardViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(UserLeaderboardViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_user_leaderboard, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
+        val titulo: TextView = root.findViewById(R.id.textView15)
+        val columnas: TextView = root.findViewById(R.id.textView19)
+        if(Language.idioma.equals("castellano")){
+            titulo.text = "CLASIFICACION USUARIOS!"
+            columnas.text = "Posicion         Nombre usuario         Honor"
+        }
+        else if(Language.idioma.equals("ingles")){
+            titulo.text = "USER   LEADERBOARD!"
+            columnas.text = "Position            Username            Honor"
+        }
         return root
     }
     fun AfegirValors(){

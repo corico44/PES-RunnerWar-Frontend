@@ -47,13 +47,17 @@
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.494"/>
 
     <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@drawable/rectangle_19" android:id="@+id/imageButton4"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton2" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="azul"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton5" android:background="#FFFFFF"/>
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:contentDescription="azul"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        app:srcCompat="@drawable/rectangle_19" />
 
     <TextView
         android:id="@+id/texto_azul"
@@ -66,16 +70,20 @@
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="@+id/imageButton4"
         app:layout_constraintTop_toTopOf="@+id/imageButton4" />
+
     <ImageButton
-            android:layout_width="wrap_content"
-            android:text="Proceed >"
-            android:layout_height="wrap_content" app:srcCompat="@drawable/rectangle_21" android:id="@+id/imageButton5"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton4" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="naranja"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton6" android:background="#FFFFFF"
-    />
+        android:id="@+id/imageButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:contentDescription="naranja"
+        android:text="Proceed >"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton4"
+        app:srcCompat="@drawable/rectangle_21" />
 
     <TextView
         android:id="@+id/texto_rojo"
@@ -113,7 +121,6 @@
         android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="27dp"
         android:background="#FFFFFF"
         android:contentDescription="amarillo"
         android:visibility="visible"
@@ -123,6 +130,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titulo"
         app:srcCompat="@drawable/rectangle_20" />
+
     <TextView
             android:text="CHANGE YOUR TEAM!"
             android:fontFamily="@font/font_arcade_classic"

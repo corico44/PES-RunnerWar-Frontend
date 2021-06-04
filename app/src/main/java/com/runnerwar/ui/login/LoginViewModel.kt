@@ -11,6 +11,7 @@ import com.runnerwar.Repositories.ActivityRepository
 import com.runnerwar.Repositories.UserRepository
 import com.runnerwar.Model.*
 import com.runnerwar.ui.registro.RegistroFormState
+import com.runnerwar.util.Language
 import com.runnerwar.util.Session
 import kotlinx.coroutines.launch
 
@@ -64,14 +65,34 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun loginDataChanged(email: String, password: String) {
         if (!isEmailValid(email) ) {
-            _registroForm.value = RegistroFormState(emailError = "Not a valid email" )
+            if(Language.idioma.equals("castellano")){
+                _registroForm.value = RegistroFormState(emailError = "No es un mail valido" )
+            }
+            else if(Language.idioma.equals("ingles")){
+                _registroForm.value = RegistroFormState(emailError = "Not a valid email" )
+            }
         } else if (!isPasswordValid(password)) {
             if(!contieneMinuscula(password)){
-                _registroForm.value = RegistroFormState(passwordError = "Password must contain a lower case")
+                if(Language.idioma.equals("castellano")){
+                    _registroForm.value = RegistroFormState(passwordError = "La contraseña debe contener una letra minúscula")
+                }
+                else if(Language.idioma.equals("ingles")){
+                    _registroForm.value = RegistroFormState(passwordError = "Password must contain a lower case")
+                }
             } else if(!contieneMayuscula(password)){
-                _registroForm.value = RegistroFormState(passwordError = "Password must contain a capital letter")
+                if(Language.idioma.equals("castellano")){
+                    _registroForm.value = RegistroFormState(passwordError = "La contraseña debe contener una letra mayúscula")
+                }
+                else if(Language.idioma.equals("ingles")){
+                    _registroForm.value = RegistroFormState(passwordError = "Password must contain a capital letter")
+                }
             } else {
-                _registroForm.value = RegistroFormState(passwordError = "Password must be > 5 characters")
+                if(Language.idioma.equals("castellano")){
+                    _registroForm.value = RegistroFormState(passwordError = "La contraseña debe tener más de 5 carácteres")
+                }
+                else if(Language.idioma.equals("ingles")){
+                    _registroForm.value = RegistroFormState(passwordError = "Password must be > 5 characters")
+                }
             }
         } else {
             _registroForm.value = RegistroFormState(isDataValid = true)

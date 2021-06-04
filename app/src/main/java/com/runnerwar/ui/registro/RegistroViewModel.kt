@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.runnerwar.Model.RegisterResponse
 
 import com.runnerwar.Repositories.RegistroRepository
+import com.runnerwar.util.Language
 import retrofit2.Response
 
 
@@ -21,16 +22,41 @@ class RegistroViewModel(private val repository: RegistroRepository) : ViewModel(
 
     fun singUpDataChanged(username: String,email: String, password: String) {
         if (!isUserNameValid(username) ) {
-            _registroForm.value = RegistroFormState(usernameError = "Not a valid username" )
+            if(Language.idioma.equals("castellano")){
+                _registroForm.value = RegistroFormState(usernameError = "No es un nombre de usuario valido" )
+            }
+            else if(Language.idioma.equals("ingles")){
+                _registroForm.value = RegistroFormState(usernameError = "Not a valid username" )
+            }
         } else if (!isEmailValid(email) ) {
-            _registroForm.value = RegistroFormState(emailError = "Not a valid email" )
+            if(Language.idioma.equals("castellano")){
+                _registroForm.value = RegistroFormState(emailError = "No es un mail valido" )
+            }
+            else if(Language.idioma.equals("ingles")){
+                _registroForm.value = RegistroFormState(emailError = "Not a valid email" )
+            }
         } else if (!isPasswordValid(password)) {
             if(!contieneMinuscula(password)){
-                _registroForm.value = RegistroFormState(passwordError = "Password must contain a lower case")
+                if(Language.idioma.equals("castellano")){
+                    _registroForm.value = RegistroFormState(passwordError = "La contraseña debe contener una letra minúscula")
+                }
+                else if(Language.idioma.equals("ingles")){
+                    _registroForm.value = RegistroFormState(passwordError = "Password must contain a lower case")
+                }
             } else if(!contieneMayuscula(password)){
-                _registroForm.value = RegistroFormState(passwordError = "Password must contain a capital letter")
+                if(Language.idioma.equals("castellano")){
+                    _registroForm.value = RegistroFormState(passwordError = "La contraseña debe contener una letra mayúscula")
+                }
+                else if(Language.idioma.equals("ingles")){
+                    _registroForm.value = RegistroFormState(passwordError = "Password must contain a capital letter")
+                }
             } else {
-                _registroForm.value = RegistroFormState(passwordError = "Password must be > 5 characters")
+                if(Language.idioma.equals("castellano")){
+                    _registroForm.value = RegistroFormState(passwordError = "La contraseña debe tener más de 5 carácteres")
+                }
+                else if(Language.idioma.equals("ingles")){
+                    _registroForm.value = RegistroFormState(passwordError = "Password must be > 5 characters")
+                }
             }
         } else {
             _registroForm.value = RegistroFormState(isDataValid = true)

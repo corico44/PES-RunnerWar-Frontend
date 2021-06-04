@@ -1,4 +1,4 @@
-package com.runnerwar.ui.muro
+package com.runnerwar.ui.team_leaderboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,10 +12,10 @@ import com.runnerwar.Model.MailForm
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MuroViewModel (private val repository: UserRepository) : ViewModel() {
+class TeamLeaderboardViewModel (private val repository: UserRepository) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is muro Fragment"
+        value = "This is team_leaderboard Fragment"
     }
     val text: LiveData<String> = _text
 
