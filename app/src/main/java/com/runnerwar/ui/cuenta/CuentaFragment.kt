@@ -145,11 +145,23 @@ class CuentaFragment : Fragment() {
                 val data: RegisterResponse? = response.body()
                 if (data != null) {
                     if (data.codi == 200) {
-                        Toast.makeText(activity?.applicationContext, "Update successfully", Toast.LENGTH_SHORT).show()
+                        if(Language.idioma.equals("castellano")){
+                            Toast.makeText(activity?.applicationContext, "Actualizado satisfactoriamente", Toast.LENGTH_SHORT).show()
+                        }
+
+                        else if(Language.idioma.equals("ingles")){
+                            Toast.makeText(activity?.applicationContext, "Update successfully", Toast.LENGTH_SHORT).show()
+                        }
                         actualname = data.accountname.toString()
                     }
                     else {
-                        Toast.makeText(activity?.applicationContext, "Accountname already used", Toast.LENGTH_SHORT).show()
+                        if(Language.idioma.equals("castellano")){
+                            Toast.makeText(activity?.applicationContext, "Nombre de usuario ya en uso", Toast.LENGTH_SHORT).show()
+                        }
+
+                        else if(Language.idioma.equals("ingles")){
+                            Toast.makeText(activity?.applicationContext, "Accountname already used", Toast.LENGTH_SHORT).show()
+                        }
                         reg_userName.setText(actualname)
                     }
                 }
