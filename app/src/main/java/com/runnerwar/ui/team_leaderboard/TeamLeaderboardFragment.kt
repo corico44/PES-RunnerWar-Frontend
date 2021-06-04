@@ -192,25 +192,94 @@ class TeamLeaderboardFragment : Fragment() {
         val result = map2.toList().sortedBy{(_,value) -> value}
 
          map["numcell"] = contador.toString()
-         map["train"] = result[3].first
+
+        if(Language.idioma.equals("castellano")){
+            if(result[3].first.equals("blue")){
+                map["train"] = "azul"
+            }
+            else if(result[3].first.equals("red")){
+                map["train"] = "rojo"
+            }
+            else if(result[3].first.equals("yellow")){
+                map["train"] = "amarillo"
+            }
+            else if(result[3].first.equals("green")){
+                map["train"] = "verde"
+            }
+        }
+        else{
+            map["train"] = result[3].first
+        }
+
          map["from"] = result[3].second.toString()
          mylist.add(map)
          map = HashMap()
          contador++
+
         map["numcell"] = contador.toString()
-        map["train"] = result[2].first
+        if(Language.idioma.equals("castellano")){
+            if(result[2].first.equals("blue")){
+                map["train"] = "azul"
+            }
+            else if(result[2].first.equals("red")){
+                map["train"] = "rojo"
+            }
+            else if(result[2].first.equals("yellow")){
+                map["train"] = "amarillo"
+            }
+            else if(result[2].first.equals("green")){
+                map["train"] = "verde"
+            }
+        }
+        else{
+            map["train"] = result[2].first
+        }
         map["from"] = result[2].second.toString()
         mylist.add(map)
         map = HashMap()
         contador++
+
         map["numcell"] = contador.toString()
-        map["train"] = result[1].first
+        if(Language.idioma.equals("castellano")){
+            if(result[1].first.equals("blue")){
+                map["train"] = "azul"
+            }
+            else if(result[1].first.equals("red")){
+                map["train"] = "rojo"
+            }
+            else if(result[1].first.equals("yellow")){
+                map["train"] = "amarillo"
+            }
+            else if(result[1].first.equals("green")){
+                map["train"] = "verde"
+            }
+        }
+        else{
+            map["train"] = result[1].first
+        }
         map["from"] = result[1].second.toString()
         mylist.add(map)
         map = HashMap()
         contador++
+
         map["numcell"] = contador.toString()
-        map["train"] = result[0].first
+        if(Language.idioma.equals("castellano")){
+            if(result[0].first.equals("blue")){
+                map["train"] = "azul"
+            }
+            else if(result[0].first.equals("red")){
+                map["train"] = "rojo"
+            }
+            else if(result[0].first.equals("yellow")){
+                map["train"] = "amarillo"
+            }
+            else if(result[0].first.equals("green")){
+                map["train"] = "verde"
+            }
+        }
+        else{
+            map["train"] = result[0].first
+        }
         map["from"] = result[0].second.toString()
         mylist.add(map)
         map = HashMap()
