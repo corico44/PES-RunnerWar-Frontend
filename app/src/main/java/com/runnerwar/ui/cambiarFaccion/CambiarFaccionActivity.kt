@@ -58,11 +58,23 @@ class CambiarFaccionActivity : AppCompatActivity(){
 
         selCambiarFacViewModel.responseChangeFaction.observe(this@CambiarFaccionActivity, Observer{ response ->
             if (response.isSuccessful){
-                Toast.makeText(applicationContext, "Update faction successfully", Toast.LENGTH_SHORT).show()
+                if(Language.idioma.equals("castellano")){
+                    Toast.makeText(applicationContext, "Cambio faccion satisfactorio", Toast.LENGTH_SHORT).show()
+                }
+
+                else if(Language.idioma.equals("ingles")){
+                    Toast.makeText(applicationContext, "Update faction successfully", Toast.LENGTH_SHORT).show()
+                }
                 val intent = Intent(applicationContext, NavActivity::class.java)
                 startActivity(intent)
             }else{
-                Toast.makeText(applicationContext, "Update faction failed", Toast.LENGTH_SHORT).show()
+                if(Language.idioma.equals("castellano")){
+                    Toast.makeText(applicationContext, "Cambio faccion fallido", Toast.LENGTH_SHORT).show()
+                }
+
+                else if(Language.idioma.equals("ingles")){
+                    Toast.makeText(applicationContext, "Update faction failed", Toast.LENGTH_SHORT).show()
+                }
                 val intent = Intent(applicationContext, NavActivity::class.java)
                 startActivity(intent)
             }
